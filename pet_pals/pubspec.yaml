@@ -65,6 +65,8 @@ flutter:
     - assets/images/register.png
     - assets/images/paw_icon.png
     - assets/images/google_logo.png
+    - assets/images/menu_portrait.png
+    - assets/images/menu_landscape.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

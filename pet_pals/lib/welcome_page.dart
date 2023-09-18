@@ -22,16 +22,19 @@ class WelcomePage extends StatelessWidget {
         child: Center(
           child: SingleChildScrollView(
             child: Column(
-              crossAxisAlignment: 
-                  isLandscape ? CrossAxisAlignment.center : CrossAxisAlignment.start,
+              crossAxisAlignment: isLandscape
+                  ? CrossAxisAlignment.center
+                  : CrossAxisAlignment.start,
               children: [
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 35),
                   //Alignment depending on the orientation
-                  alignment: isLandscape ? Alignment.center : Alignment.centerLeft,
+                  alignment:
+                      isLandscape ? Alignment.center : Alignment.centerLeft,
                   child: Column(
-                    crossAxisAlignment: 
-                        isLandscape ? CrossAxisAlignment.center : CrossAxisAlignment.start,
+                    crossAxisAlignment: isLandscape
+                        ? CrossAxisAlignment.center
+                        : CrossAxisAlignment.start,
                     children: [
                       Text(
                         'Join Our',
@@ -63,7 +66,7 @@ class WelcomePage extends StatelessWidget {
                   child: Image.asset(
                     'assets/images/welcome.png',
                     //Change image size depending on orientation
-                    width: isLandscape ? 250 : null, 
+                    width: isLandscape ? 250 : null,
                     fit: BoxFit.contain,
                   ),
                 ),
@@ -81,7 +84,8 @@ class WelcomePage extends StatelessWidget {
                       backgroundColor:
                           MaterialStateProperty.all(const Color(0xFF5E17EB)),
                       padding: MaterialStateProperty.all(
-                          const EdgeInsets.symmetric(horizontal: 50, vertical: 10)),
+                          const EdgeInsets.symmetric(
+                              horizontal: 50, vertical: 10)),
                       shape: MaterialStateProperty.all(RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30.0),
                       )),
@@ -112,7 +116,9 @@ class WelcomePage extends StatelessWidget {
                       },
                       child: Text(
                         'Sign in',
-                        style: TextStyle(fontSize: getFontSize(20, 16), color: Color(0xFF5E17EB)),
+                        style: TextStyle(
+                            fontSize: getFontSize(20, 16),
+                            color: Color(0xFF5E17EB)),
                       ),
                     )
                   ],
