@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'menu_drawer_widget.dart';
-import 'pet_home_item.dart';
-import 'dummy_data/dummy_pets.dart';
+import '../widgets/menu_drawer_widget.dart';
+import '../widgets/pet_home_item.dart';
+import '../dummy_data/dummy_pets.dart';
 import 'profile_page.dart';
-import 'bottom_nav_bar_widget.dart';
+import '../widgets/bottom_nav_bar_widget.dart';
 
 class HomePage extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();

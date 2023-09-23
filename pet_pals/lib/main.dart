@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:pet_pals/home_page.dart';
-import 'welcome_page.dart';
-import 'menu_drawer_widget.dart';
+import 'package:pet_pals/pages/home_page.dart';
+import 'pages/welcome_page.dart';
+import 'widgets/menu_drawer_widget.dart';
 
 void main() => runApp(MyApp());
 
