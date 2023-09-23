@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'register_page.dart';
+import 'home_page.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -113,7 +114,12 @@ class _SignInPageState extends State<SignInPage> {
         const SizedBox(height: 30),
         Center(
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => HomePage()),
+              );
+            },
             style: ButtonStyle(
               minimumSize: MaterialStateProperty.all(const Size(220, 50)),
               backgroundColor:
@@ -130,7 +136,12 @@ class _SignInPageState extends State<SignInPage> {
         const SizedBox(height: 15),
         Center(
           child: ElevatedButton.icon(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => HomePage()),
+              );
+            },
             icon: Image.asset(
               'assets/images/google_logo.png',
               height: 20.0,
@@ -154,7 +165,7 @@ class _SignInPageState extends State<SignInPage> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => RegisterPage()), 
+                  MaterialPageRoute(builder: (context) => RegisterPage()),
                 );
               },
               child: const Text(

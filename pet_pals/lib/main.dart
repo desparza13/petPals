@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pet_pals/home_page.dart';
 import 'welcome_page.dart';
 import 'menu_drawer_widget.dart';
 
@@ -12,7 +13,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
       ),
-      home: Menu(),
+      home: HomePage(),
     );
   }
 }
