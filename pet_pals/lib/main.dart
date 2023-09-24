@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pet_pals/pages/home_page.dart';
+import 'package:pet_pals/pages/to_do_page.dart';
 import 'pages/welcome_page.dart';
 import 'widgets/menu_drawer_widget.dart';
 
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
       ),
-      home: WelcomePage(),
+      home: ToDoPage(),
     );
   }
 }

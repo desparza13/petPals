@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import '../widgets/menu_drawer_widget.dart';
 import '../widgets/pet_home_item.dart';
 import '../dummy_data/dummy_pets.dart';
-import 'profile_page.dart';
 import '../widgets/bottom_nav_bar_widget.dart';
 import '../widgets/to_do_home_widget.dart';
+import '../widgets/app_bar_widget.dart'; // Importación del nuevo widget AppBar
 
 class HomePage extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -20,33 +20,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      appBar: AppBar(
-        backgroundColor: Color(0xFF8F4152),
-        leading: IconButton(
-          icon: Icon(Icons.menu, color: Colors.white),
-          onPressed: () {
-            if (_scaffoldKey.currentState!.isDrawerOpen) {
-              _scaffoldKey.currentState!.openEndDrawer();
-            } else {
-              _scaffoldKey.currentState!.openDrawer();
-            }
-          },
-        ),
-        title: Text('Home', style: TextStyle(color: Colors.white)),
-        actions: [
-          GestureDetector(
-            onTap: () {
-              // Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProfilePage()));
-            },
-            child: const CircleAvatar(
-              backgroundImage: NetworkImage(
-                  'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png'),
-              radius: 25.0,
-            ),
-          ),
-          const SizedBox(width: 25),
-        ],
-      ),
+      appBar: AppBarWidget(scaffoldKey: _scaffoldKey), // Uso del nuevo widget AppBar
       drawer: Menu(),
       body: SingleChildScrollView(
         child: Column(
