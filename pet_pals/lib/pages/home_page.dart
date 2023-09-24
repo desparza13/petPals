@@ -4,6 +4,7 @@ import '../widgets/pet_home_item.dart';
 import '../dummy_data/dummy_pets.dart';
 import 'profile_page.dart';
 import '../widgets/bottom_nav_bar_widget.dart';
+import '../widgets/to_do_home_widget.dart';
 
 class HomePage extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -35,7 +36,7 @@ class HomePage extends StatelessWidget {
         actions: [
           GestureDetector(
             onTap: () {
-              //Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProfilePage()));
+              // Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProfilePage()));
             },
             child: const CircleAvatar(
               backgroundImage: NetworkImage(
@@ -135,10 +136,14 @@ class HomePage extends StatelessWidget {
                 ],
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: ToDoHomeWidget(),
+            ),
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavBar(), // Barrita de navegación del widget
+      bottomNavigationBar: BottomNavBar(),
     );
   }
 }

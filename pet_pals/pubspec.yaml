@@ -68,6 +68,13 @@ flutter:
     - assets/images/menu_portrait.png
     - assets/images/menu_landscape.png
     - assets/images/woman_home.png
+    - assets/images/icons/bath_icon.png
+    - assets/images/icons/eat_icon.png
+    - assets/images/icons/medicine_icon.png
+    - assets/images/icons/play_icon.png
+    - assets/images/icons/vaccine_icon.png
+    - assets/images/icons/vet_icon.png
+    - assets/images/icons/walk_icon.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
