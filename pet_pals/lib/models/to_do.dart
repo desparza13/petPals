@@ -14,6 +14,7 @@ enum ActivityType {
 }
 
 class ToDo {
+  final int id;
   final DateTime date;
   final TimeOfDay time;
   final String activityName;
@@ -22,6 +23,7 @@ class ToDo {
   bool completed;
 
   ToDo({
+    required this.id,
     required this.date,
     required this.time,
     required this.activityName,

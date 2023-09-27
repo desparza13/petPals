@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../widgets/menu_drawer_widget.dart';
 import '../widgets/pet_home_item.dart';
 import '../dummy_data/dummy_pets.dart';
-import '../widgets/bottom_nav_bar_widget.dart';
 import '../widgets/to_do_home_widget.dart';
 import '../widgets/app_bar_widget.dart'; // Importación del nuevo widget AppBar
 
@@ -15,6 +14,8 @@ class HomePage extends StatelessWidget {
     Color(0xFFC0F6FF),
     Color(0xFFBBFFAD)
   ];
+
+  HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -117,7 +118,6 @@ class HomePage extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavBar(),
     );
   }
 }

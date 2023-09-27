@@ -6,6 +6,8 @@ import 'package:pet_pals/dummy_data/dummy_to_do.dart';
 import '../widgets/menu_drawer_widget.dart';
 
 class ToDoPage extends StatefulWidget {
+  const ToDoPage({super.key});
+
   @override
   _ToDoPageState createState() => _ToDoPageState();
 }
@@ -201,7 +203,6 @@ class _ToDoPageState extends State<ToDoPage> {
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavBar(),
     );
   }
 }

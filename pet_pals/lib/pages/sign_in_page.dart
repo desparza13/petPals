@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'register_page.dart';
-import 'home_page.dart';
+import 'package:pet_pals/widgets/bottom_nav_bar_widget.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -117,7 +117,7 @@ class _SignInPageState extends State<SignInPage> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => HomePage()),
+                MaterialPageRoute(builder: (context) => BottomNavBar()),
               );
             },
             style: ButtonStyle(
@@ -139,7 +139,7 @@ class _SignInPageState extends State<SignInPage> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => HomePage()),
+                MaterialPageRoute(builder: (context) => BottomNavBar()),
               );
             },
             icon: Image.asset(

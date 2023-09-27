@@ -38,7 +38,7 @@ List<Pet> dummyPets = [
     name: 'Tipsy',
     location: 'Seattle, WA',
     type: 'Dog',
-    breed: 'Shitzu',
+    breed: 'Shih tzu',
     age: 3,
     sex: 'Female',
     color: 'white',
