@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:pet_pals/pages/home_page.dart';
-import 'package:pet_pals/pages/to_do_page.dart';
-import 'pages/welcome_page.dart';
-import 'widgets/menu_drawer_widget.dart';
 
-void main() => runApp(MyApp());
+import 'package:pet_pals/widgets/bottom_nav_bar_widget.dart';
+
+
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
       ),
-      home: ToDoPage(),
+      home: BottomNavBar(),
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pet_pals/pages/my_pet_page.dart';
 import '../models/pet.dart';
 
 class PetHomeItem extends StatelessWidget {
@@ -22,13 +23,23 @@ class PetHomeItem extends StatelessWidget {
           // Margen de 15px alrededor de la foto para que se aprecie el color
           Padding(
             padding: const EdgeInsets.all(10.0),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(35),
-              child: Image.network(
-                pet.image,
-                fit: BoxFit.cover,
-                width: double.infinity,
-                height: double.infinity,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => MyPetPage(
+                              pet:pet,
+                            )));
+              },
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(35),
+                child: Image.network(
+                  pet.image,
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                  height: double.infinity,
+                ),
               ),
             ),
           ),
@@ -36,7 +47,7 @@ class PetHomeItem extends StatelessWidget {
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              height: 65, 
+              height: 65,
               width: double.infinity,
               decoration: BoxDecoration(
                 //Redondear solo abajo
@@ -44,16 +55,16 @@ class PetHomeItem extends StatelessWidget {
                   bottomLeft: Radius.circular(35),
                   bottomRight: Radius.circular(35),
                 ),
-                color: color.withOpacity(0.85),  // Menos opacidad
+                color: color.withOpacity(0.85), // Menos opacidad
               ),
             ),
           ),
           // Nombre y breed de la mascota posicionados encima del fondo
           Positioned(
-            bottom: 25,  
-            left: 20,  
+            bottom: 25,
+            left: 20,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,  
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   pet.name,
