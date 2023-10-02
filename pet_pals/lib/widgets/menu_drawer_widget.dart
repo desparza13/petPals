@@ -61,7 +61,7 @@ class Menu extends StatelessWidget {
                         _buildMenuItem(
                             Icons.question_answer, 'Q&A', context, '/qa'),
                         _buildMenuItem(Icons.workspace_premium_rounded, 'Store',
-                            context, '/BuyPage'),
+                            context, '/buyPage'),
                         Divider(color: Colors.white),
                       ],
                     ),
@@ -102,7 +102,7 @@ class Menu extends StatelessWidget {
       leading: Icon(icon, color: Colors.white),
       title: Text(title, style: TextStyle(fontSize: 18, color: Colors.white)),
       onTap: () {
-        //Navigation pending
+        Navigator.pushNamed(context, route);
       },
     );
   }

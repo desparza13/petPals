@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       ),
       home: WelcomePage(),
       routes: {
-        '/buyPage': (context) => const BuyPage(), // Nueva ruta
+        '/buyPage': (context) => const BuyPage(),
       },
     );
   }

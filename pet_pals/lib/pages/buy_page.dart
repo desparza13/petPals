@@ -36,11 +36,16 @@ class _BuyPageState extends State<BuyPage> {
             ),
             actions: [],
             flexibleSpace: FlexibleSpaceBar(
-              background: ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: Image.network(
-                  'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fp0.pikist.com%2Fphotos%2F139%2F353%2Fpets-cute-cat-dog-cute-wallpaper-pink-animals-friends.jpg&f=1&nofb=1&ipt=cafb7b0a7f50a5e268fd0ef607b29fcaba23aaf926c5e108b7ac8e9a265c7914&ipo=images',
-                  fit: BoxFit.cover,
+              background: Container(
+                decoration: BoxDecoration(
+                  color: const Color(0xFF39D2C0),
+                  image: const DecorationImage(
+                    fit: BoxFit.cover,
+                    image: AssetImage(
+                      'assets/images/pets_buy_page.jpg',
+                    ),
+                  ),
+                  borderRadius: BorderRadius.circular(12),
                 ),
               ),
             ),
@@ -158,8 +163,8 @@ class _BuyPageState extends State<BuyPage> {
                               alignment:
                                   const AlignmentDirectional(-1.00, 0.00),
                               child: Container(
-                                width: 348,
-                                height: 210,
+                                width: double.infinity,
+                                height: 220,
                                 decoration: const BoxDecoration(
                                   gradient: LinearGradient(
                                     colors: [
@@ -222,7 +227,7 @@ class _BuyPageState extends State<BuyPage> {
                                                   .fromSTEB(0, 10, 0, 10),
                                               child: Text(
                                                 'Learn together with your best\nfriend appropriate behavior\nduring the trip and before the trip to\ntake care of your four-legged friend',
-                                                textAlign: TextAlign.justify,
+                                                textAlign: TextAlign.left,
                                                 style: TextStyle(
                                                   fontFamily: 'Ubuntu',
                                                   fontSize:
@@ -239,24 +244,40 @@ class _BuyPageState extends State<BuyPage> {
                                                     0.00, 0.00),
                                             child: Row(
                                               mainAxisSize: MainAxisSize.min,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
                                               children: [
-                                                Align(
-                                                  alignment:
-                                                      const AlignmentDirectional(
-                                                          -1.00, 0.00),
-                                                ),
-                                                const Align(
-                                                  alignment:
-                                                      AlignmentDirectional(
-                                                          1.00, 0.00),
-                                                  child: Icon(
-                                                    Icons.lock,
+                                                Container(
+                                                  decoration: BoxDecoration(
                                                     color: Colors.white,
-                                                    size: 24,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8), // Esquinas redondeadas
                                                   ),
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: TextButton(
+                                                      onPressed: () {
+                                                        // Acción del botón
+                                                      },
+                                                      child: const Text(
+                                                        'Tu texto de botón aquí',
+                                                        style: TextStyle(
+                                                          fontSize: 14,
+                                                          color: Colors
+                                                              .black, // Texto negro
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                    width:
+                                                        8), // Espacio entre el botón y el icono de candado
+                                                const Icon(
+                                                  Icons.lock,
+                                                  color: Colors.white,
+                                                  size: 24,
                                                 ),
                                               ],
                                             ),
