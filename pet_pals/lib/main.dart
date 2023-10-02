@@ -9,9 +9,14 @@ import 'package:pet_pals/pages/add_pet_page.dart';
 import 'package:pet_pals/pages/to_do_page.dart';
 import 'package:pet_pals/pages/q&a_page.dart';
 
-void main() => runApp(MyApp());
+import 'package:pet_pals/widgets/bottom_nav_bar_widget.dart';
+
+
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

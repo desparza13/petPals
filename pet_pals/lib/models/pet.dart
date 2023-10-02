@@ -10,6 +10,7 @@ class Pet {
   final String color;
   final bool sterilized;
   final String image;  
+   String size;
 
   Pet({
     required this.name,
@@ -21,6 +22,9 @@ class Pet {
     required this.color,
     required this.sterilized,
     required this.image, 
+    this.size='',
+
+    
   });
 
 }
