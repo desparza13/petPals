@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pet_pals/pages/add_pet_page.dart';
 import 'package:pet_pals/pages/adoption_feed_page.dart';
 import 'package:pet_pals/pages/home_page.dart';
 import 'package:pet_pals/pages/to_do_page.dart';
@@ -23,7 +24,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   final List<Widget> _pages = [
     HomePage(),
     HomePage(),
-    HomePage(),
+    AddPetPage(),
     ToDoPage(),
     const AdoptionFeedPage()
   ];

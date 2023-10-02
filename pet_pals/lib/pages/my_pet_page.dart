@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pet_pals/models/pet.dart';
+import 'package:pet_pals/pages/edit_my_pet_page.dart';
 import 'package:pet_pals/widgets/info_my_pet_widget.dart';
 
 class MyPetPage extends StatelessWidget {
@@ -11,12 +12,13 @@ class MyPetPage extends StatelessWidget {
     Color(0xFFC0F6FF),
     Color(0xFFBBFFAD)
   ];
-  
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(backgroundColor: Color(0xFF8F4152)),
+      appBar: AppBar(
+        title: Text('My pet profile'),
+        backgroundColor: Color(0xFF8F4152)),
       body: Stack(
         children: [
           //Imagen de la mascota
@@ -83,7 +85,7 @@ class MyPetPage extends StatelessWidget {
                               children: [
                                 const Column(
                                   children: [
-                                     Icon(Icons.pets,
+                                    Icon(Icons.pets,
                                         size: 35,
                                         color:
                                             Color.fromARGB(255, 245, 190, 138)),
@@ -125,14 +127,18 @@ class MyPetPage extends StatelessWidget {
                         ElevatedButton(
                           onPressed: () {
                             //Redirigir a editar
-
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => EditMyPetPage(
+                                          pet: pet,
+                                        )));
                           },
                           style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(100.0),
-                            ),
-                            fixedSize: const Size(60, 60)
-                          ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(100.0),
+                              ),
+                              fixedSize: const Size(60, 60)),
                           child: const Icon(Icons.border_color_outlined),
                         )
                       ],

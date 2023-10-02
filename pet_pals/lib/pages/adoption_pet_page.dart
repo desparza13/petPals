@@ -10,6 +10,7 @@ class AdoptionPetPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Text('Pet Profile'),
         backgroundColor: Color(0xFF8F4152),
       ),
       body: Stack(
