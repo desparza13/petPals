@@ -45,9 +45,8 @@ class Menu extends StatelessWidget {
                     child: ListView(
                       padding: EdgeInsets.zero,
                       children: <Widget>[
-                        _buildMenuItem(Icons.pets, 'Adoption', context, '/adoption'),
+                        _buildMenuItem(Icons.pets, 'Home', context, '/home'),
                         _buildMenuItem(Icons.add_circle_outline, 'Add pet', context, '/addPet'),
-                        _buildMenuItem(Icons.checklist, 'To-do', context, '/todo'),
                         _buildMenuItem(Icons.question_answer, 'Q&A', context, '/qa'),
                         Divider(color: Colors.white),
                       ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pet_pals/widgets/app_bar_widget.dart';
+import 'package:pet_pals/widgets/bottom_nav_bar_widget.dart';
 import 'package:pet_pals/widgets/menu_drawer_widget.dart';
 
 class AddPetPage extends StatefulWidget {
@@ -52,7 +53,7 @@ class _AddPetPageState extends State<AddPetPage> {
           ),
           Positioned(
             top: 100,
-            bottom: 500,
+            bottom: 600,
             left: 120,
             right: 120,
             child: ElevatedButton(
@@ -187,7 +188,13 @@ class _AddPetPageState extends State<AddPetPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           ElevatedButton(
-                              onPressed: () {}, child: Text('Add pet'))
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => BottomNavBar()));
+                              },
+                              child: Text('Add pet'))
                         ],
                       )
                     ]),

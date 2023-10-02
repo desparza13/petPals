@@ -172,7 +172,9 @@ class EditMyPetPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           ElevatedButton(
-                              onPressed: () {}, child: Text('Edit pet'))
+                              onPressed: () {
+                                Navigator.pop(context);
+                              }, child: Text('Edit pet'))
                         ],
                       )
                     ]),
