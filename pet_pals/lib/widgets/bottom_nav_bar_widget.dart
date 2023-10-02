@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:pet_pals/pages/add_pet_page.dart';
 import 'package:pet_pals/pages/adoption_feed_page.dart';
 import 'package:pet_pals/pages/home_page.dart';
 import 'package:pet_pals/pages/to_do_page.dart';
-
+import 'package:pet_pals/pages/new_task_page.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({super.key});
@@ -24,8 +23,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
   final List<Widget> _pages = [
     HomePage(),
     HomePage(),
-    AddPetPage(),
-    ToDoPage(),
+    NewTaskPage(),
+    const ToDoPage(),
     const AdoptionFeedPage()
   ];
 
@@ -36,23 +35,28 @@ class _BottomNavBarState extends State<BottomNavBar> {
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home, color: _selectedIndex == 0 ? Color(0xFF8F4152) : Colors.grey),
+            icon: Icon(Icons.home,
+                color: _selectedIndex == 0 ? Color(0xFF8F4152) : Colors.grey),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.pets, color: _selectedIndex == 1 ? Color(0xFF8F4152) : Colors.grey),
-            label: 'My Pets',
+            icon: Icon(Icons.event_note, // Updated icon for 'Plans'.
+                color: _selectedIndex == 1 ? Color(0xFF8F4152) : Colors.grey),
+            label: 'Plans', // Updated label from 'My Pets' to 'Plans'.
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.add, color: _selectedIndex == 2 ? Color(0xFF8F4152) : Colors.grey),
+            icon: Icon(Icons.add,
+                color: _selectedIndex == 2 ? Color(0xFF8F4152) : Colors.grey),
             label: 'Add',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_today, color: _selectedIndex == 3 ? Color(0xFF8F4152) : Colors.grey),
-            label: 'Calendar',
+            icon: Icon(Icons.list,
+                color: _selectedIndex == 3 ? Color(0xFF8F4152) : Colors.grey),
+            label: 'To-Do',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.favorite, color: _selectedIndex == 4 ? Color(0xFF8F4152) : Colors.grey),
+            icon: Icon(Icons.favorite,
+                color: _selectedIndex == 4 ? Color(0xFF8F4152) : Colors.grey),
             label: 'Adoptions',
           ),
         ],

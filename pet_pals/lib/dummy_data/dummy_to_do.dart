@@ -4,6 +4,7 @@ import 'package:pet_pals/dummy_data/dummy_pets.dart';
 
 List<ToDo> dummyToDos = [
   ToDo(
+    id: 1,
     date: DateTime.now().add(Duration(days: 1)),
     time: TimeOfDay(hour: 8, minute: 30),
     activityName: 'Morning Walk',
@@ -12,6 +13,7 @@ List<ToDo> dummyToDos = [
     completed: false
   ),
   ToDo(
+    id: 2,
     date: DateTime.now().add(Duration(days: 2)),
     time: TimeOfDay(hour: 9, minute: 0),
     activityName: 'Vet Checkup',
@@ -20,6 +22,7 @@ List<ToDo> dummyToDos = [
     completed: false
   ),
   ToDo(
+    id: 3,
     date: DateTime.now().add(Duration(days: 1)),
     time: TimeOfDay(hour: 18, minute: 30),
     activityName: 'Play Time',
@@ -28,6 +31,7 @@ List<ToDo> dummyToDos = [
     completed: false
   ),
   ToDo(
+    id:4,
     date: DateTime.now().add(Duration(days: 4)),
     time: TimeOfDay(hour: 12, minute: 0),
     activityName: 'Afternoon Walk',
@@ -36,6 +40,7 @@ List<ToDo> dummyToDos = [
     completed: false
   ),
   ToDo(
+    id:5,
     date: DateTime.now().add(Duration(days: 2)),
     time: TimeOfDay(hour: 20, minute: 0),
     activityName: 'Medication',
@@ -44,6 +49,7 @@ List<ToDo> dummyToDos = [
     completed: false
   ),
   ToDo(
+    id: 6,
     date: DateTime.now().add(Duration(days: 5)),
     time: TimeOfDay(hour: 8, minute: 15),
     activityName: 'Morning Walk',
@@ -52,6 +58,7 @@ List<ToDo> dummyToDos = [
     completed: false
   ),
   ToDo(
+    id: 7,
     date: DateTime.now().add(Duration(days: 3)),
     time: TimeOfDay(hour: 10, minute: 30),
     activityName: 'Vaccine',
@@ -60,6 +67,7 @@ List<ToDo> dummyToDos = [
     completed: false
   ),
   ToDo(
+    id:8,
     date: DateTime.now().add(Duration(days: 6)),
     time: TimeOfDay(hour: 14, minute: 45),
     activityName: 'Eat Time',
@@ -68,6 +76,7 @@ List<ToDo> dummyToDos = [
     completed: false
   ),
   ToDo(
+    id:9,
     date: DateTime.now().add(Duration(days: 7)),
     time: TimeOfDay(hour: 15, minute: 30),
     activityName: 'Play Time',
@@ -76,6 +85,7 @@ List<ToDo> dummyToDos = [
     completed: false
   ),
   ToDo(
+    id: 10,
     date: DateTime.now().add(Duration(days: 8)),
     time: TimeOfDay(hour: 9, minute: 45),
     activityName: 'Bath Time',

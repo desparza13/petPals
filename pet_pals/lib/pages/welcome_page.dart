@@ -75,7 +75,7 @@ class WelcomePage extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: () {
                       //Go to register
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(builder: (context) => RegisterPage()),
                       );
