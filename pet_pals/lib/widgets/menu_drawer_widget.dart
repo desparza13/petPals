@@ -87,6 +87,7 @@ class Menu extends StatelessWidget {
       title: Text(title, style: TextStyle(fontSize: 18, color: Colors.white)),
       onTap: () {
         //Navigation pending
+        Navigator.pushNamed(context, route); // Navega a la ruta especificada
       },
     );
   }

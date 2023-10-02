@@ -115,7 +115,7 @@ class _SignInPageState extends State<SignInPage> {
         Center(
           child: ElevatedButton(
             onPressed: () {
-              Navigator.push(
+              Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(builder: (context) => BottomNavBar()),
               );
