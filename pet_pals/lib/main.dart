@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
       ),
       home: WelcomePage(),
       routes: {
-        '/home': (context) => HomePage(), // Página de adopción
+        '/home': (context) => BottomNavBar(), // Página de adopción
         '/addPet': (context) => AddPetPage(), // Página para agregar mascota
         '/todo': (context) => ToDoPage(), // Página de To-do
         //'/qa': (context) => QAPage(), // Página de Q&A
