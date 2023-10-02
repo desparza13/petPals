@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pet_pals/pages/buy_page.dart';
 import 'package:pet_pals/pages/home_page.dart';
+import 'package:pet_pals/pages/q&a_page.dart';
 import 'package:pet_pals/pages/to_do_page.dart';
 import 'pages/welcome_page.dart';
 import 'widgets/menu_drawer_widget.dart';
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
       home: WelcomePage(),
       routes: {
         '/buyPage': (context) => const BuyPage(),
+        '/qa': (context) => QAPage(),
       },
     );
   }
