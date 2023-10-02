@@ -192,7 +192,9 @@ class AdoptionPetPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           ElevatedButton(
-                            onPressed: (){}, 
+                            onPressed: (){
+                              Navigator.pop(context);
+                            }, 
                             child: Text('Adoption'))
                         ],
                       )
