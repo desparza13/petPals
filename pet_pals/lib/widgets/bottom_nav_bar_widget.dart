@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pet_pals/pages/adoption_feed_page.dart';
 import 'package:pet_pals/pages/home_page.dart';
+import 'package:pet_pals/pages/q&a_page.dart';
 import 'package:pet_pals/pages/to_do_page.dart';
 import 'package:pet_pals/pages/new_task_page.dart';
 
@@ -25,7 +26,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
     HomePage(),
     NewTaskPage(),
     const ToDoPage(),
-    const AdoptionFeedPage()
+    const AdoptionFeedPage(),
+    QAPage(),
   ];
 
   @override

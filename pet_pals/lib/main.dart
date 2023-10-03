@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:pet_pals/pages/buy_page.dart';
 import 'package:pet_pals/pages/home_page.dart';
+import 'package:pet_pals/pages/q&a_page.dart';
 import 'package:pet_pals/pages/to_do_page.dart';
 import 'pages/welcome_page.dart';
 import 'widgets/menu_drawer_widget.dart';
@@ -26,12 +28,12 @@ class MyApp extends StatelessWidget {
       ),
       home: WelcomePage(),
       routes: {
+        '/buyPage': (context) => const BuyPage(),
         '/home': (context) => BottomNavBar(), // Página de adopción
         '/addPet': (context) => AddPetPage(), // Página para agregar mascota
         '/todo': (context) => ToDoPage(), // Página de To-do
-        //'/qa': (context) => QAPage(), // Página de Q&A
+        '/qa': (context) => QAPage(), // Página de Q&A
       },
-
     );
   }
 }

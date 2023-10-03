@@ -27,7 +27,8 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         GestureDetector(
           onTap: () {
-            // Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProfilePage()));
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => ProfilePage()));
           },
           child: const CircleAvatar(
             backgroundImage: NetworkImage(

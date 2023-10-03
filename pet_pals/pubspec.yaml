@@ -31,6 +31,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_calendar_carousel: ^2.4.2
+  google_fonts: 4.0.3
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -68,6 +69,11 @@ flutter:
     - assets/images/menu_portrait.png
     - assets/images/menu_landscape.png
     - assets/images/woman_home.png
+    - assets/images/plan_1_buy_page.png
+    - assets/images/plan_2_buy_page.png
+    - assets/images/trainin_buy_page.png
+    - assets/images/food_buy_page.png
+    - assets/images/pets_buy_page.jpg
     - assets/images/icons/bath_icon.png
     - assets/images/icons/eat_icon.png
     - assets/images/icons/medicine_icon.png
