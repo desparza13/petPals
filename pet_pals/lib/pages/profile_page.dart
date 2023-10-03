@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pet_pals/pages/edit_profile_page.dart';
+import 'package:pet_pals/widgets/menu_drawer_widget.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -9,7 +10,6 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  late ProfilePage _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -19,21 +19,12 @@ class _ProfilePageState extends State<ProfilePage> {
       key: scaffoldKey,
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        automaticallyImplyLeading: false,
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Colors.black,
-          ),
-          onPressed: () {
-            Navigator.of(context)
-                .pop(); // Esto hace que la pantalla vuelva atrás
-          },
-        ),
+        backgroundColor:  Color(0xFF8F4152),        
         centerTitle: false,
         elevation: 2,
       ),
+      drawer: Menu(),
+
       body: SafeArea(
         top: true,
         child: SingleChildScrollView(
@@ -81,37 +72,43 @@ class _ProfilePageState extends State<ProfilePage> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                36, 15, 35, 15),
-                            child: ListTile(
-                              title: const Text(
-                                'Mis mascotas',
-                                style: TextStyle(
-                                  fontFamily:
-                                      'Ubuntu', // Si 'Ubuntu' es tu tipo de letra personalizado
-                                  color: Color(0xFF0A0909),
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 20,
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  36, 15, 35, 15),
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) =>
+                                          const EditProfile()));
+                                },
+                                child: ListTile(
+                                  title: const Text(
+                                    'Mi Perfil',
+                                    style: TextStyle(
+                                      fontFamily:
+                                          'Ubuntu', // Si 'Ubuntu' es tu tipo de letra personalizado
+                                      color: Color(0xFF0A0909),
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                  subtitle: const Text(
+                                    'Actualizar datos de mi perfil',
+                                    style: TextStyle(
+                                      fontFamily: 'Ubuntu',
+                                    ),
+                                  ),
+                                  trailing: const Icon(
+                                    Icons.keyboard_arrow_right_sharp,
+                                    color: Color(0xFFFFD8B1),
+                                    size: 20,
+                                  ),
+                                  tileColor: const Color(0xFFFFD8B1),
+                                  dense: false,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
                                 ),
-                              ),
-                              subtitle: const Text(
-                                'Ver y editar el perfil de mis mascotas',
-                                style: TextStyle(
-                                  fontFamily: 'Ubuntu',
-                                ),
-                              ),
-                              trailing: const Icon(
-                                Icons.keyboard_arrow_right_sharp,
-                                color: Color(0xFFFFD8B1),
-                                size: 20,
-                              ),
-                              tileColor: const Color(0xFFFFD8B1),
-                              dense: false,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
-                          ),
+                              )),
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 36, 0, 35, 15),
@@ -240,44 +237,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                             ),
                           ),
-                          Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  36, 0, 35, 15),
-                              child: InkWell(
-                                onTap: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) =>
-                                          const EditProfile()));
-                                },
-                                child: ListTile(
-                                  title: const Text(
-                                    'Mi Perfil',
-                                    style: TextStyle(
-                                      fontFamily:
-                                          'Ubuntu', // Si 'Ubuntu' es tu tipo de letra personalizado
-                                      color: Color(0xFF0A0909),
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 20,
-                                    ),
-                                  ),
-                                  subtitle: const Text(
-                                    'Actualizar datos de mi perfil',
-                                    style: TextStyle(
-                                      fontFamily: 'Ubuntu',
-                                    ),
-                                  ),
-                                  trailing: const Icon(
-                                    Icons.keyboard_arrow_right_sharp,
-                                    color: Color(0xFFFFD8B1),
-                                    size: 20,
-                                  ),
-                                  tileColor: const Color(0xFFFFD8B1),
-                                  dense: false,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                ),
-                              )),
+                          
                         ],
                       ),
                     ))

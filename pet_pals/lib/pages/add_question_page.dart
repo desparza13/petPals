@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pet_pals/widgets/menu_drawer_widget.dart';
 
 class AddQuestionPage extends StatefulWidget {
   AddQuestionPage({Key? key}) : super(key: key);
@@ -9,7 +8,6 @@ class AddQuestionPage extends StatefulWidget {
 }
 
 class _AddQuestionPageState extends State<AddQuestionPage> {
-  late AddQuestionPage _model;
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -56,7 +54,7 @@ class _AddQuestionPageState extends State<AddQuestionPage> {
                   child: Align(
                     alignment: Alignment.topCenter,
                     child: FractionallySizedBox(
-                      widthFactor: 0.4,
+                      widthFactor: 1,
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         children: [

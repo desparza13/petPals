@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pet_pals/main.dart';
+import 'package:pet_pals/pages/profile_page.dart';
 
 class Menu extends StatelessWidget {
   final String username = "Jennifer";
@@ -33,19 +33,25 @@ class Menu extends StatelessWidget {
                     padding: const EdgeInsets.all(16.0),
                     child:
                         //User avatar and name
-                        Row(
-                      children: [
-                        CircleAvatar(
-                          //Make it circular
-                          backgroundImage: NetworkImage(
-                              'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png'),
-                          radius: 20.0,
-                        ),
-                        SizedBox(width: 15),
-                        Text(username,
-                            style:
-                                TextStyle(fontSize: 20, color: Colors.white)),
-                      ],
+                      GestureDetector(
+                      onTap: (){
+                        Navigator.push(context,MaterialPageRoute(builder: (context) =>
+                                                             ProfilePage()));
+                      },
+                      child: Row(
+                        children: [
+                          CircleAvatar(
+                            //Make it circular
+                            backgroundImage: NetworkImage(
+                                'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png'),
+                            radius: 20.0,
+                          ),
+                          SizedBox(width: 15),
+                          Text(username,
+                              style:
+                                  TextStyle(fontSize: 20, color: Colors.white)),
+                        ],
+                      ),
                     ),
                   ),
                   Expanded(
@@ -53,8 +59,10 @@ class Menu extends StatelessWidget {
                       padding: EdgeInsets.zero,
                       children: <Widget>[
                         _buildMenuItem(Icons.pets, 'Home', context, '/home'),
-                        _buildMenuItem(Icons.add_circle_outline, 'Add pet', context, '/addPet'),
-                        _buildMenuItem(Icons.question_answer, 'Q&A', context, '/qa'),
+                        _buildMenuItem(Icons.add_circle_outline, 'Add pet',
+                            context, '/addPet'),
+                        _buildMenuItem(
+                            Icons.question_answer, 'Q&A', context, '/qa'),
                         _buildMenuItem(Icons.workspace_premium_rounded, 'Store',
                             context, '/buyPage'),
                         Divider(color: Colors.white),

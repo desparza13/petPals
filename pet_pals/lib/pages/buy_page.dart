@@ -167,56 +167,44 @@ class _BuyPageState extends State<BuyPage> {
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Column(
-                              mainAxisSize: MainAxisSize.max,
                               children: [
-                                Align(
-                                  alignment:
-                                      const AlignmentDirectional(-1.00, 0.00),
-                                  child: Container(
-                                    width: double.infinity,
-                                    height: 220,
-                                    decoration: const BoxDecoration(
-                                      gradient: LinearGradient(
-                                        colors: [
-                                          Color(0xFFF3A4B3),
-                                          Color(0xFFF8DDE3)
-                                        ],
-                                        stops: [0, 1],
-                                        begin: AlignmentDirectional(1, -1),
-                                        end: AlignmentDirectional(-1, 1),
-                                      ),
+                                Container(
+                                  width: double.infinity,
+                                  decoration: const BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Color(0xFFF3A4B3),
+                                        Color(0xFFF8DDE3)
+                                      ],
+                                      stops: [0, 1],
+                                      begin: AlignmentDirectional(1, -1),
+                                      end: AlignmentDirectional(-1, 1),
                                     ),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(15, 15, 15, 15),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              const Align(
-                                                alignment: AlignmentDirectional(
-                                                    -1.00, 0.00),
-                                                child: Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(0, 0, 0, 10),
-                                                  child: Text(
-                                                    'Discover Our Products',
-                                                    style: TextStyle(
-                                                      fontFamily: 'Ubuntu',
-                                                      fontSize:
-                                                          16, // Tamaño del texto
-                                                      color: Color(
-                                                          0xFF5D5D5D), // Color del texto
-                                                    ),
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(15),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                             const Row(
+                                               children: [
+                                                 Text(
+                                                  'Discover Our Products',
+                                                  style: TextStyle(
+                                                    fontFamily: 'Ubuntu',
+                                                    fontSize:
+                                                        16, // Tamaño del texto
+                                                    color: Color(
+                                                        0xFF5D5D5D), // Color del texto
                                                   ),
-                                                ),
-                                              ),
-                                              const Align(
-                                                alignment: AlignmentDirectional(
-                                                    -1.00, 0.00),
-                                                child: Text(
+                                            ),
+                                               ],
+                                             ),
+                                            const Row(
+                                              children: [
+                                                Text(
                                                   'Travel Training',
                                                   style: TextStyle(
                                                       fontFamily: 'Ubuntu',
@@ -227,79 +215,67 @@ class _BuyPageState extends State<BuyPage> {
                                                           .w600 // Color del texto
                                                       ),
                                                 ),
-                                              ),
-                                              const Align(
-                                                alignment: AlignmentDirectional(
-                                                    -1.00, 0.00),
-                                                child: Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(0, 10, 0, 10),
-                                                  child: Text(
-                                                    'Learn together with your best\nfriend appropriate behavior\nduring the trip and before the trip to\ntake care of your four-legged friend',
-                                                    textAlign: TextAlign.left,
-                                                    style: TextStyle(
-                                                      fontFamily: 'Ubuntu',
-                                                      fontSize:
-                                                          15, // Tamaño del texto
-                                                      color: Color(
-                                                          0xFF232121), // Color del texto
-                                                    ),
-                                                  ),
+                                              ],
+                                            ),
+                                            const Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(0, 10, 0, 10),
+                                              child: Text(
+                                                'Learn together with your best\nfriend appropriate behavior\nduring the trip and before the trip to\ntake care of your four-legged friend',
+                                                textAlign: TextAlign.left,
+                                                style: TextStyle(
+                                                  fontFamily: 'Ubuntu',
+                                                  fontSize:
+                                                      15, // Tamaño del texto
+                                                  color: Color(
+                                                      0xFF232121), // Color del texto
                                                 ),
                                               ),
-                                              Align(
-                                                alignment:
-                                                    const AlignmentDirectional(
-                                                        0.00, 0.00),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Container(
-                                                      decoration: BoxDecoration(
-                                                        color: Colors.white,
-                                                        borderRadius:
-                                                            BorderRadius.circular(
-                                                                8), // Esquinas redondeadas
-                                                      ),
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(8.0),
-                                                        child: TextButton(
-                                                          onPressed: () {
-                                                            // Acción del botón
-                                                          },
-                                                          child: const Text(
-                                                            'Start Learning',
-                                                            style: TextStyle(
-                                                              fontSize: 14,
-                                                              fontFamily:
-                                                                  'Ubuntu',
-                                                              color: Colors
-                                                                  .black, // Texto negro
-                                                            ),
-                                                          ),
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Container(
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8), // Esquinas redondeadas
+                                                  ),
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets
+                                                            .all(8.0),
+                                                    child: TextButton(
+                                                      onPressed: () {
+                                                        // Acción del botón
+                                                      },
+                                                      child: const Text(
+                                                        'Start Learning',
+                                                        style: TextStyle(
+                                                          fontSize: 14,
+                                                          fontFamily:
+                                                              'Ubuntu',
+                                                          color: Colors
+                                                              .black, // Texto negro
                                                         ),
                                                       ),
                                                     ),
-                                                    const SizedBox(
-                                                        width:
-                                                            100), // Espacio entre el botón y el icono de candado
-                                                    const Icon(
-                                                      Icons.lock,
-                                                      color: Colors.white,
-                                                      size: 24,
-                                                    ),
-                                                  ],
+                                                  ),
+                                                ),// Espacio entre el botón y el icono de candado
+                                                const Icon(
+                                                  Icons.lock,
+                                                  color: Colors.white,
+                                                  size: 24,
                                                 ),
-                                              ),
-                                            ],
-                                          ),
+                                              ],
+                                            ),
+                                          ],
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ],

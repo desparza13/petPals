@@ -23,7 +23,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
   final List<Widget> _pages = [
     HomePage(),
-    HomePage(),
     NewTaskPage(),
     const ToDoPage(),
     const AdoptionFeedPage(),
@@ -40,11 +39,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
             icon: Icon(Icons.home,
                 color: _selectedIndex == 0 ? Color(0xFF8F4152) : Colors.grey),
             label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.event_note, // Updated icon for 'Plans'.
-                color: _selectedIndex == 1 ? Color(0xFF8F4152) : Colors.grey),
-            label: 'Plans', // Updated label from 'My Pets' to 'Plans'.
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.add,

@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:pet_pals/models/pet.dart';
 
-class EditMyPetPage extends StatelessWidget {
-  EditMyPetPage({super.key, required this.pet});
+class EditMyPetPage extends StatefulWidget {
+  const EditMyPetPage({super.key, required this.pet});
   final Pet pet;
+
+  @override
+  State<EditMyPetPage> createState() => _EditMyPetPageState();
+}
+
+class _EditMyPetPageState extends State<EditMyPetPage> {
   List<String> _sex = ['Female', 'Male','No selected'];
+
   String _sexSelected = 'No selected';
 
   InputDecoration getInputDecoration({required String hint}) {
@@ -39,7 +46,7 @@ class EditMyPetPage extends StatelessWidget {
             child: Container(
               height: MediaQuery.of(context).size.height / 3,
               width: MediaQuery.of(context).size.width,
-              child: Image.network(pet.image, fit: BoxFit.fill),
+              child: Image.network(widget.pet.image, fit: BoxFit.fill),
             ),
           ),
           Positioned(
@@ -86,7 +93,7 @@ class EditMyPetPage extends StatelessWidget {
                         ],
                       ),
                       TextFormField(
-                        decoration: getInputDecoration(hint: pet.name),
+                        decoration: getInputDecoration(hint: widget.pet.name),
                       ),
                       SizedBox(
                         height: 10,
@@ -98,7 +105,7 @@ class EditMyPetPage extends StatelessWidget {
                         ],
                       ),
                       TextFormField(
-                        decoration: getInputDecoration(hint: pet.type),
+                        decoration: getInputDecoration(hint: widget.pet.type),
                       ),
                       SizedBox(
                         height: 10,
@@ -110,7 +117,7 @@ class EditMyPetPage extends StatelessWidget {
                         ],
                       ),
                       TextFormField(
-                        decoration: getInputDecoration(hint: pet.breed),
+                        decoration: getInputDecoration(hint: widget.pet.breed),
                       ),
                       SizedBox(
                         height: 10,
@@ -142,7 +149,7 @@ class EditMyPetPage extends StatelessWidget {
                         ],
                       ),
                       TextFormField(
-                        decoration: getInputDecoration(hint: pet.age.toString()),
+                        decoration: getInputDecoration(hint: widget.pet.age.toString()),
                       ),
                       SizedBox(
                         height: 10,
@@ -154,7 +161,7 @@ class EditMyPetPage extends StatelessWidget {
                         ],
                       ),
                       TextFormField(
-                        decoration: getInputDecoration(hint: pet.color),
+                        decoration: getInputDecoration(hint: widget.pet.color),
                       ),
                       SizedBox(
                         height: 10,
@@ -166,7 +173,7 @@ class EditMyPetPage extends StatelessWidget {
                         ],
                       ),
                       TextFormField(
-                        decoration: getInputDecoration(hint: pet.sterilized==true?'Yes':'No'),
+                        decoration: getInputDecoration(hint: widget.pet.sterilized==true?'Yes':'No'),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,

@@ -9,7 +9,6 @@ class EditProfile extends StatefulWidget {
 
 class _EditProfileState extends State<EditProfile> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  late EditProfile _model;
 
   TextStyle customTextStyle = const TextStyle(
     fontFamily: 'Outfit',

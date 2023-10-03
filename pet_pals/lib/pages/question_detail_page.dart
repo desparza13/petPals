@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pet_pals/widgets/menu_drawer_widget.dart';
 
 class QuestionDetail extends StatefulWidget {
   QuestionDetail({Key? key}) : super(key: key);
@@ -15,6 +14,9 @@ class _QuestionDetailState extends State<QuestionDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
+      appBar: AppBar(
+        backgroundColor: Color(0xFF8F4152)
+      ),
       backgroundColor: const Color(0xFFF1F4F8),
       body: SingleChildScrollView(
         child: Padding(
