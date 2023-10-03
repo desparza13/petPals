@@ -5,10 +5,20 @@ import 'package:pet_pals/pages/q&a_page.dart';
 import 'package:pet_pals/pages/to_do_page.dart';
 import 'pages/welcome_page.dart';
 import 'widgets/menu_drawer_widget.dart';
+//Rutas
+import 'package:pet_pals/pages/adoption_feed_page.dart';
+import 'package:pet_pals/pages/add_pet_page.dart';
+import 'package:pet_pals/pages/to_do_page.dart';
+import 'package:pet_pals/pages/q&a_page.dart';
 
-void main() => runApp(MyApp());
+import 'package:pet_pals/widgets/bottom_nav_bar_widget.dart';
+
+
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -19,7 +29,10 @@ class MyApp extends StatelessWidget {
       home: WelcomePage(),
       routes: {
         '/buyPage': (context) => const BuyPage(),
-        '/qa': (context) => QAPage(),
+        '/home': (context) => BottomNavBar(), // Página de adopción
+        '/addPet': (context) => AddPetPage(), // Página para agregar mascota
+        '/todo': (context) => ToDoPage(), // Página de To-do
+        '/qa': (context) => QAPage(), // Página de Q&A
       },
     );
   }

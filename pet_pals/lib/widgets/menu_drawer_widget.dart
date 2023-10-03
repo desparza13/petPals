@@ -52,14 +52,9 @@ class Menu extends StatelessWidget {
                     child: ListView(
                       padding: EdgeInsets.zero,
                       children: <Widget>[
-                        _buildMenuItem(
-                            Icons.pets, 'Adoption', context, '/adoption'),
-                        _buildMenuItem(Icons.add_circle_outline, 'Add pet',
-                            context, '/addPet'),
-                        _buildMenuItem(
-                            Icons.checklist, 'To-do', context, '/todo'),
-                        _buildMenuItem(
-                            Icons.question_answer, 'Q&A', context, '/qa'),
+                        _buildMenuItem(Icons.pets, 'Home', context, '/home'),
+                        _buildMenuItem(Icons.add_circle_outline, 'Add pet', context, '/addPet'),
+                        _buildMenuItem(Icons.question_answer, 'Q&A', context, '/qa'),
                         _buildMenuItem(Icons.workspace_premium_rounded, 'Store',
                             context, '/buyPage'),
                         Divider(color: Colors.white),
@@ -102,7 +97,7 @@ class Menu extends StatelessWidget {
       leading: Icon(icon, color: Colors.white),
       title: Text(title, style: TextStyle(fontSize: 18, color: Colors.white)),
       onTap: () {
-        Navigator.pushNamed(context, route);
+        Navigator.pushNamed(context, route); // Navega a la ruta especificada
       },
     );
   }

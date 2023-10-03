@@ -42,9 +42,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.pets,
+            icon: Icon(Icons.event_note, // Updated icon for 'Plans'.
                 color: _selectedIndex == 1 ? Color(0xFF8F4152) : Colors.grey),
-            label: 'My Pets',
+            label: 'Plans', // Updated label from 'My Pets' to 'Plans'.
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.add,
@@ -52,9 +52,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
             label: 'Add',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_today,
+            icon: Icon(Icons.list,
                 color: _selectedIndex == 3 ? Color(0xFF8F4152) : Colors.grey),
-            label: 'Calendar',
+            label: 'To-Do',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.favorite,

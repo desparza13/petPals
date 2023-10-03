@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'sign_in_page.dart';
+import 'package:pet_pals/widgets/bottom_nav_bar_widget.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -124,7 +125,12 @@ class _RegisterPageState extends State<RegisterPage> {
         SizedBox(height: 10),
         Center(
           child: ElevatedButton.icon(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => BottomNavBar()),
+              );
+            },
             icon: Image.asset(
               'assets/images/google_logo.png',
               height: 20.0,

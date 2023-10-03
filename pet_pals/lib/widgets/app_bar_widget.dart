@@ -24,7 +24,6 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
           }
         },
       ),
-      title: Text('Home', style: TextStyle(color: Colors.white)),
       actions: [
         GestureDetector(
           onTap: () {

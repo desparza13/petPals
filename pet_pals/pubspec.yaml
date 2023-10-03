@@ -80,6 +80,11 @@ flutter:
     - assets/images/icons/play_icon.png
     - assets/images/icons/vaccine_icon.png
     - assets/images/icons/vet_icon.png
+    - assets/images/icons/walk_icon.png
+    - assets/images/icons/dog_icon.png
+    - assets/images/icons/cat_icon.png
+    - assets/images/icons/bird_icon.png
+    - assets/images/icons/bunnie_icon.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
