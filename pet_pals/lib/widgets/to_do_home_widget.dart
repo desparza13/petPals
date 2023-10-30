@@ -22,6 +22,8 @@ class _ToDoHomeWidgetState extends State<ToDoHomeWidget> {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context).colorScheme;
+
     //Ordenar los elementos de más cercano a más lejano
     List<ToDo> sortedToDos = List.from(dummyToDos)..sort((a, b) => a.date.compareTo(b.date));
 
@@ -31,7 +33,7 @@ class _ToDoHomeWidgetState extends State<ToDoHomeWidget> {
     return Container(
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
-        color: const Color(0xFFF3DAE3),
+        color: theme.surface,
         borderRadius: BorderRadius.circular(40),
       ),
       child: Column(
@@ -43,7 +45,6 @@ class _ToDoHomeWidgetState extends State<ToDoHomeWidget> {
               const Text(
                 'To do',
                 style: TextStyle(
-                  color: Color(0xFF8F4152),
                   fontWeight: FontWeight.bold,
                   fontSize: 22,
                 ),
@@ -86,8 +87,8 @@ class _ToDoHomeWidgetState extends State<ToDoHomeWidget> {
                 widgets.add(
                   Text(
                     _formatDate(toDo.date),
-                    style: const TextStyle(
-                      color: Color(0xFFED9BB7),
+                    style: TextStyle(
+                      color: theme.tertiary,
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
                     ),
@@ -112,10 +113,10 @@ class _ToDoHomeWidgetState extends State<ToDoHomeWidget> {
                       shape: const CircleBorder(),
                     ),
                     //Hora formateada - Titulo de la actividad
-                    Text('${toDo.time.format(context)} - ${toDo.activityName}', style: TextStyle(color: Colors.black)),
+                    Text('${toDo.time.format(context)} - ${toDo.activityName}'),
                     const SizedBox(width: 5),
                     //Nombre de la mascotita
-                    Text(toDo.relatedPet.name, style: const TextStyle(color: Color(0xFFED9BB7), fontWeight: FontWeight.bold))
+                    Text(toDo.relatedPet.name, style: TextStyle(color: theme.tertiary, fontWeight: FontWeight.bold))
                   ],
                 ),
               );

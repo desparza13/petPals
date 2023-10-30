@@ -14,14 +14,16 @@ class AdoptionFeedPage extends StatefulWidget {
 
 class _AdoptionFeedPageState extends State<AdoptionFeedPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final _colors = [
-    Color(0xFFFFDE59),
-    Color(0xFFDFD2C8),
-    Color(0xFFC0F6FF),
-    Color(0xFFBBFFAD)
-  ];
+  
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context).colorScheme;
+    final colors = [
+      theme.primaryContainer,
+      Color(0xFFDFD2C8),
+      theme.secondaryContainer,
+      theme.tertiaryContainer
+    ];
     return Scaffold(
       key: _scaffoldKey,
       drawer: Menu(),
@@ -49,8 +51,8 @@ class _AdoptionFeedPageState extends State<AdoptionFeedPage> {
                       ),
                       Text(
                         'Guadalajara, Jalisco',
-                        style:
-                            TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 16),
                       )
                     ],
                   )
@@ -58,7 +60,7 @@ class _AdoptionFeedPageState extends State<AdoptionFeedPage> {
               ),
             ),
             Card(
-              color: Color.fromARGB(255, 236, 221, 248),
+              color: Theme.of(context).colorScheme.surface,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15.0),
               ),
@@ -68,7 +70,8 @@ class _AdoptionFeedPageState extends State<AdoptionFeedPage> {
                   const ListTile(
                     title: Text(
                       "Let's start the adoption!",
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                     ),
                     subtitle: Text('Find your lovely pet'),
                   ),
@@ -86,24 +89,21 @@ class _AdoptionFeedPageState extends State<AdoptionFeedPage> {
                     child: PetsBarWidget(),
                   ),
                   SizedBox(
-                    height: 10,
-                  ),  
-                  SizedBox(
-                      height: 300,
-                      child: ListView.separated(
-                        scrollDirection: Axis.vertical,
-                        itemCount: dummyAdoptionPets.length,
-                        separatorBuilder: (context, index) =>
-                            const SizedBox(height: 10),
-                        itemBuilder: (context, index) {
-                          return PetAdoptionItem(
-                            pet: dummyAdoptionPets[index],
-                            color: _colors[index % _colors.length]
-                          );
-                        },
-                      ),
-                    ),
-                  
+                    height: 20,
+                  ),
+                  ListView.separated(
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: dummyAdoptionPets.length,
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(height: 10),
+                    itemBuilder: (context, index) {
+                      return PetAdoptionItem(
+                          pet: dummyAdoptionPets[index],
+                          color: colors[index % colors.length]);
+                    },
+                  ),
                 ]),
               ),
             ),

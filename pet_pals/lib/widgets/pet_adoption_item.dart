@@ -9,6 +9,7 @@ class PetAdoptionItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context).colorScheme;
     return Stack(
       children: [
         Card(
@@ -96,8 +97,9 @@ class PetAdoptionItem extends StatelessWidget {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
-                              backgroundColor:
-                                  Color.fromARGB(255, 141, 100, 212)),
+                              backgroundColor:theme.secondary,
+                              foregroundColor: theme.onSecondary),
+                              
                           child: Text(
                             'Info',
                             style: TextStyle(fontSize: 11),

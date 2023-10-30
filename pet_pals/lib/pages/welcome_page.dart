@@ -16,7 +16,7 @@ class WelcomePage extends StatelessWidget {
     }
 
     return Scaffold(
-      backgroundColor: const Color(0xFFEBDFE3),
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Center(
@@ -80,19 +80,18 @@ class WelcomePage extends StatelessWidget {
                         MaterialPageRoute(builder: (context) => RegisterPage()),
                       );
                     },
-                    style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all(const Color(0xFF5E17EB)),
-                      padding: MaterialStateProperty.all(
-                          const EdgeInsets.symmetric(
-                              horizontal: 50, vertical: 10)),
-                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Theme.of(context).colorScheme.secondary,
+                      foregroundColor: Theme.of(context).colorScheme.onSecondary,
+                      shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30.0),
-                      )),
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                              horizontal: 50, vertical: 10)
                     ),
                     child: const Text(
                       "Let's Go",
-                      style: TextStyle(fontSize: 20, color: Colors.white),
+                      style: TextStyle(fontSize: 20),
                     ),
                   ),
                 ),
@@ -118,7 +117,7 @@ class WelcomePage extends StatelessWidget {
                         'Sign in',
                         style: TextStyle(
                             fontSize: getFontSize(20, 16),
-                            color: Color(0xFF5E17EB)),
+                            color: Theme.of(context).colorScheme.secondary),
                       ),
                     )
                   ],

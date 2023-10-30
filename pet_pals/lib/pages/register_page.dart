@@ -46,7 +46,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     var isLandscape =
         MediaQuery.of(context).orientation == Orientation.landscape;
-
+    var theme = Theme.of(context).colorScheme;
     // Logo widget
     Widget logo = Padding(
       padding: EdgeInsets.only(top: isLandscape ? 0 : 50),
@@ -69,10 +69,9 @@ class _RegisterPageState extends State<RegisterPage> {
             Text(
               "Welcome",
               style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF5E17EB),
-              ),
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: theme.secondary),
             ),
             Image.asset(
               'assets/images/paw_icon.png',
@@ -109,16 +108,13 @@ class _RegisterPageState extends State<RegisterPage> {
         Center(
           child: ElevatedButton(
             onPressed: () {},
-            style: ButtonStyle(
-              minimumSize: MaterialStateProperty.all(const Size(220, 50)),
-              backgroundColor:
-                  MaterialStateProperty.all(const Color(0xFF5E17EB)),
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(25),
-                ),
-              ),
-            ),
+            style: ElevatedButton.styleFrom(
+                backgroundColor: theme.secondary,
+                foregroundColor: theme.onSecondary,
+                // shape: RoundedRectangleBorder(
+                //   borderRadius: BorderRadius.circular(30.0),
+                // ),
+                minimumSize: const Size(220, 50)),
             child: const Text('Sign up', style: TextStyle(fontSize: 20)),
           ),
         ),
@@ -163,7 +159,7 @@ class _RegisterPageState extends State<RegisterPage> {
               },
               child: Text(
                 'Log in',
-                style: TextStyle(color: Color(0xFF5E17EB)),
+                style: TextStyle(color: theme.secondary),
               ),
             ),
           ],
@@ -172,7 +168,7 @@ class _RegisterPageState extends State<RegisterPage> {
     );
 
     return Scaffold(
-      backgroundColor: Color(0xFFEBDFE3),
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: SingleChildScrollView(

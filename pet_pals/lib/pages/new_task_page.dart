@@ -30,15 +30,15 @@ class _NewTaskPageState extends State<NewTaskPage> {
   TextEditingController taskTitleController = TextEditingController();
 
   Future<void> _selectTime(BuildContext context) async {
+    var theme = Theme.of(context);
     final TimeOfDay? picked = await showTimePicker(
       context: context,
       initialTime: selectedTime,
       builder: (BuildContext context, Widget? child) {
         return Theme(
           data: ThemeData.light().copyWith(
-            primaryColor: Color(0xFF8F4152),
-            colorScheme: ColorScheme.light(primary: Color(0xFF8F4152)),
-            buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
+            primaryColor: theme.colorScheme.primary,
+            colorScheme: ColorScheme.light(primary: theme.colorScheme.primary),
           ),
           child: child!,
         );
@@ -53,6 +53,8 @@ class _NewTaskPageState extends State<NewTaskPage> {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+
     return Scaffold(
       key: _scaffoldKey,
       drawer: Menu(),
@@ -67,14 +69,14 @@ class _NewTaskPageState extends State<NewTaskPage> {
               style: TextStyle(
                 fontSize: 32,
                 fontWeight: FontWeight.bold,
-                color: Color(0xFF8F4152),
+                color: theme.colorScheme.primary,
               ),
             ),
             SizedBox(height: 20),
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
-                  color: Color(0xFFF3DAE3),
+                  color: Theme.of(context).colorScheme.surface,
                   borderRadius: BorderRadius.circular(15),
                 ),
                 padding: EdgeInsets.all(20),
@@ -98,7 +100,7 @@ class _NewTaskPageState extends State<NewTaskPage> {
                         child: CalendarCarousel(
                           dayPadding: 4,
                           headerTextStyle: TextStyle(
-                            color: Color(0xFF8F4152),
+                            color: theme.colorScheme.primary,
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                           ),
@@ -107,21 +109,20 @@ class _NewTaskPageState extends State<NewTaskPage> {
                             this.setState(() => selectedDate = date);
                           },
                           weekendTextStyle: TextStyle(
-                            color: Color(0xFF8F4152),
+                            color: theme.colorScheme.primary,
                           ),
-                          thisMonthDayBorderColor: Color(0xFF8F4152),
-                          selectedDayButtonColor: Color(0xFF8F4152),
+                          thisMonthDayBorderColor: theme.colorScheme.primary,
+                          selectedDayButtonColor: theme.colorScheme.primary,
                           selectedDayTextStyle: TextStyle(color: Colors.white),
                           weekFormat: false,
                           height: 350.0,
                           selectedDateTime: selectedDate,
                           daysHaveCircularBorder: true,
-                          iconColor: Color(0xFF8F4152),
-                          todayBorderColor: Color(0xFFED9BB7),
-                          weekdayTextStyle: TextStyle(color: Color(0xFF8F4152)),
+                          iconColor: theme.colorScheme.primary,
+                          todayBorderColor: theme.colorScheme.tertiary,
+                          weekdayTextStyle: TextStyle(color: theme.colorScheme.primary),
                           todayButtonColor: Colors.white,
-                          todayTextStyle: TextStyle(color: Color(0xFFED9BB7)),
-                          daysTextStyle: TextStyle(color: Colors.black),
+                          todayTextStyle: TextStyle(color: theme.colorScheme.tertiary),
                         ),
                       ),
                       SizedBox(height: 20),
@@ -133,7 +134,7 @@ class _NewTaskPageState extends State<NewTaskPage> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+                                const Text(
                                   'Time',
                                   style: TextStyle(
                                     fontSize: 18,
@@ -145,12 +146,12 @@ class _NewTaskPageState extends State<NewTaskPage> {
                                   onPressed: () {
                                     _selectTime(context);
                                   },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: theme.colorScheme.primary,
+                                  ),
                                   child: Text(
                                     "${selectedTime.format(context)}",
-                                    style: TextStyle(color: Colors.white, fontSize: 18),
-                                  ),
-                                  style: ElevatedButton.styleFrom(
-                                    primary: Color(0xFF8F4152),
+                                    style: theme.primaryTextTheme.labelLarge,
                                   ),
                                 ),
                               ],
@@ -256,7 +257,8 @@ class _NewTaskPageState extends State<NewTaskPage> {
                           },
                           child: Text('Save'),
                           style: ElevatedButton.styleFrom(
-                            primary: Colors.pink[300],
+                            backgroundColor: theme.colorScheme.primary,
+                            foregroundColor: theme.colorScheme.onPrimary
                           ),
                         ),
                       ),

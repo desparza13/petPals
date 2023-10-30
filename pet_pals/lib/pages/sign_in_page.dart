@@ -14,6 +14,7 @@ class _SignInPageState extends State<SignInPage> {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context).colorScheme;
     var isLandscape =
         MediaQuery.of(context).orientation == Orientation.landscape;
 
@@ -42,7 +43,7 @@ class _SignInPageState extends State<SignInPage> {
         focusedBorder: OutlineInputBorder(
           // When focused
           borderRadius: BorderRadius.circular(25),
-          borderSide: const BorderSide(color: Color(0xFF5E17EB)),
+          borderSide:  BorderSide(color: theme.secondary),
         ),
         //Show or hide password
         suffixIcon: hint == 'Password'
@@ -70,12 +71,12 @@ class _SignInPageState extends State<SignInPage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
+             Text(
               "Let's start the fun",
               style: TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.bold,
-                color: Color(0xFF5E17EB),
+                color: theme.secondary,
               ),
             ),
             const SizedBox(width: 10),
@@ -120,16 +121,13 @@ class _SignInPageState extends State<SignInPage> {
                 MaterialPageRoute(builder: (context) => BottomNavBar()),
               );
             },
-            style: ButtonStyle(
-              minimumSize: MaterialStateProperty.all(const Size(220, 50)),
-              backgroundColor:
-                  MaterialStateProperty.all(const Color(0xFF5E17EB)),
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(25),
-                ),
-              ),
-            ),
+            style: ElevatedButton.styleFrom(
+                backgroundColor: theme.secondary,
+                foregroundColor: theme.onSecondary,
+                // shape: RoundedRectangleBorder(
+                //   borderRadius: BorderRadius.circular(30.0),
+                // ),
+                minimumSize: const Size(220, 50)),
             child: const Text('Sign in', style: TextStyle(fontSize: 20)),
           ),
         ),
@@ -168,9 +166,9 @@ class _SignInPageState extends State<SignInPage> {
                   MaterialPageRoute(builder: (context) => RegisterPage()),
                 );
               },
-              child: const Text(
+              child: Text(
                 'Sign up',
-                style: TextStyle(color: Color(0xFF5E17EB)),
+                style: TextStyle(color: theme.secondary),
               ),
             ),
           ],
@@ -179,7 +177,7 @@ class _SignInPageState extends State<SignInPage> {
     );
 
     return Scaffold(
-      backgroundColor: const Color(0xFFEBDFE3),
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: SingleChildScrollView(

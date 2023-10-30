@@ -37,7 +37,7 @@ class _EditMyPetPageState extends State<EditMyPetPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Edit my pet'),
-        backgroundColor: const Color(0xFF8F4152),
+        backgroundColor: Theme.of(context).colorScheme.primary,
       ),
       body: Stack(
         children: [

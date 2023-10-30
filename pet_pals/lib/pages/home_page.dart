@@ -8,17 +8,17 @@ import '../widgets/app_bar_widget.dart'; // Importación del nuevo widget AppBar
 class HomePage extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  final colors = [
-    Color(0xFFFFDE59),
-    Color(0xFFDFD2C8),
-    Color(0xFFC0F6FF),
-    Color(0xFFBBFFAD)
-  ];
-
   HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context).colorScheme;
+    final colors = [
+      theme.primaryContainer,
+      Color(0xFFDFD2C8),
+      theme.secondaryContainer,
+      theme.tertiaryContainer
+    ];
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBarWidget(scaffoldKey: _scaffoldKey), // Uso del nuevo widget AppBar
@@ -48,14 +48,14 @@ class HomePage extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  const Column(
+                  Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         'Hi Jenny!',
                         style: TextStyle(
-                            color: Color(0xFF8F4152),
+                            color: theme.primary,
                             fontSize: 32,
                             fontWeight: FontWeight.bold),
                       ),
@@ -80,7 +80,6 @@ class HomePage extends StatelessWidget {
               height: 20,
             ),
             Container(
-              color: Color(0xFFF4F4F4),
               width: double.infinity,
               padding: EdgeInsets.all(10),
               child: Column(
@@ -89,7 +88,6 @@ class HomePage extends StatelessWidget {
                   const Text(
                     'Your pets',
                     style: TextStyle(
-                        color: Colors.black,
                         fontSize: 22,
                         fontWeight: FontWeight.bold),
                   ),
