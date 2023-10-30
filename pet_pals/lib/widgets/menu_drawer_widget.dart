@@ -1,13 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pet_pals/pages/profile_page.dart';
+import 'package:pet_pals/providers/dark_mode_provider.dart';
+import 'package:pet_pals/theme/app_themes.dart';
+import 'package:pet_pals/theme/bloc/theme_bloc.dart';
+import 'package:provider/provider.dart';
 
-class Menu extends StatelessWidget {
+class Menu extends StatefulWidget {
+
+  @override
+  State<Menu> createState() => _MenuState();
+}
+
+class _MenuState extends State<Menu> {
   final String username = "Jennifer";
-
+  
   @override
   Widget build(BuildContext context) {
     // Determine if the device is in landscape or portrait
     var isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    DarkModeProvider darkModeProvider = Provider.of<DarkModeProvider>(context);
+    bool darkMode = darkModeProvider.darkMode;
 
     return Drawer(
       child: Container(
@@ -33,10 +46,12 @@ class Menu extends StatelessWidget {
                     padding: const EdgeInsets.all(16.0),
                     child:
                         //User avatar and name
-                      GestureDetector(
-                      onTap: (){
-                        Navigator.push(context,MaterialPageRoute(builder: (context) =>
-                                                             ProfilePage()));
+                        GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ProfilePage()));
                       },
                       child: Row(
                         children: [
@@ -70,20 +85,28 @@ class Menu extends StatelessWidget {
                     ),
                   ),
                   ListTile(
-                    leading: Icon(Icons.brightness_6, color: Colors.white),
-                    title: Text('Dark Mode',
+                    leading:
+                        const Icon(Icons.brightness_6, color: Colors.white),
+                    title: const Text('Dark Mode',
                         style: TextStyle(fontSize: 18, color: Colors.white)),
                     trailing: Switch(
                       activeColor: Colors.white,
-                      value: true,
-                      onChanged: (value) {
+                      value: darkMode,
+                      onChanged: (bool value) {
                         // Change the colors to darkmode
+                        setState(() {
+                          darkModeProvider.toggleDarkMode();
+                          darkMode = darkModeProvider.darkMode;                          
+                        });
+
+                        BlocProvider.of<ThemeBloc>(context)
+                            .add(ThemeChangedEvent(theme: darkMode == true ? AppTheme.themeDark : AppTheme.themeLight ));
                       },
                     ),
                   ),
                   ListTile(
                     leading: Icon(Icons.logout, color: Colors.white),
-                    title: Text('Log out',
+                    title: const Text('Log out',
                         style: TextStyle(fontSize: 18, color: Colors.white)),
                     onTap: () {
                       // Implementa la lógica de cerrar sesión aquí
