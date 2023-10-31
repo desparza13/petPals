@@ -14,7 +14,7 @@ enum ActivityType {
 }
 
 class ToDo {
-  final int id;
+  final String id;
   final DateTime date;
   final TimeOfDay time;
   final String activityName;

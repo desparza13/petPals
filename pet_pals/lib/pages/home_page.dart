@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import '../models/pet.dart';
 import '../widgets/menu_drawer_widget.dart';
 import '../widgets/pet_home_item.dart';
-import '../dummy_data/dummy_pets.dart';
 import '../widgets/to_do_home_widget.dart';
-import '../widgets/app_bar_widget.dart'; // Importación del nuevo widget AppBar
+import '../widgets/app_bar_widget.dart';
+import 'package:pet_pals/providers/data_provider.dart';
 
 class HomePage extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -21,7 +22,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      appBar: AppBarWidget(scaffoldKey: _scaffoldKey), // Uso del nuevo widget AppBar
+      appBar: AppBarWidget(scaffoldKey: _scaffoldKey),
       drawer: Menu(),
       body: SingleChildScrollView(
         child: Column(
@@ -93,20 +94,35 @@ class HomePage extends StatelessWidget {
                         fontSize: 22,
                         fontWeight: FontWeight.bold),
                   ),
-                  Container(
-                    height: 200,
-                    child: ListView.separated(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: dummyPets.length,
-                      separatorBuilder: (context, index) =>
-                          const SizedBox(width: 10),
-                      itemBuilder: (context, index) {
-                        return PetHomeItem(
-                          pet: dummyPets[index],
-                          color: colors[index % colors.length],
-                        );
-                      },
-                    ),
+                  FutureBuilder<List<Pet>>(
+                    future: fetchPets('ejemplo'), 
+                    builder: (BuildContext context, AsyncSnapshot<List<Pet>> snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(child: CircularProgressIndicator());
+                      }
+                      if (snapshot.hasError) {
+                        return Center(child: Text('Error: ${snapshot.error}'));
+                      }
+                      if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                        return Center(child: Text('No Pets Found'));
+                      }
+                      List<Pet> pets = snapshot.data!;
+                      return Container(
+                        height: 200,
+                        child: ListView.separated(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: pets.length,
+                          separatorBuilder: (context, index) => const SizedBox(width: 10),
+                          itemBuilder: (context, index) {
+                            Pet pet = pets[index];
+                            return PetHomeItem(
+                              pet: pet,
+                              color: colors[index % colors.length],
+                            );
+                          },
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),

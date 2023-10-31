@@ -2,20 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:pet_pals/widgets/app_bar_widget.dart';
 import 'package:pet_pals/widgets/bottom_nav_bar_widget.dart';
 import 'package:pet_pals/models/to_do.dart';
-import 'package:pet_pals/dummy_data/dummy_to_do.dart';
+import 'package:pet_pals/providers/data_provider.dart';
 import '../widgets/menu_drawer_widget.dart';
 
 class ToDoPage extends StatefulWidget {
   const ToDoPage({super.key});
 
   @override
-  _ToDoPageState createState() => _ToDoPageState();
+  ToDoPageState createState() => ToDoPageState();
 }
 
-class _ToDoPageState extends State<ToDoPage> {
+class ToDoPageState extends State<ToDoPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   DateTime? previousDate;
-  
+  List<ToDo> todos = [];
+  bool isLoading = true;
+
   final activityIcons = {
     ActivityType.bath: 'assets/images/icons/bath_icon.png',
     ActivityType.eat: 'assets/images/icons/eat_icon.png',
@@ -26,24 +28,49 @@ class _ToDoPageState extends State<ToDoPage> {
     ActivityType.walk: 'assets/images/icons/walk_icon.png',
   };
 
+  Future<void> initToDos() async {
+    List<ToDo> fetchedToDos = await fetchToDos('ejemplo');
+    setState(() {
+      todos = fetchedToDos;
+      isLoading = false;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    initToDos();
+  }
+
   String timeFilter = 'All';
   String completionFilter = 'All';
 
   List<ToDo> filteredTodos() {
     DateTime now = DateTime.now();
-    DateTime startOfWeek = now.subtract(Duration(days: now.weekday - 1));
-    DateTime endOfWeek = startOfWeek.add(Duration(days: 6));
-    DateTime startOfMonth = DateTime(now.year, now.month, 1);
-    DateTime endOfMonth = DateTime(now.year, now.month + 1, 0);
 
-    List<ToDo> timeFiltered = dummyToDos;
+    List<ToDo> timeFiltered = todos;
 
     if (timeFilter == 'Today') {
-      timeFiltered = dummyToDos.where((todo) => todo.date.isAtSameMomentAs(now)).toList();
+      timeFiltered = todos
+          .where((todo) =>
+              todo.date.year == now.year &&
+              todo.date.month == now.month &&
+              todo.date.day == now.day)
+          .toList();
     } else if (timeFilter == 'This week') {
-      timeFiltered = dummyToDos.where((todo) => todo.date.isAfter(startOfWeek) && todo.date.isBefore(endOfWeek)).toList();
+      DateTime startOfWeek = now.subtract(Duration(days: now.weekday - 1));
+      DateTime endOfWeek = startOfWeek.add(Duration(days: 6));
+      timeFiltered = todos
+          .where((todo) =>
+              todo.date.isAfter(startOfWeek) && todo.date.isBefore(endOfWeek))
+          .toList();
     } else if (timeFilter == 'This month') {
-      timeFiltered = dummyToDos.where((todo) => todo.date.isAfter(startOfMonth) && todo.date.isBefore(endOfMonth)).toList();
+      DateTime startOfMonth = DateTime(now.year, now.month, 1);
+      DateTime endOfMonth = DateTime(now.year, now.month + 1, 0);
+      timeFiltered = todos
+          .where((todo) =>
+              todo.date.isAfter(startOfMonth) && todo.date.isBefore(endOfMonth))
+          .toList();
     }
 
     timeFiltered.sort((a, b) => a.date.compareTo(b.date));
@@ -56,7 +83,6 @@ class _ToDoPageState extends State<ToDoPage> {
       return timeFiltered;
     }
   }
-
 
   String _formatDate(DateTime date) {
     final now = DateTime.now();
@@ -73,7 +99,9 @@ class _ToDoPageState extends State<ToDoPage> {
       key: _scaffoldKey,
       drawer: Menu(),
       appBar: AppBarWidget(scaffoldKey: _scaffoldKey),
-      body: Column(
+      body: isLoading 
+      ? Center(child: CircularProgressIndicator())
+      : Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
@@ -110,8 +138,7 @@ class _ToDoPageState extends State<ToDoPage> {
                 SizedBox(width: 10),
                 DropdownButton<String>(
                   value: completionFilter,
-                  items: ['Not done', 'Done', 'All']
-                      .map((String value) {
+                  items: ['Not done', 'Done', 'All'].map((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
                       child: Text(value),
@@ -139,7 +166,8 @@ class _ToDoPageState extends State<ToDoPage> {
                   final toDo = filteredTodos()[index];
                   List<Widget> widgets = [];
 
-                  if (previousDate == null || previousDate?.day != toDo.date.day) {
+                  if (previousDate == null ||
+                      previousDate?.day != toDo.date.day) {
                     widgets.add(
                       Align(
                         alignment: Alignment.centerLeft,

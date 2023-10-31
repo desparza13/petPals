@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_calendar_carousel/classes/event.dart';
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
-import 'package:pet_pals/widgets/app_bar_widget.dart';
+import 'package:intl/intl.dart';
 import 'package:pet_pals/models/to_do.dart';
 import 'package:pet_pals/models/pet.dart';
-import 'package:pet_pals/dummy_data/dummy_pets.dart';
+import 'package:pet_pals/providers/data_provider.dart'; // Asegúrate de cambiar esta línea por la ruta correcta a tu archivo
 import '../widgets/menu_drawer_widget.dart';
+import '../widgets/app_bar_widget.dart';
 
 final activityIcons = {
   ActivityType.bath: 'assets/images/icons/bath_icon.png',
@@ -17,17 +19,43 @@ final activityIcons = {
 };
 
 class NewTaskPage extends StatefulWidget {
+  const NewTaskPage({super.key});
+
   @override
-  _NewTaskPageState createState() => _NewTaskPageState();
+  NewTaskPageState createState() => NewTaskPageState();
 }
 
-class _NewTaskPageState extends State<NewTaskPage> {
+class NewTaskPageState extends State<NewTaskPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   DateTime selectedDate = DateTime.now();
   TimeOfDay selectedTime = TimeOfDay.now();
   ActivityType? selectedActivity;
   Pet? selectedPet;
+  List<Pet> pets = [];
+  bool isLoading = true;
+  String? errorMessage;
+
   TextEditingController taskTitleController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _loadPets();
+  }
+
+  void _loadPets() async {
+    try {
+      pets = await fetchPets('ejemplo');
+      setState(() {
+        isLoading = false;
+      });
+    } catch (error) {
+      setState(() {
+        isLoading = false;
+        errorMessage = "No se pudieron cargar las mascotas. Por favor, intenta nuevamente más tarde.";
+      });
+    }
+  }
 
   Future<void> _selectTime(BuildContext context) async {
     final TimeOfDay? picked = await showTimePicker(
@@ -36,9 +64,9 @@ class _NewTaskPageState extends State<NewTaskPage> {
       builder: (BuildContext context, Widget? child) {
         return Theme(
           data: ThemeData.light().copyWith(
-            primaryColor: Color(0xFF8F4152),
-            colorScheme: ColorScheme.light(primary: Color(0xFF8F4152)),
-            buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
+            primaryColor: const Color(0xFF8F4152),
+            colorScheme: const ColorScheme.light(primary: Color(0xFF8F4152)),
+            buttonTheme: const ButtonThemeData(textTheme: ButtonTextTheme.primary),
           ),
           child: child!,
         );
@@ -58,11 +86,11 @@ class _NewTaskPageState extends State<NewTaskPage> {
       drawer: Menu(),
       appBar: AppBarWidget(scaffoldKey: _scaffoldKey),
       body: Padding(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'New Task',
               style: TextStyle(
                 fontSize: 32,
@@ -70,18 +98,33 @@ class _NewTaskPageState extends State<NewTaskPage> {
                 color: Color(0xFF8F4152),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
-                  color: Color(0xFFF3DAE3),
+                  color: const Color(0xFFF3DAE3),
                   borderRadius: BorderRadius.circular(15),
                 ),
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      const Text(
+                        'Task Title',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      TextField(
+                        controller: taskTitleController,
+                        decoration: const InputDecoration(
+                          hintText: 'Enter task title',
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
                       const Text(
                         'Date',
                         style: TextStyle(
@@ -89,175 +132,150 @@ class _NewTaskPageState extends State<NewTaskPage> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(height: 20),
-                      Container(
-                        decoration: BoxDecoration(
+                      CalendarCarousel(
+                        selectedDateTime: selectedDate,
+                        onDayPressed: (DateTime date, List<Event> events) {
+                          setState(() {
+                            selectedDate = date;
+                          });
+                        },
+                        weekendTextStyle: const TextStyle(
+                          color: Colors.red,
+                        ),
+                        thisMonthDayBorderColor: Colors.grey,
+                        height: 420.0,
+                        selectedDayBorderColor: const Color(0xFF8F4152),
+                        selectedDayButtonColor: const Color(0xFFF3DAE3),
+                        selectedDayTextStyle: const TextStyle(
+                          color: Colors.black,
+                        ),
+                        todayBorderColor: const Color(0xFF8F4152),
+                        todayButtonColor: const Color(0xFF8F4152),
+                        todayTextStyle: const TextStyle(
                           color: Colors.white,
-                          borderRadius: BorderRadius.circular(15),
                         ),
-                        child: CalendarCarousel(
-                          dayPadding: 4,
-                          headerTextStyle: TextStyle(
-                            color: Color(0xFF8F4152),
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          headerMargin: EdgeInsets.all(0),
-                          onDayPressed: (DateTime date, List events) {
-                            this.setState(() => selectedDate = date);
-                          },
-                          weekendTextStyle: TextStyle(
-                            color: Color(0xFF8F4152),
-                          ),
-                          thisMonthDayBorderColor: Color(0xFF8F4152),
-                          selectedDayButtonColor: Color(0xFF8F4152),
-                          selectedDayTextStyle: TextStyle(color: Colors.white),
-                          weekFormat: false,
-                          height: 350.0,
-                          selectedDateTime: selectedDate,
-                          daysHaveCircularBorder: true,
-                          iconColor: Color(0xFF8F4152),
-                          todayBorderColor: Color(0xFFED9BB7),
-                          weekdayTextStyle: TextStyle(color: Color(0xFF8F4152)),
-                          todayButtonColor: Colors.white,
-                          todayTextStyle: TextStyle(color: Color(0xFFED9BB7)),
-                          daysTextStyle: TextStyle(color: Colors.black),
+                        weekdayTextStyle: const TextStyle(
+                          color: Color(0xFF8F4152),
+                        ),
+                        headerTextStyle: const TextStyle(
+                          fontSize: 20,
+                          color: Color(0xFF8F4152),
+                        ),
+                        iconColor: const Color(0xFF8F4152),
+                        daysTextStyle: const TextStyle(
+                          color: Colors.black,
                         ),
                       ),
-                      SizedBox(height: 20),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          // Time Section
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Time',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                SizedBox(height: 10),
-                                ElevatedButton(
-                                  onPressed: () {
-                                    _selectTime(context);
-                                  },
-                                  child: Text(
-                                    "${selectedTime.format(context)}",
-                                    style: TextStyle(color: Colors.white, fontSize: 18),
-                                  ),
-                                  style: ElevatedButton.styleFrom(
-                                    primary: Color(0xFF8F4152),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(width: 20),
-                          // Type Section
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Type',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                DropdownButton<ActivityType>(
-                                  value: selectedActivity,
-                                  onChanged: (ActivityType? newValue) {
-                                    setState(() {
-                                      selectedActivity = newValue;
-                                    });
-                                  },
-                                  items: ActivityType.values.map((ActivityType type) {
-                                    return DropdownMenuItem<ActivityType>(
-                                      value: type,
-                                      child: Row(
-                                        children: [
-                                          Image.asset(activityIcons[type]!, height: 30, width: 30),
-                                          SizedBox(width: 10),
-                                          Text(type.toString().split('.').last),
-                                        ],
-                                      ),
-                                    );
-                                  }).toList(),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+                      const SizedBox(height: 20),
+                      const Text(
+                        'Time',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                      SizedBox(height: 20),
-                      Text(
+                      InkWell(
+                        onTap: () => _selectTime(context),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                          decoration: BoxDecoration(
+                            border: Border.all(),
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: Text(
+                            DateFormat.jm().format(
+                              DateTime(
+                                selectedDate.year,
+                                selectedDate.month,
+                                selectedDate.day,
+                                selectedTime.hour,
+                                selectedTime.minute,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      const Text(
+                        'Activity',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Wrap(
+                        spacing: 10,
+                        children: ActivityType.values.map((activity) {
+                          return ChoiceChip(
+                            label: Text(activity.toString().split('.').last),
+                            avatar: CircleAvatar(
+                              backgroundImage: AssetImage(activityIcons[activity]!),
+                            ),
+                            selected: selectedActivity == activity,
+                            onSelected: (selected) {
+                              setState(() {
+                                selectedActivity = activity;
+                              });
+                            },
+                          );
+                        }).toList(),
+                      ),
+                      const SizedBox(height: 20),
+                      const Text(
                         'Pet',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      DropdownButton<Pet>(
-                        value: selectedPet,
-                        onChanged: (Pet? newValue) {
-                          setState(() {
-                            selectedPet = newValue;
-                          });
-                        },
-                        items: dummyPets.map((Pet pet) {
-                          return DropdownMenuItem<Pet>(
-                            value: pet,
-                            child: Text(pet.name),
-                          );
-                        }).toList(),
-                      ),
-                      SizedBox(height: 20),
-                      Text(
-                        'Title',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                      if (isLoading)
+                        const Center(child: CircularProgressIndicator())
+                      else if (errorMessage != null)
+                        Text(errorMessage!, style: const TextStyle(color: Colors.red))
+                      else
+                        DropdownButton<Pet>(
+                          value: selectedPet,
+                          onChanged: (Pet? newValue) {
+                            setState(() {
+                              selectedPet = newValue;
+                            });
+                          },
+                          items: pets.map((Pet pet) {
+                            return DropdownMenuItem<Pet>(
+                              value: pet,
+                              child: Text(pet.name),
+                            );
+                          }).toList(),
                         ),
-                      ),
-                      SizedBox(height: 10),
-                      TextField(
-                        controller: taskTitleController,
-                        decoration: InputDecoration(
-                          hintText: "Write the task's name",
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 20),
-                      Center(
+                      const SizedBox(height: 20),
+                      SizedBox(
+                        width: double.infinity,
                         child: ElevatedButton(
                           onPressed: () {
-                            if (selectedActivity != null && selectedPet != null) {
-                              // Add new ToDo item to dummyToDos
-                              final newTodo = ToDo(
-                                id: DateTime.now().millisecondsSinceEpoch,
+                            // Verificar si alguno de los campos requeridos está vacío
+                            if (taskTitleController.text.isEmpty || selectedActivity == null || selectedPet == null) {
+                              // Mostrar un mensaje de error
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Falta completar algunos campos'),
+                                  duration: Duration(seconds: 3),
+                                ),
+                              );
+                            } else {
+                              ToDo task = ToDo(
+                                id: selectedDate.toString(),
+                                activityName: taskTitleController.text,
                                 date: selectedDate,
                                 time: selectedTime,
-                                activityName: taskTitleController.text,
+                                activityType: selectedActivity ?? ActivityType.walk,
                                 relatedPet: selectedPet!,
-                                activityType: selectedActivity!,
                               );
-                              // Here you can append newTodo to dummyToDos.
-                              // Since dummyToDos is outside this file, you might want to
-                              // handle this addition in a different manner or ensure
-                              // proper imports and state management.
                             }
                           },
-                          child: Text('Save'),
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.pink[300],
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(const Color(0xFF8F4152)),
                           ),
+                          child: const Text('Save Task'),
                         ),
                       ),
                     ],
