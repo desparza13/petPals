@@ -13,28 +13,10 @@ class _AddQuestionPageState extends State<AddQuestionPage> {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
     return Scaffold(
       key: _scaffoldKey,
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        automaticallyImplyLeading: false,
-        leading: IconButton(
-          padding: const EdgeInsets.all(
-              0), // Puedes ajustar el relleno según tus necesidades
-          icon: const Icon(
-            Icons.arrow_back_rounded,
-            color: Color(0xFF15161E),
-            size: 30,
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        actions: [],
-        centerTitle: false,
-        elevation: 0,
-      ),
+      appBar: AppBar(),
       body: SafeArea(
         top: true,
         child: Padding(
@@ -48,7 +30,7 @@ class _AddQuestionPageState extends State<AddQuestionPage> {
                   width: double.infinity,
                   height: 450,
                   decoration: BoxDecoration(
-                    color: const Color(0xFFD8F3DC),
+                    color: theme.colorScheme.tertiaryContainer,
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: Align(
@@ -65,7 +47,6 @@ class _AddQuestionPageState extends State<AddQuestionPage> {
                               'Submit a Question',
                               style: TextStyle(
                                 fontFamily: 'Ubuntu',
-                                color: Color(0xFF15161E),
                                 fontSize: 24,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -88,7 +69,6 @@ class _AddQuestionPageState extends State<AddQuestionPage> {
                                       labelText: 'Question Title',
                                       labelStyle: const TextStyle(
                                         fontFamily: 'Outfit',
-                                        color: Color(0xFF606A85),
                                         fontSize: 14,
                                         fontWeight: FontWeight.w500,
                                       ),
@@ -98,20 +78,20 @@ class _AddQuestionPageState extends State<AddQuestionPage> {
                                         fontSize: 14,
                                         fontWeight: FontWeight.w500,
                                       ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                          color: Colors.white,
-                                          width: 2,
-                                        ),
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                          color: Color(0xFF6F61EF),
-                                          width: 2,
-                                        ),
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
+                                      // enabledBorder: OutlineInputBorder(
+                                      //   borderSide: const BorderSide(
+                                      //     color: Colors.white,
+                                      //     width: 2,
+                                      //   ),
+                                      //   borderRadius: BorderRadius.circular(12),
+                                      // ),
+                                      // focusedBorder: OutlineInputBorder(
+                                      //   borderSide: const BorderSide(
+                                      //     color: Color(0xFF6F61EF),
+                                      //     width: 2,
+                                      //   ),
+                                      //   borderRadius: BorderRadius.circular(12),
+                                      // ),
                                       errorBorder: OutlineInputBorder(
                                         borderSide: const BorderSide(
                                           color: Color(0xFFFF5963),
@@ -132,7 +112,6 @@ class _AddQuestionPageState extends State<AddQuestionPage> {
                                     ),
                                     style: const TextStyle(
                                       fontFamily: 'Ubuntu',
-                                      color: Color(0xFF15161E),
                                       fontSize: 14,
                                       fontWeight: FontWeight.w500,
                                     ),
@@ -160,7 +139,6 @@ class _AddQuestionPageState extends State<AddQuestionPage> {
                                       hintText: 'Question',
                                       hintStyle: const TextStyle(
                                         fontFamily: 'Outfit',
-                                        color: Color(0xFF606A85),
                                         fontSize: 14,
                                         fontWeight: FontWeight.w500,
                                       ),
@@ -171,13 +149,13 @@ class _AddQuestionPageState extends State<AddQuestionPage> {
                                         ),
                                         borderRadius: BorderRadius.circular(12),
                                       ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                          color: Color(0xFF6F61EF),
-                                          width: 2,
-                                        ),
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
+                                      // focusedBorder: OutlineInputBorder(
+                                      //   borderSide: const BorderSide(
+                                      //     color: Color(0xFF6F61EF),
+                                      //     width: 2,
+                                      //   ),
+                                      //   borderRadius: BorderRadius.circular(12),
+                                      // ),
                                       errorBorder: OutlineInputBorder(
                                         borderSide: const BorderSide(
                                           color: Color(0xFFFF5963),
@@ -198,7 +176,6 @@ class _AddQuestionPageState extends State<AddQuestionPage> {
                                     ),
                                     style: const TextStyle(
                                       fontFamily: 'Plus Jakarta Sans',
-                                      color: Color(0xFF15161E),
                                       fontSize: 14,
                                       fontWeight: FontWeight.w500,
                                     ),
@@ -223,7 +200,7 @@ class _AddQuestionPageState extends State<AddQuestionPage> {
                                         width: 2,
                                       ),
                                     ),
-                                    child: const Padding(
+                                    child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           8, 8, 8, 8),
                                       child: Row(
@@ -231,10 +208,10 @@ class _AddQuestionPageState extends State<AddQuestionPage> {
                                         children: [
                                           Icon(
                                             Icons.add_a_photo_rounded,
-                                            color: Color(0xFF6F61EF),
+                                            color: theme.colorScheme.secondary,
                                             size: 32,
                                           ),
-                                          Padding(
+                                          const Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     16, 0, 0, 0),
@@ -243,7 +220,6 @@ class _AddQuestionPageState extends State<AddQuestionPage> {
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
                                                 fontFamily: 'Ubuntu',
-                                                color: Color(0xFF363744),
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w500,
                                               ),
@@ -260,10 +236,10 @@ class _AddQuestionPageState extends State<AddQuestionPage> {
                                   child: ElevatedButton(
                                     onPressed: () {},
                                     style: ElevatedButton.styleFrom(
-                                      primary: const Color(0xFF6F61EF),
+                                      backgroundColor: theme.colorScheme.secondary,
+                                      foregroundColor: theme.colorScheme.onSecondary,
                                       textStyle: const TextStyle(
                                         fontFamily: 'Ubuntu',
-                                        color: Colors.white,
                                         fontSize: 16,
                                         fontWeight: FontWeight.w500,
                                       ),

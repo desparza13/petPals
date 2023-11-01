@@ -6,19 +6,19 @@ import 'package:pet_pals/widgets/info_my_pet_widget.dart';
 class MyPetPage extends StatelessWidget {
   MyPetPage({super.key, required this.pet});
   final Pet pet;
-  final _colors = [
-    Color(0xFFFFDE59),
-    Color(0xFFDFD2C8),
-    Color(0xFFC0F6FF),
-    Color(0xFFBBFFAD)
-  ];
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+    final colors = [
+      theme.colorScheme.primaryContainer,
+      Color(0xFFDFD2C8),
+      theme.colorScheme.secondaryContainer,
+      theme.colorScheme.tertiaryContainer
+    ];
     return Scaffold(
       appBar: AppBar(
-        title: Text('My pet profile'),
-        backgroundColor: Color(0xFF8F4152)),
+        title: Text('My pet profile')),
       body: Stack(
         children: [
           //Imagen de la mascota
@@ -44,10 +44,10 @@ class MyPetPage extends StatelessWidget {
                   child: Column(children: [
                     Text(
                       pet.name,
-                      style: const TextStyle(
+                      style: TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.bold,
-                          color: Color(0xFF8F4152)),
+                          color: theme.colorScheme.primary),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -115,7 +115,7 @@ class MyPetPage extends StatelessWidget {
                     //Widget para mostrar la información de la mascota en containers
                     Padding(
                       padding: const EdgeInsets.only(top: 20),
-                      child: InfoMyPetWidget(pet: pet, colors: _colors),
+                      child: InfoMyPetWidget(pet: pet, colors: colors),
                     ),
                     const SizedBox(
                       height: 130,

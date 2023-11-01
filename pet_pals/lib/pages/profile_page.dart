@@ -17,14 +17,11 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor:  Color(0xFF8F4152),        
         centerTitle: false,
         elevation: 2,
       ),
       drawer: Menu(),
-
       body: SafeArea(
         top: true,
         child: SingleChildScrollView(
@@ -95,6 +92,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     'Actualizar datos de mi perfil',
                                     style: TextStyle(
                                       fontFamily: 'Ubuntu',
+                                      color: Colors.black
                                     ),
                                   ),
                                   trailing: const Icon(
@@ -127,6 +125,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                 'Ver mis entrenamientos adquiridos',
                                 style: TextStyle(
                                   fontFamily: 'Ubuntu',
+                                  color: Colors.black
+
                                 ),
                               ),
                               trailing: const Icon(
@@ -159,6 +159,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 'Ver mis planes adquiridos',
                                 style: TextStyle(
                                   fontFamily: 'Ubuntu',
+                                  color: Colors.black
                                 ),
                               ),
                               trailing: const Icon(
@@ -191,6 +192,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 'Actualizar contraseña',
                                 style: TextStyle(
                                   fontFamily: 'Ubuntu',
+                                  color: Colors.black
                                 ),
                               ),
                               trailing: const Icon(
@@ -223,6 +225,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 'Ver, editar y agregar mis fomas de pago',
                                 style: TextStyle(
                                   fontFamily: 'Ubuntu',
+                                  color: Colors.black
                                 ),
                               ),
                               trailing: const Icon(

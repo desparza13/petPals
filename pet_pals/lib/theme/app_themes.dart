@@ -20,7 +20,8 @@ final appThemeData = {
       labelLarge: TextStyle(
         color: Colors.white
       )
-    )
+    ),
+    cardColor: Colors.white
     
   ),
   AppTheme.themeDark: ThemeData(
@@ -30,7 +31,8 @@ final appThemeData = {
       color: Color(0xFF955196),
       iconTheme: IconThemeData(
       color: Colors.white, // Color de los iconos en la barra de aplicación
-    ),)
+    ),),
+    cardColor: Color(0xFF444E86)
   ),
   
   

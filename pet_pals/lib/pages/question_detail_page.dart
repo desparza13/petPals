@@ -14,9 +14,7 @@ class _QuestionDetailState extends State<QuestionDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      appBar: AppBar(
-        backgroundColor: Color(0xFF8F4152)
-      ),
+      appBar: AppBar(),
       backgroundColor: const Color(0xFFF1F4F8),
       body: SingleChildScrollView(
         child: Padding(
@@ -122,10 +120,12 @@ class _QuestionDetailState extends State<QuestionDetail> {
 class QuestionAndAnswersWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: const Color(0xFFD8F3DC),
+        color: theme.colorScheme.tertiaryContainer,
         borderRadius: BorderRadius.circular(15),
       ),
       child: Column(
@@ -141,7 +141,6 @@ class QuestionAndAnswersWidget extends StatelessWidget {
                   '¿Ut enim ad minim veniam?',
                   style: TextStyle(
                     fontFamily: 'Plus Jakarta Sans',
-                    color: Color(0xFF101213),
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
                   ),
@@ -153,7 +152,6 @@ class QuestionAndAnswersWidget extends StatelessWidget {
                   'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
                   style: TextStyle(
                     fontFamily: 'Plus Jakarta Sans',
-                    color: Color(0xFF57636C),
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
                   ),
@@ -177,7 +175,6 @@ class QuestionAndAnswersWidget extends StatelessWidget {
                     '3',
                     style: TextStyle(
                       fontFamily: 'Plus Jakarta Sans',
-                      color: Color(0xFF101213),
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
                     ),
@@ -189,7 +186,6 @@ class QuestionAndAnswersWidget extends StatelessWidget {
                     'likes',
                     style: TextStyle(
                       fontFamily: 'Plus Jakarta Sans',
-                      color: Color(0xFF101213),
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
                     ),
@@ -209,7 +205,6 @@ class QuestionAndAnswersWidget extends StatelessWidget {
                     '8',
                     style: TextStyle(
                       fontFamily: 'Plus Jakarta Sans',
-                      color: Color(0xFF101213),
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
                     ),
@@ -221,7 +216,6 @@ class QuestionAndAnswersWidget extends StatelessWidget {
                     'Comments',
                     style: TextStyle(
                       fontFamily: 'Plus Jakarta Sans',
-                      color: Color(0xFF101213),
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
                     ),
@@ -297,7 +291,6 @@ class AnswerWidget extends StatelessWidget {
                       author,
                       style: const TextStyle(
                         fontFamily: 'Plus Jakarta Sans',
-                        color: Color(0xFF101213),
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
                       ),
@@ -340,6 +333,8 @@ class WriteCommentButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+
     return Container(
       width: double.infinity,
       height: 100,
@@ -359,13 +354,13 @@ class WriteCommentButton extends StatelessWidget {
             'Write a Comment',
             style: TextStyle(
               fontFamily: 'Plus Jakarta Sans',
-              color: Colors.white,
               fontSize: 16,
               fontWeight: FontWeight.w500,
             ),
           ),
           style: ElevatedButton.styleFrom(
-            primary: const Color(0xFF4B39EF),
+            backgroundColor: theme.colorScheme.secondary,
+            foregroundColor: theme.colorScheme.onSecondary,
             minimumSize: const Size(double.infinity, 50),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),

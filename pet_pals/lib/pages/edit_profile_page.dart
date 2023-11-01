@@ -19,64 +19,12 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: Colors.white,
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(80),
-        child: AppBar(
-          backgroundColor: Colors.white,
-          automaticallyImplyLeading: false,
-          actions: [],
-          flexibleSpace: FlexibleSpaceBar(
-            title: Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0, 0, 0, 0),
-                            child: IconButton(
-                              icon: const Icon(
-                                Icons.arrow_back_rounded,
-                                color: Color(0xFF14181B),
-                                size: 30,
-                              ),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            )),
-                        Align(
-                          alignment: const AlignmentDirectional(-1.00, 0.00),
-                          child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0, 0, 0, 0),
-                            child: Text(
-                              'Edit Profile',
-                              style: customTextStyle,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            centerTitle: true,
-            expandedTitleScale: 1.0,
-          ),
-          elevation: 0,
+      appBar: AppBar(
+          title: Text('Edit profile'),
         ),
-      ),
       body: SafeArea(
         top: true,
         child: SingleChildScrollView(
@@ -489,28 +437,34 @@ class _EditProfileState extends State<EditProfile> {
                       onPressed: () {
                         print('Button pressed ...');
                       },
-                      style: ButtonStyle(
-                        minimumSize: MaterialStateProperty.all<Size>(
-                          const Size(270, 50),
-                        ),
-                        padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                          const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                        ),
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                          const Color(0xFF4B39EF),
-                        ),
-                        elevation: MaterialStateProperty.all<double>(2),
-                        shape: MaterialStateProperty.all<OutlinedBorder>(
-                          RoundedRectangleBorder(
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size(270, 50),
+                        padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                        elevation: 2,
+                        shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
-                        ),
+                        backgroundColor: theme.colorScheme.secondary,
+                        foregroundColor: theme.colorScheme.onSecondary
                       ),
+                      // style: ButtonStyle(
+                      //   minimumSize: MaterialStateProperty.all<Size>(
+                      //     const Size(270, 50),
+                      //   ),
+                      //   padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                      //     const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                      //   ),
+                      //   elevation: MaterialStateProperty.all<double>(2),
+                      //   shape: MaterialStateProperty.all<OutlinedBorder>(
+                      //     RoundedRectangleBorder(
+                      //       borderRadius: BorderRadius.circular(12),
+                      //     ),
+                      //   ),
+                      // ),
                       child: const Text(
                         'Save Changes',
                         style: TextStyle(
                           fontFamily: 'Plus Jakarta Sans',
-                          color: Colors.white,
                           fontSize: 18,
                           fontWeight: FontWeight.normal,
                         ),

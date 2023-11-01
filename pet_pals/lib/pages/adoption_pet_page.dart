@@ -8,10 +8,10 @@ class AdoptionPetPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Pet Profile'),
-        backgroundColor: Theme.of(context).colorScheme.primary,
       ),
       body: Stack(
         children: [
@@ -39,10 +39,10 @@ class AdoptionPetPage extends StatelessWidget {
                     child: Column(children: [
                       Text(
                         pet.name,
-                        style: const TextStyle(
+                        style: TextStyle(
                             fontSize: 25,
                             fontWeight: FontWeight.bold,
-                            color: Color(0xFF8F4152)),
+                            color: theme.colorScheme.primary),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -184,7 +184,7 @@ class AdoptionPetPage extends StatelessWidget {
                       ),
                       //Mostrar información del dueño
                       Padding(
-                        padding: const EdgeInsets.only(top: 10),
+                        padding: const EdgeInsets.only(top: 20),
                         child: OwnerWidget(),
                       ),
                       //Botón de adopción
@@ -192,6 +192,10 @@ class AdoptionPetPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Theme.of(context).colorScheme.secondary,
+                              foregroundColor: Theme.of(context).colorScheme.onSecondary,
+                            ),
                             onPressed: (){
                               Navigator.pop(context);
                             }, 
