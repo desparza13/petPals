@@ -46,6 +46,7 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   permission_handler: ^11.0.1
+  flutter_markdown: ^0.6.18
 
 dev_dependencies:
   flutter_test:
@@ -95,6 +96,7 @@ flutter:
     - assets/images/icons/cat_icon.png
     - assets/images/icons/bird_icon.png
     - assets/images/icons/bunnie_icon.png
+    - assets/terms_and_conditions.md
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

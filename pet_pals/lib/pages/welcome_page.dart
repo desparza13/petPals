@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pet_pals/widgets/terms_of_use_widget.dart';
 import 'register_page.dart';
 import 'sign_in_page.dart';
 
@@ -122,6 +123,12 @@ class WelcomePage extends StatelessWidget {
                     )
                   ],
                 ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TermsOfUseWidget()
+                  ],
+                )
               ],
             ),
           ),
