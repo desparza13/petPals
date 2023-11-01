@@ -51,15 +51,14 @@ class _ProfilePageState extends State<ProfilePage> {
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: Image.network(
-                  _user?.image ?? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpXMhULJPnXeVWQaHQYN0cECDjdK6B4XIsVQ&usqp=CAU",
-                  width: 401,
-                  height: 180,  
-                  fit: BoxFit.cover,
+              if (_user != null) 
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20.0),
+                  child: CircleAvatar(
+                    radius: 80.0,
+                    backgroundImage: NetworkImage(_user!.image),
+                  ),
                 ),
-              ),
               Container(
                 width: 396,
                 constraints: const BoxConstraints(

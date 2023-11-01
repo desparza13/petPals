@@ -258,7 +258,7 @@ class NewTaskPageState extends State<NewTaskPage> {
                               // Mostrar un mensaje de error
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
-                                  content: Text('Falta completar algunos campos'),
+                                  content: Text('Some data is missing'),
                                   duration: Duration(seconds: 3),
                                 ),
                               );

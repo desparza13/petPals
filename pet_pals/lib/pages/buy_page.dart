@@ -27,12 +27,12 @@ class _BuyPageState extends State<BuyPage> {
               leading: IconButton(
                 icon: const Icon(
                   Icons.arrow_back,
-                  size: 30, // Tamaño del icono
-                  color: Colors.white, // Color del icono
+                  size: 30, 
+                  color: Colors.white, 
                 ),
                 onPressed: () {
                   Navigator.of(context)
-                      .pop(); // Esto hará que la pantalla vuelva atrás
+                      .pop(); 
                 },
               ),
               actions: [],
@@ -103,9 +103,9 @@ class _BuyPageState extends State<BuyPage> {
                                         'Training',
                                         style: TextStyle(
                                           fontFamily: 'Ubuntu',
-                                          fontSize: 16, // Tamaño del texto
+                                          fontSize: 16, 
                                           color:
-                                              Colors.black, // Color del texto
+                                              Colors.black, 
                                         ),
                                       ),
                                     ),

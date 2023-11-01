@@ -31,7 +31,6 @@ class _AdoptionFeedPageState extends State<AdoptionFeedPage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // Location
             const Padding(
               padding: EdgeInsets.all(12.0),
               child: Row(

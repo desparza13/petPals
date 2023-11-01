@@ -20,7 +20,7 @@ class QAPage extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           children: [
             Container(
-              width: double.infinity, // Ocupa todo el ancho de la pantalla
+              width: double.infinity, 
               padding: EdgeInsets.all(10),
               child: Row(
                 children: [
@@ -59,7 +59,7 @@ class QAPage extends StatelessWidget {
                         child: Icon(
                           Icons.add,
                           color: Colors
-                              .white, // Cambia el color del icono según tus necesidades
+                              .white, 
                           size: 24,
                         ),
                       ),
@@ -413,11 +413,11 @@ class QAPage extends StatelessWidget {
                                           'Question Title',
                                           style: TextStyle(
                                             fontFamily: 'Readex Pro',
-                                            fontSize: 16, // Tamaño del texto
+                                            fontSize: 16, 
                                             color: Color(
-                                                0xFF232121), // Color del texto
+                                                0xFF232121), 
                                             fontWeight: FontWeight
-                                                .w600, // Peso de la fuente
+                                                .w600, 
                                           ),
                                         ),
                                         Align(
@@ -434,12 +434,11 @@ class QAPage extends StatelessWidget {
                                     Text(
                                       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor...',
                                       style: TextStyle(
-                                        fontFamily: 'Readex Pro',
-                                        fontSize: 15, // Tamaño del texto
+                                        fontSize: 15, 
                                         color: Color(
-                                            0xFF232121), // Color del texto
+                                            0xFF232121), 
                                         fontWeight: FontWeight
-                                            .normal, // Peso de la fuente
+                                            .normal, 
                                       ),
                                     ),
                                   ],

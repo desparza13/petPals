@@ -15,7 +15,6 @@ class AdoptionPetPage extends StatelessWidget {
       ),
       body: Stack(
         children: [
-          //Imagen de la mascota
           Align(
             alignment: Alignment.topCenter,
             child: SizedBox(
@@ -107,7 +106,6 @@ class AdoptionPetPage extends StatelessWidget {
                           ),
                         ],
                       ),
-                      // mostrar la información de la mascota en containers
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -182,12 +180,10 @@ class AdoptionPetPage extends StatelessWidget {
                           ),
                         ],
                       ),
-                      //Mostrar información del dueño
                       Padding(
                         padding: const EdgeInsets.only(top: 10),
                         child: OwnerWidget(),
                       ),
-                      //Botón de adopción
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

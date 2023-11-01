@@ -1,526 +1,158 @@
 import 'package:flutter/material.dart';
+import 'package:pet_pals/models/user.dart';
+import 'package:pet_pals/providers/data_provider_users.dart';
+import 'package:pet_pals/widgets/menu_drawer_widget.dart';
 
 class EditProfile extends StatefulWidget {
-  const EditProfile({Key? key}) : super(key: key);
-
   @override
-  State<EditProfile> createState() => _EditProfileState();
+  _EditProfileState createState() => _EditProfileState();
 }
 
 class _EditProfileState extends State<EditProfile> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final usersDataProvider = UsersDataProvider();
 
-  TextStyle customTextStyle = const TextStyle(
-    fontFamily: 'Outfit',
-    color: Color(0xFF14181B),
-    fontSize: 22,
-    fontWeight: FontWeight.normal,
-  );
+  late TextEditingController _nameController;
+  late TextEditingController _lastnameController;
+  late TextEditingController _numberController;
+  late TextEditingController _emailController;
+  late TextEditingController _cityController;
+
+  User? _user;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchUserData();
+    _nameController = TextEditingController();
+    _lastnameController = TextEditingController();
+    _numberController = TextEditingController();
+    _emailController = TextEditingController();
+    _cityController = TextEditingController();
+  }
+
+  _fetchUserData() async {
+    try {
+      User userData = await usersDataProvider.getUserById("t5unAPjpCvZbg6nJl52Y");
+      setState(() {
+        _user = userData;
+        _nameController.text = userData.name;
+        _lastnameController.text = userData.lastname;
+        _numberController.text = userData.number;
+        _emailController.text = userData.email;
+        _cityController.text = userData.city;
+      });
+    } catch (e) {
+      print("Error fetching user data: $e");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: Colors.white,
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(80),
-        child: AppBar(
-          backgroundColor: Colors.white,
-          automaticallyImplyLeading: false,
-          actions: [],
-          flexibleSpace: FlexibleSpaceBar(
-            title: Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0, 0, 0, 0),
-                            child: IconButton(
-                              icon: const Icon(
-                                Icons.arrow_back_rounded,
-                                color: Color(0xFF14181B),
-                                size: 30,
-                              ),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            )),
-                        Align(
-                          alignment: const AlignmentDirectional(-1.00, 0.00),
-                          child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0, 0, 0, 0),
-                            child: Text(
-                              'Edit Profile',
-                              style: customTextStyle,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            centerTitle: true,
-            expandedTitleScale: 1.0,
-          ),
-          elevation: 0,
-        ),
+      appBar: AppBar(
+        backgroundColor: Color(0xFF8F4152),
+        centerTitle: false,
+        elevation: 2,
       ),
+      drawer: Menu(),
       body: SafeArea(
         top: true,
         child: SingleChildScrollView(
           child: Column(
-            mainAxisSize: MainAxisSize.max,
             children: [
-              Align(
-                alignment: const AlignmentDirectional(-1.00, 0.00),
-                child: Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                  child: Container(
-                    width: 407,
-                    height: 278,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Align(
-                          alignment: const AlignmentDirectional(-1.00, 0.00),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: Image.network(
-                              'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
-                              width: 398,
-                              height: 278,
-                              fit: BoxFit.cover,
+              if (_user != null)
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20.0),
+                  child: CircleAvatar(
+                    radius: 80.0,
+                    backgroundImage: NetworkImage(_user!.image),
+                  ),
+                ),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  children: [
+                    TextFormField(
+                      controller: _nameController,
+                      decoration: InputDecoration(
+                        labelText: 'Name',
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    TextFormField(
+                      controller: _lastnameController,
+                      decoration: InputDecoration(
+                        labelText: 'Last Name',
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    TextFormField(
+                      controller: _numberController,
+                      decoration: InputDecoration(
+                        labelText: 'Phone Number',
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    TextFormField(
+                      controller: _emailController,
+                      decoration: InputDecoration(
+                        labelText: 'Email Address',
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    TextFormField(
+                      controller: _cityController,
+                      decoration: InputDecoration(
+                        labelText: 'City',
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: () async {
+                        if (_user != null) {
+                          User updatedUser = User(
+                            id: _user!.id,
+                            name: _nameController.text,
+                            lastname: _lastnameController.text,
+                            number: _numberController.text,
+                            email: _emailController.text,
+                            city: _cityController.text,
+                            image: _user!.image,
+                          );
+                          await usersDataProvider.updateUser(updatedUser);
+                          
+                          // Mostrar SnackBar con mensaje
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text("Profile updated"),
                             ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 16),
-                child: TextFormField(
-                  controller: null,
-                  textCapitalization: TextCapitalization.words,
-                  obscureText: false,
-                  decoration: InputDecoration(
-                    labelText: 'Your Name',
-                    labelStyle: const TextStyle(
-                      fontFamily: 'Plus Jakarta Sans',
-                      color: Color(0xFF14181B),
-                      fontSize: 14,
-                      fontWeight: FontWeight.normal,
-                    ),
-                    hintStyle: const TextStyle(
-                      fontFamily: 'Plus Jakarta Sans',
-                      color: Color(0xFF14181B),
-                      fontSize: 14,
-                      fontWeight: FontWeight.normal,
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: Color(0xFFE0E3E7),
-                        width: 2,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: Color(0xFF4B39EF),
-                        width: 2,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    errorBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: Color(0xFFFF5963),
-                        width: 2,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    focusedErrorBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: Color(0xFFFF5963),
-                        width: 2,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    filled: true,
-                    fillColor: Colors.white,
-                    contentPadding:
-                        const EdgeInsetsDirectional.fromSTEB(20, 24, 0, 24),
-                  ),
-                  style: const TextStyle(
-                    fontFamily: 'Plus Jakarta Sans',
-                    color: Color(0xFF14181B),
-                    fontSize: 14,
-                    fontWeight: FontWeight.normal,
-                  ),
-                  validator: null,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 16),
-                child: TextFormField(
-                  controller: null,
-                  textCapitalization: TextCapitalization.words,
-                  obscureText: false,
-                  decoration: InputDecoration(
-                    labelText: 'Last Name',
-                    labelStyle: const TextStyle(
-                      fontFamily: 'Plus Jakarta Sans',
-                      color: Color(0xFF57636C),
-                      fontSize: 14,
-                      fontWeight: FontWeight.normal,
-                    ),
-                    hintStyle: const TextStyle(
-                      fontFamily: 'Plus Jakarta Sans',
-                      color: Color(0xFF57636C),
-                      fontSize: 14,
-                      fontWeight: FontWeight.normal,
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: Color(0xFFE0E3E7),
-                        width: 2,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: Color(0xFF4B39EF),
-                        width: 2,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    errorBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: Color(0xFFFF5963),
-                        width: 2,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    focusedErrorBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: Color(0xFFFF5963),
-                        width: 2,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    filled: true,
-                    fillColor: Colors.white,
-                    contentPadding:
-                        const EdgeInsetsDirectional.fromSTEB(20, 24, 0, 24),
-                  ),
-                  style: const TextStyle(
-                    fontFamily: 'Plus Jakarta Sans',
-                    color: Color(0xFF14181B),
-                    fontSize: 14,
-                    fontWeight: FontWeight.normal,
-                  ),
-                  validator: null,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 16),
-                child: TextFormField(
-                  controller: null,
-                  textCapitalization: TextCapitalization.words,
-                  obscureText: false,
-                  decoration: InputDecoration(
-                    labelText: 'Number',
-                    labelStyle: const TextStyle(
-                      fontFamily: 'Plus Jakarta Sans',
-                      color: Color(0xFF57636C),
-                      fontSize: 14,
-                      fontWeight: FontWeight.normal,
-                    ),
-                    hintStyle: const TextStyle(
-                      fontFamily: 'Plus Jakarta Sans',
-                      color: Color(0xFF57636C),
-                      fontSize: 14,
-                      fontWeight: FontWeight.normal,
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: Color(0xFFE0E3E7),
-                        width: 2,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: Color(0xFF4B39EF),
-                        width: 2,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    errorBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: Color(0xFFFF5963),
-                        width: 2,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    focusedErrorBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: Color(0xFFFF5963),
-                        width: 2,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    filled: true,
-                    fillColor: Colors.white,
-                    contentPadding:
-                        const EdgeInsetsDirectional.fromSTEB(20, 24, 0, 24),
-                  ),
-                  style: const TextStyle(
-                    fontFamily: 'Plus Jakarta Sans',
-                    color: Color(0xFF14181B),
-                    fontSize: 14,
-                    fontWeight: FontWeight.normal,
-                  ),
-                  validator: null,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 16),
-                child: TextFormField(
-                  controller: null,
-                  textCapitalization: TextCapitalization.words,
-                  obscureText: false,
-                  decoration: InputDecoration(
-                    labelText: 'E-mail',
-                    labelStyle: const TextStyle(
-                      fontFamily: 'Plus Jakarta Sans',
-                      color: Color(0xFF57636C),
-                      fontSize: 14,
-                      fontWeight: FontWeight.normal,
-                    ),
-                    hintStyle: const TextStyle(
-                      fontFamily: 'Plus Jakarta Sans',
-                      color: Color(0xFF57636C),
-                      fontSize: 14,
-                      fontWeight: FontWeight.normal,
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: Color(0xFFE0E3E7),
-                        width: 2,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: Color(0xFF4B39EF),
-                        width: 2,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    errorBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: Color(0xFFFF5963),
-                        width: 2,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    focusedErrorBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: Color(0xFFFF5963),
-                        width: 2,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    filled: true,
-                    fillColor: Colors.white,
-                    contentPadding:
-                        const EdgeInsetsDirectional.fromSTEB(20, 24, 0, 24),
-                  ),
-                  style: const TextStyle(
-                    fontFamily: 'Plus Jakarta Sans',
-                    color: Color(0xFF14181B),
-                    fontSize: 14,
-                    fontWeight: FontWeight.normal,
-                  ),
-                  validator: null,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 16),
-                child: TextFormField(
-                  controller: null,
-                  textCapitalization: TextCapitalization.words,
-                  obscureText: false,
-                  decoration: InputDecoration(
-                    labelText: 'City',
-                    labelStyle: const TextStyle(
-                      fontFamily: 'Plus Jakarta Sans',
-                      color: Color(0xFF14181B),
-                      fontSize: 14,
-                      fontWeight: FontWeight.normal,
-                    ),
-                    hintStyle: const TextStyle(
-                      fontFamily: 'Plus Jakarta Sans',
-                      color: Color(0xFF14181B),
-                      fontSize: 14,
-                      fontWeight: FontWeight.normal,
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: Color(0xFFE0E3E7),
-                        width: 2,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: Color(0xFF4B39EF),
-                        width: 2,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    errorBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: Color(0xFFFF5963),
-                        width: 2,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    focusedErrorBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: Color(0xFFFF5963),
-                        width: 2,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    filled: true,
-                    fillColor: Colors.white,
-                    contentPadding:
-                        const EdgeInsetsDirectional.fromSTEB(20, 24, 0, 24),
-                  ),
-                  style: const TextStyle(
-                    fontFamily: 'Plus Jakarta Sans',
-                    color: Color(0xFF14181B),
-                    fontSize: 14,
-                    fontWeight: FontWeight.normal,
-                  ),
-                  validator: null,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 16),
-                child: TextFormField(
-                  controller: null,
-                  textCapitalization: TextCapitalization.words,
-                  obscureText: false,
-                  decoration: InputDecoration(
-                    labelText: 'Birthday',
-                    labelStyle: const TextStyle(
-                      fontFamily: 'Plus Jakarta Sans',
-                      color: Color(0xFF57636C),
-                      fontSize: 14,
-                      fontWeight: FontWeight.normal,
-                    ),
-                    hintStyle: const TextStyle(
-                      fontFamily: 'Plus Jakarta Sans',
-                      color: Color(0xFF57636C),
-                      fontSize: 14,
-                      fontWeight: FontWeight.normal,
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: Color(0xFFE0E3E7),
-                        width: 2,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: Color(0xFF4B39EF),
-                        width: 2,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    errorBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: Color(0xFFFF5963),
-                        width: 2,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    focusedErrorBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        color: Color(0xFFFF5963),
-                        width: 2,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    filled: true,
-                    fillColor: Colors.white,
-                    contentPadding:
-                        const EdgeInsetsDirectional.fromSTEB(20, 24, 0, 24),
-                  ),
-                  style: const TextStyle(
-                      fontFamily: 'Plus Jakarta Sans',
-                      color: Color(0xFF14181B),
-                      fontSize: 14,
-                      fontWeight: FontWeight.normal),
-                  validator: null,
-                ),
-              ),
-              Align(
-                alignment: const AlignmentDirectional(0.00, 0.05),
-                child: Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        print('Button pressed ...');
+                          );
+                          
+                          // Redirigir a la página anterior
+                          Navigator.pop(context);
+                        }
                       },
-                      style: ButtonStyle(
-                        minimumSize: MaterialStateProperty.all<Size>(
-                          const Size(270, 50),
-                        ),
-                        padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                          const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                        ),
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                          const Color(0xFF4B39EF),
-                        ),
-                        elevation: MaterialStateProperty.all<double>(2),
-                        shape: MaterialStateProperty.all<OutlinedBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
-                      ),
-                      child: const Text(
-                        'Save Changes',
-                        style: TextStyle(
-                          fontFamily: 'Plus Jakarta Sans',
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                    )),
+                      child: Text("Save Changes"),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _lastnameController.dispose();
+    _numberController.dispose();
+    _emailController.dispose();
+    _cityController.dispose();
+    super.dispose();
   }
 }

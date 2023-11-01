@@ -21,7 +21,7 @@ class _AddQuestionPageState extends State<AddQuestionPage> {
         automaticallyImplyLeading: false,
         leading: IconButton(
           padding: const EdgeInsets.all(
-              0), // Puedes ajustar el relleno según tus necesidades
+              0),
           icon: const Icon(
             Icons.arrow_back_rounded,
             color: Color(0xFF15161E),
@@ -282,7 +282,7 @@ class _AddQuestionPageState extends State<AddQuestionPage> {
                                         ),
                                         SizedBox(
                                             width:
-                                                8), // Espacio entre el icono y el texto
+                                                8), 
                                         Text('Submit Question'),
                                       ],
                                     ),
