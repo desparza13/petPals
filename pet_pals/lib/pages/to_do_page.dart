@@ -95,6 +95,7 @@ class ToDoPageState extends State<ToDoPage> {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context).colorScheme;
     return Scaffold(
       key: _scaffoldKey,
       drawer: Menu(),
@@ -109,7 +110,7 @@ class ToDoPageState extends State<ToDoPage> {
             child: Text(
               'My To-Do list',
               style: TextStyle(
-                color: Color(0xFF8F4152),
+                color: theme.primary,
                 fontWeight: FontWeight.bold,
                 fontSize: 32,
               ),
@@ -156,7 +157,7 @@ class ToDoPageState extends State<ToDoPage> {
           Expanded(
             child: Container(
               decoration: BoxDecoration(
-                color: Color(0xFFEBDFE3),
+                color: Theme.of(context).colorScheme.surface,
                 borderRadius: BorderRadius.circular(15),
               ),
               child: ListView.builder(
@@ -178,7 +179,7 @@ class ToDoPageState extends State<ToDoPage> {
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
-                              color: Color(0xFFED9BB7),
+                              color: theme.tertiary,
                             ),
                           ),
                         ),
@@ -213,7 +214,7 @@ class ToDoPageState extends State<ToDoPage> {
                             toDo.relatedPet.name,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: Color(0xFFED9BB7),
+                              color: theme.tertiary,
                               fontSize: 18,
                             ),
                           ),

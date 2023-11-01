@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:pet_pals/widgets/app_bar_widget.dart';
+import 'package:pet_pals/widgets/menu_drawer_widget.dart';
 
 class BuyPage extends StatefulWidget {
   const BuyPage({Key? key}) : super(key: key);
@@ -9,12 +11,14 @@ class BuyPage extends StatefulWidget {
 }
 
 class _BuyPageState extends State<BuyPage> {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        key: scaffoldKey,
+        key: _scaffoldKey,
+        appBar: AppBarWidget(scaffoldKey: _scaffoldKey),
+        drawer: Menu(),
         body: NestedScrollView(
           floatHeaderSlivers: true,
           headerSliverBuilder: (context, _) => [
@@ -23,18 +27,7 @@ class _BuyPageState extends State<BuyPage> {
               pinned: false,
               floating: false,
               backgroundColor: const Color(0xFFE49FAC),
-              automaticallyImplyLeading: false,
-              leading: IconButton(
-                icon: const Icon(
-                  Icons.arrow_back,
-                  size: 30, 
-                  color: Colors.white, 
-                ),
-                onPressed: () {
-                  Navigator.of(context)
-                      .pop(); 
-                },
-              ),
+              automaticallyImplyLeading: false,              
               actions: [],
               flexibleSpace: FlexibleSpaceBar(
                 background: Container(
@@ -103,9 +96,7 @@ class _BuyPageState extends State<BuyPage> {
                                         'Training',
                                         style: TextStyle(
                                           fontFamily: 'Ubuntu',
-                                          fontSize: 16, 
-                                          color:
-                                              Colors.black, 
+                                          fontSize: 16, // Tamaño del texto
                                         ),
                                       ),
                                     ),
@@ -145,8 +136,6 @@ class _BuyPageState extends State<BuyPage> {
                                         style: TextStyle(
                                           fontFamily: 'Ubuntu',
                                           fontSize: 16, // Tamaño del texto
-                                          color:
-                                              Colors.black, // Color del texto
                                         ),
                                       ),
                                     ),

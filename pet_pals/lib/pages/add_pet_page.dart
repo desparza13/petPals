@@ -37,6 +37,7 @@ class _AddPetPageState extends State<AddPetPage> {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
     return Scaffold(
       key: _scaffoldKey,
       drawer: Menu(),
@@ -52,29 +53,6 @@ class _AddPetPageState extends State<AddPetPage> {
             ),
           ),
           Positioned(
-            top: 100,
-            bottom: 600,
-            left: 120,
-            right: 120,
-            child: ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(100.0),
-                ),
-              ),
-              child: Row(
-                children: [
-                  Icon(Icons.camera_enhance),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text('Add Photo'),
-                ],
-              ),
-            ),
-          ),
-          Positioned(
               top: MediaQuery.of(context).size.height / 4,
               bottom: 0,
               left: 0,
@@ -87,6 +65,12 @@ class _AddPetPageState extends State<AddPetPage> {
                   child: Container(
                     padding: const EdgeInsets.all(20),
                     child: Column(children: [
+                      ElevatedButton(
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: theme.colorScheme.primary,
+                              foregroundColor: theme.colorScheme.onPrimary),
+                          child: Text('upload image')),
                       const Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -188,6 +172,9 @@ class _AddPetPageState extends State<AddPetPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: theme.colorScheme.primary,
+                                  foregroundColor: theme.colorScheme.onPrimary),
                               onPressed: () {
                                 Navigator.push(
                                     context,

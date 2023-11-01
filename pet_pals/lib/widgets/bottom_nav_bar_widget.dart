@@ -31,35 +31,36 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context).colorScheme;
     return Scaffold(
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home,
-                color: _selectedIndex == 0 ? Color(0xFF8F4152) : Colors.grey),
+                color: _selectedIndex == 0 ? theme.primary : Colors.grey),
             label: 'Home',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.add,
-                color: _selectedIndex == 2 ? Color(0xFF8F4152) : Colors.grey),
+                color: _selectedIndex == 1 ? theme.primary : Colors.grey),
             label: 'Add',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.list,
-                color: _selectedIndex == 3 ? Color(0xFF8F4152) : Colors.grey),
+                color: _selectedIndex == 2 ? theme.primary : Colors.grey),
             label: 'To-Do',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.favorite,
-                color: _selectedIndex == 4 ? Color(0xFF8F4152) : Colors.grey),
+                color: _selectedIndex == 3 ? theme.primary : Colors.grey),
             label: 'Adoptions',
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Color(0xFF8F4152),
+        selectedItemColor: theme.primary,
         unselectedItemColor: Colors.grey,
-        selectedLabelStyle: TextStyle(color: Color(0xFF8F4152)),
+        selectedLabelStyle: TextStyle(color: theme.primary),
         unselectedLabelStyle: TextStyle(color: Colors.grey),
         showSelectedLabels: true,
         showUnselectedLabels: true,

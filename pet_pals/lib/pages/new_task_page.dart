@@ -59,15 +59,15 @@ class NewTaskPageState extends State<NewTaskPage> {
   }
 
   Future<void> _selectTime(BuildContext context) async {
+    var theme = Theme.of(context);
     final TimeOfDay? picked = await showTimePicker(
       context: context,
       initialTime: selectedTime,
       builder: (BuildContext context, Widget? child) {
         return Theme(
           data: ThemeData.light().copyWith(
-            primaryColor: const Color(0xFF8F4152),
-            colorScheme: const ColorScheme.light(primary: Color(0xFF8F4152)),
-            buttonTheme: const ButtonThemeData(textTheme: ButtonTextTheme.primary),
+            primaryColor: theme.colorScheme.primary,
+            colorScheme: ColorScheme.light(primary: theme.colorScheme.primary),
           ),
           child: child!,
         );
@@ -82,6 +82,8 @@ class NewTaskPageState extends State<NewTaskPage> {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+
     return Scaffold(
       key: _scaffoldKey,
       drawer: Menu(),
@@ -96,14 +98,14 @@ class NewTaskPageState extends State<NewTaskPage> {
               style: TextStyle(
                 fontSize: 32,
                 fontWeight: FontWeight.bold,
-                color: Color(0xFF8F4152),
+                color: theme.colorScheme.primary,
               ),
             ),
             const SizedBox(height: 20),
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
-                  color: const Color(0xFFF3DAE3),
+                  color: Theme.of(context).colorScheme.surface,
                   borderRadius: BorderRadius.circular(15),
                 ),
                 padding: const EdgeInsets.all(20),
@@ -112,114 +114,115 @@ class NewTaskPageState extends State<NewTaskPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
-                        'Task Title',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      TextField(
-                        controller: taskTitleController,
-                        decoration: const InputDecoration(
-                          hintText: 'Enter task title',
-                          border: OutlineInputBorder(),
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      const Text(
                         'Date',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      CalendarCarousel(
-                        selectedDateTime: selectedDate,
-                        onDayPressed: (DateTime date, List<Event> events) {
-                          setState(() {
-                            selectedDate = date;
-                          });
-                        },
-                        weekendTextStyle: const TextStyle(
-                          color: Colors.red,
-                        ),
-                        thisMonthDayBorderColor: Colors.grey,
-                        height: 420.0,
-                        selectedDayBorderColor: const Color(0xFF8F4152),
-                        selectedDayButtonColor: const Color(0xFFF3DAE3),
-                        selectedDayTextStyle: const TextStyle(
-                          color: Colors.black,
-                        ),
-                        todayBorderColor: const Color(0xFF8F4152),
-                        todayButtonColor: const Color(0xFF8F4152),
-                        todayTextStyle: const TextStyle(
+                      SizedBox(height: 20),
+                      Container(
+                        decoration: BoxDecoration(
                           color: Colors.white,
+                          borderRadius: BorderRadius.circular(15),
                         ),
-                        weekdayTextStyle: const TextStyle(
-                          color: Color(0xFF8F4152),
-                        ),
-                        headerTextStyle: const TextStyle(
-                          fontSize: 20,
-                          color: Color(0xFF8F4152),
-                        ),
-                        iconColor: const Color(0xFF8F4152),
-                        daysTextStyle: const TextStyle(
-                          color: Colors.black,
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      const Text(
-                        'Time',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () => _selectTime(context),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                          decoration: BoxDecoration(
-                            border: Border.all(),
-                            borderRadius: BorderRadius.circular(5),
+                        child: CalendarCarousel(
+                          dayPadding: 4,
+                          headerTextStyle: TextStyle(
+                            color: theme.colorScheme.primary,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
                           ),
-                          child: Text(
-                            DateFormat.jm().format(
-                              DateTime(
-                                selectedDate.year,
-                                selectedDate.month,
-                                selectedDate.day,
-                                selectedTime.hour,
-                                selectedTime.minute,
-                              ),
+                          headerMargin: EdgeInsets.all(0),
+                          onDayPressed: (DateTime date, List events) {
+                            this.setState(() => selectedDate = date);
+                          },
+                          weekendTextStyle: TextStyle(
+                            color: theme.colorScheme.primary,
+                          ),
+                          thisMonthDayBorderColor: theme.colorScheme.primary,
+                          selectedDayButtonColor: theme.colorScheme.primary,
+                          selectedDayTextStyle: TextStyle(color: Colors.white),
+                          weekFormat: false,
+                          height: 350.0,
+                          selectedDateTime: selectedDate,
+                          daysHaveCircularBorder: true,
+                          iconColor: theme.colorScheme.primary,
+                          todayBorderColor: theme.colorScheme.tertiary,
+                          weekdayTextStyle: TextStyle(color: theme.colorScheme.primary),
+                          todayButtonColor: Colors.white,
+                          todayTextStyle: TextStyle(color: theme.colorScheme.tertiary),
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          // Time Section
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'Time',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                SizedBox(height: 10),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    _selectTime(context);
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: theme.colorScheme.primary,
+                                  ),
+                                  child: Text(
+                                    "${selectedTime.format(context)}",
+                                    style: theme.primaryTextTheme.labelLarge,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      const Text(
-                        'Activity',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Wrap(
-                        spacing: 10,
-                        children: ActivityType.values.map((activity) {
-                          return ChoiceChip(
-                            label: Text(activity.toString().split('.').last),
-                            avatar: CircleAvatar(
-                              backgroundImage: AssetImage(activityIcons[activity]!),
+                          SizedBox(width: 20),
+                          // Type Section
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Type',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                DropdownButton<ActivityType>(
+                                  value: selectedActivity,
+                                  onChanged: (ActivityType? newValue) {
+                                    setState(() {
+                                      selectedActivity = newValue;
+                                    });
+                                  },
+                                  items: ActivityType.values.map((ActivityType type) {
+                                    return DropdownMenuItem<ActivityType>(
+                                      value: type,
+                                      child: Row(
+                                        children: [
+                                          Image.asset(activityIcons[type]!, height: 30, width: 30),
+                                          SizedBox(width: 10),
+                                          Text(type.toString().split('.').last),
+                                        ],
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              ],
                             ),
-                            selected: selectedActivity == activity,
-                            onSelected: (selected) {
-                              setState(() {
-                                selectedActivity = activity;
-                              });
-                            },
-                          );
-                        }).toList(),
+                          ),
+                        ],
                       ),
                       const SizedBox(height: 20),
                       const Text(
@@ -229,12 +232,7 @@ class NewTaskPageState extends State<NewTaskPage> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      if (isLoading)
-                        const Center(child: CircularProgressIndicator())
-                      else if (errorMessage != null)
-                        Text(errorMessage!, style: const TextStyle(color: Colors.red))
-                      else
-                        DropdownButton<Pet>(
+                      DropdownButton<Pet>(
                           value: selectedPet,
                           onChanged: (Pet? newValue) {
                             setState(() {
@@ -249,34 +247,48 @@ class NewTaskPageState extends State<NewTaskPage> {
                           }).toList(),
                         ),
                       const SizedBox(height: 20),
-                      SizedBox(
-                        width: double.infinity,
+                      Text(
+                        'Title',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      TextField(
+                        controller: taskTitleController,
+                        decoration: InputDecoration(
+                          hintText: "Write the task's name",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      Center(
                         child: ElevatedButton(
                           onPressed: () {
-                            // Verificar si alguno de los campos requeridos está vacío
-                            if (taskTitleController.text.isEmpty || selectedActivity == null || selectedPet == null) {
-                              // Mostrar un mensaje de error
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Some data is missing'),
-                                  duration: Duration(seconds: 3),
-                                ),
-                              );
-                            } else {
-                              ToDo task = ToDo(
-                                id: selectedDate.toString(),
-                                activityName: taskTitleController.text,
+                            if (selectedActivity != null && selectedPet != null) {
+                              // Add new ToDo item to dummyToDos
+                              final newTodo = ToDo(
+                                id: DateTime.now().millisecondsSinceEpoch,
                                 date: selectedDate,
                                 time: selectedTime,
-                                activityType: selectedActivity ?? ActivityType.walk,
+                                activityName: taskTitleController.text,
                                 relatedPet: selectedPet!,
+                                activityType: selectedActivity!,
                               );
+                              // Here you can append newTodo to dummyToDos.
+                              // Since dummyToDos is outside this file, you might want to
+                              // handle this addition in a different manner or ensure
+                              // proper imports and state management.
                             }
                           },
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(const Color(0xFF8F4152)),
+                          child: Text('Save'),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: theme.colorScheme.primary,
+                            foregroundColor: theme.colorScheme.onPrimary
                           ),
-                          child: const Text('Save Task'),
                         ),
                       ),
                     ],

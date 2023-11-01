@@ -49,14 +49,13 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
-        backgroundColor: Color(0xFF8F4152),
-        centerTitle: false,
-        elevation: 2,
-      ),
-      drawer: Menu(),
+          title: Text('Edit profile'),
+          elevation: 2,
+        ),
       body: SafeArea(
         top: true,
         child: SingleChildScrollView(

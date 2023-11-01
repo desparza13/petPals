@@ -34,10 +34,10 @@ class _EditMyPetPageState extends State<EditMyPetPage> {
   @override
 
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Edit my pet'),
-        backgroundColor: const Color(0xFF8F4152),
       ),
       body: Stack(
         children: [
@@ -60,7 +60,7 @@ class _EditMyPetPageState extends State<EditMyPetPage> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(100.0),
                 ),
-                backgroundColor: Color.fromARGB(255, 84, 47, 143).withOpacity(0.6)
+                backgroundColor: theme.colorScheme.secondary.withOpacity(0.6)
               ),
               child: Row(
                 children: [

@@ -38,9 +38,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Color(0xFF8F4152),
         centerTitle: false,
         elevation: 2,
       ),

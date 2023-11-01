@@ -15,15 +15,16 @@ class AdoptionFeedPage extends StatefulWidget {
 
 class _AdoptionFeedPageState extends State<AdoptionFeedPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final _colors = const [
-    Color(0xFFFFDE59),
-    Color(0xFFDFD2C8),
-    Color(0xFFC0F6FF),
-    Color(0xFFBBFFAD)
-  ];
-
+  
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context).colorScheme;
+    final colors = [
+      theme.primaryContainer,
+      Color(0xFFDFD2C8),
+      theme.secondaryContainer,
+      theme.tertiaryContainer
+    ];
     return Scaffold(
       key: _scaffoldKey,
       drawer: Menu(),
@@ -57,7 +58,7 @@ class _AdoptionFeedPageState extends State<AdoptionFeedPage> {
               ),
             ),
             Card(
-              color: const Color.fromARGB(255, 236, 221, 248),
+              color: Theme.of(context).colorScheme.surface,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15.0),
               ),
@@ -67,7 +68,8 @@ class _AdoptionFeedPageState extends State<AdoptionFeedPage> {
                   const ListTile(
                     title: Text(
                       "Let's start the adoption!",
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                     ),
                     subtitle: Text('Find your lovely pet'),
                   ),

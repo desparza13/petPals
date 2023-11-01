@@ -27,7 +27,7 @@ class _ToDoHomeWidgetState extends State<ToDoHomeWidget> {
     return Container(
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
-        color: const Color(0xFFF3DAE3),
+        color: theme.surface,
         borderRadius: BorderRadius.circular(40),
       ),
       child: Column(
@@ -39,7 +39,6 @@ class _ToDoHomeWidgetState extends State<ToDoHomeWidget> {
               const Text(
                 'To do',
                 style: TextStyle(
-                  color: Color(0xFF8F4152),
                   fontWeight: FontWeight.bold,
                   fontSize: 22,
                 ),

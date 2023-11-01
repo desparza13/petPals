@@ -9,10 +9,11 @@ class PetAdoptionItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
     return Stack(
       children: [
         Card(
-          color: Colors.white,
+          color: theme.cardColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30.0),
           ),
@@ -44,7 +45,7 @@ class PetAdoptionItem extends StatelessWidget {
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(5.0),
-                        child: Text(pet.breed),
+                        child: Text(pet.breed, style: TextStyle(color: theme.colorScheme.background)),
                       ),
                     ),
                     const SizedBox(
@@ -59,7 +60,7 @@ class PetAdoptionItem extends StatelessWidget {
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(5.0),
-                            child: Text(pet.sex),
+                            child: Text(pet.sex, style: TextStyle(color: theme.colorScheme.background)),
                           ),
                         ),
                         const SizedBox(
@@ -72,7 +73,7 @@ class PetAdoptionItem extends StatelessWidget {
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(5.0),
-                            child: Text(pet.type),
+                            child: Text(pet.type, style: TextStyle(color: theme.colorScheme.background)),
                           ),
                         ),
                       ],
@@ -96,8 +97,9 @@ class PetAdoptionItem extends StatelessWidget {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
-                              backgroundColor:
-                                  Color.fromARGB(255, 141, 100, 212)),
+                              backgroundColor:theme.colorScheme.secondary,
+                              foregroundColor: theme.colorScheme.onSecondary),
+                              
                           child: Text(
                             'Info',
                             style: TextStyle(fontSize: 11),

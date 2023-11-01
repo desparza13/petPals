@@ -10,6 +10,7 @@ class QAPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBarWidget(scaffoldKey: _scaffoldKey),
@@ -68,7 +69,7 @@ class QAPage extends StatelessWidget {
                 ],
               ),
             ),
-            const Align(
+             Align(
               alignment: AlignmentDirectional(-1.00, 0.00),
               child: Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(20, 15, 0, 0),
@@ -76,7 +77,7 @@ class QAPage extends StatelessWidget {
                   'Most Voted',
                   style: TextStyle(
                     fontFamily: 'Ubuntu',
-                    color: Color(0xFFF5A688),
+                    color: theme.colorScheme.primary,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
