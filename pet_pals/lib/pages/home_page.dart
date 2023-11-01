@@ -4,12 +4,12 @@ import '../widgets/menu_drawer_widget.dart';
 import '../widgets/pet_home_item.dart';
 import '../widgets/to_do_home_widget.dart';
 import '../widgets/app_bar_widget.dart';
-import 'package:pet_pals/providers/data_provider.dart';
+import 'package:pet_pals/providers/data_provider_pet.dart';
 
 class HomePage extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  final colors = [
+  final colors = const [
     Color(0xFFFFDE59),
     Color(0xFFDFD2C8),
     Color(0xFFC0F6FF),
@@ -28,11 +28,11 @@ class HomePage extends StatelessWidget {
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: TextField(
                 decoration: InputDecoration(
                   hintText: 'Search pet',
-                  prefixIcon: Icon(Icons.search),
+                  prefixIcon: const Icon(Icons.search),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
@@ -81,9 +81,9 @@ class HomePage extends StatelessWidget {
               height: 20,
             ),
             Container(
-              color: Color(0xFFF4F4F4),
+              color: const Color(0xFFF4F4F4),
               width: double.infinity,
-              padding: EdgeInsets.all(10),
+              padding:const EdgeInsets.all(10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -95,19 +95,19 @@ class HomePage extends StatelessWidget {
                         fontWeight: FontWeight.bold),
                   ),
                   FutureBuilder<List<Pet>>(
-                    future: fetchPets('ejemplo'), 
+                    future: fetchPets('t5unAPjpCvZbg6nJl52Y'), 
                     builder: (BuildContext context, AsyncSnapshot<List<Pet>> snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(child: CircularProgressIndicator());
+                        return const Center(child: CircularProgressIndicator());
                       }
                       if (snapshot.hasError) {
                         return Center(child: Text('Error: ${snapshot.error}'));
                       }
                       if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                        return Center(child: Text('No Pets Found'));
+                        return const Center(child: Text('No Pets Found'));
                       }
                       List<Pet> pets = snapshot.data!;
-                      return Container(
+                      return SizedBox(
                         height: 200,
                         child: ListView.separated(
                           scrollDirection: Axis.horizontal,

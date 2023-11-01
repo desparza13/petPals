@@ -3,7 +3,7 @@ import 'package:pet_pals/widgets/app_bar_widget.dart';
 import 'package:pet_pals/widgets/menu_drawer_widget.dart';
 import 'package:pet_pals/widgets/pet_adoption_item.dart';
 import 'package:pet_pals/widgets/pets_bar_widget.dart';
-import 'package:pet_pals/providers/data_provider.dart';
+import 'package:pet_pals/providers/data_provider_pet.dart';
 import 'package:pet_pals/models/pet.dart';
 
 class AdoptionFeedPage extends StatefulWidget {

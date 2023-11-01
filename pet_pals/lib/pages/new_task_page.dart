@@ -4,7 +4,8 @@ import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
 import 'package:intl/intl.dart';
 import 'package:pet_pals/models/to_do.dart';
 import 'package:pet_pals/models/pet.dart';
-import 'package:pet_pals/providers/data_provider.dart'; // Asegúrate de cambiar esta línea por la ruta correcta a tu archivo
+import 'package:pet_pals/providers/data_provider_pet.dart'; 
+import 'package:pet_pals/providers/data_provider_todos.dart';
 import '../widgets/menu_drawer_widget.dart';
 import '../widgets/app_bar_widget.dart';
 
