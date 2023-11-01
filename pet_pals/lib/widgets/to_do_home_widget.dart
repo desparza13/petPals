@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pet_pals/models/to_do.dart';
-import 'package:pet_pals/dummy_data/dummy_to_do.dart';
+import 'package:pet_pals/providers/data_provider_todos.dart';
+
 
 class ToDoHomeWidget extends StatefulWidget {
   @override
@@ -8,9 +9,10 @@ class ToDoHomeWidget extends StatefulWidget {
 }
 
 class _ToDoHomeWidgetState extends State<ToDoHomeWidget> {
-  String _filter = 'All'; //Filtro para saber si mostrar todos los ToDo's, los completados o los no completados
+  String _filter =
+      'All'; // Filtro para saber si mostrar todos los ToDo's, los completados o los no completados
 
-  //Formatear la fecha para las etiquetas en la lista
+  // Formatear la fecha para las etiquetas en la lista
   String _formatDate(DateTime date) {
     final now = DateTime.now();
     if (date.year == now.year && date.month == now.month) {
@@ -22,14 +24,6 @@ class _ToDoHomeWidgetState extends State<ToDoHomeWidget> {
 
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context).colorScheme;
-
-    //Ordenar los elementos de más cercano a más lejano
-    List<ToDo> sortedToDos = List.from(dummyToDos)..sort((a, b) => a.date.compareTo(b.date));
-
-    //Variable a usar para que no se repita la fecha en todos los elementos
-    DateTime? previousDate;
-
     return Container(
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
@@ -51,15 +45,16 @@ class _ToDoHomeWidgetState extends State<ToDoHomeWidget> {
               ),
               Row(
                 children: [
-                  //Seleccionar valor del filtro
+                  // Seleccionar valor del filtro
                   DropdownButton<String>(
                     value: _filter,
                     items: const [
-                      DropdownMenuItem(value: 'All',child: Text('All')),
+                      DropdownMenuItem(value: 'All', child: Text('All')),
                       DropdownMenuItem(value: 'Done', child: Text('Done')),
-                      DropdownMenuItem(value: 'Not done', child: Text('Not done')),
+                      DropdownMenuItem(
+                          value: 'Not done', child: Text('Not done')),
                     ],
-                    //Actualizar el valor del filtro si este cambia
+                    // Actualizar el valor del filtro si este cambia
                     onChanged: (String? value) {
                       if (value != null) {
                         setState(() {
@@ -78,51 +73,89 @@ class _ToDoHomeWidgetState extends State<ToDoHomeWidget> {
             ],
           ),
           const SizedBox(height: 10),
-          ...sortedToDos.expand((toDo) {
-            List<Widget> widgets = [];
-            //Filtrado
-            if (_filter == 'All' || (_filter == 'Done' && toDo.completed) || (_filter == 'Not done' && !toDo.completed)) {
-              //Revisar si hay que mostrar la fecha
-              if (previousDate == null || previousDate?.day != toDo.date.day) {
-                widgets.add(
-                  Text(
-                    _formatDate(toDo.date),
-                    style: TextStyle(
-                      color: theme.tertiary,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
-                  ),
-                );
-                previousDate = toDo.date;
+          FutureBuilder<List<ToDo>>(
+            future: fetchToDos('t5unAPjpCvZbg6nJl52Y'),
+            builder:
+                (BuildContext context, AsyncSnapshot<List<ToDo>> snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              }
+              if (snapshot.hasError) {
+                return Center(child: Text('Error: ${snapshot.error}'));
+              }
+              if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                return Center(child: Text('No elements found'));
               }
 
-              widgets.add(
-                Row(
-                  children: [
-                    Checkbox(
-                      value: toDo.completed,
-                      onChanged: (bool? value) {
-                        if (value != null) {
-                          setState(() {
-                            toDo.completed = value;
-                          });
-                        }
-                      },
-                      //Checkbox circular
-                      shape: const CircleBorder(),
-                    ),
-                    //Hora formateada - Titulo de la actividad
-                    Text('${toDo.time.format(context)} - ${toDo.activityName}'),
-                    const SizedBox(width: 5),
-                    //Nombre de la mascotita
-                    Text(toDo.relatedPet.name, style: TextStyle(color: theme.tertiary, fontWeight: FontWeight.bold))
-                  ],
-                ),
+              List<ToDo> toDos = snapshot.data!;
+
+              // Ordenar los elementos de más cercano a más lejano
+              toDos.sort((a, b) => a.date.compareTo(b.date));
+
+              // Variable a usar para que no se repita la fecha en todos los elementos
+              DateTime? previousDate;
+
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: toDos.expand((toDo) {
+                  List<Widget> widgets = [];
+                  // Filtrado
+                  if (_filter == 'All' ||
+                      (_filter == 'Done' && toDo.completed) ||
+                      (_filter == 'Not done' && !toDo.completed)) {
+                    // Revisar si hay que mostrar la fecha
+                    if (previousDate == null ||
+                        previousDate?.day != toDo.date.day) {
+                      widgets.add(
+                        Text(
+                          _formatDate(toDo.date),
+                          style: const TextStyle(
+                            color: Color(0xFFED9BB7),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                        ),
+                      );
+                      previousDate = toDo.date;
+                    }
+
+                    widgets.add(
+                      Row(
+                        children: [
+                          Checkbox(
+                            value: toDo.completed,
+                            onChanged: (bool? value) async {
+                              if (value != null) {
+                                await toggleToDoCompletion(context, toDo.id);
+                                setState(() {
+                                  toDo.completed = value;
+                                });
+                              }
+                            },
+                            shape: const CircleBorder(),
+                          ),
+                          // Hora formateada - Titulo de la actividad
+                          Text(
+                            '${toDo.time.hour}:${toDo.time.minute.toString().padLeft(2, '0')} - ${toDo.activityName}',
+                            style: TextStyle(color: Colors.black),
+                          ),
+                          const SizedBox(width: 5),
+                          // Nombre de la mascota
+                          Text(
+                            toDo.relatedPet.name,
+                            style: const TextStyle(
+                                color: Color(0xFFED9BB7),
+                                fontWeight: FontWeight.bold),
+                          )
+                        ],
+                      ),
+                    );
+                  }
+                  return widgets;
+                }).toList(),
               );
-            }
-            return widgets;
-          }).toList(),
+            },
+          ),
         ],
       ),
     );

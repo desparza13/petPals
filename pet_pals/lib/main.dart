@@ -2,18 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pet_pals/providers/dark_mode_provider.dart';
 import 'package:pet_pals/theme/bloc/theme_bloc.dart';
-//Rutas
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:pet_pals/pages/home_page.dart';
+import 'widgets/menu_drawer_widget.dart';
+// Rutas
+import 'package:pet_pals/pages/adoption_feed_page.dart';
 import 'package:pet_pals/pages/add_pet_page.dart';
 import 'package:pet_pals/pages/q&a_page.dart';
 import 'package:pet_pals/pages/to_do_page.dart';
 import 'package:provider/provider.dart';
 import 'pages/welcome_page.dart';
 import 'package:pet_pals/pages/buy_page.dart';
-
 import 'package:pet_pals/widgets/bottom_nav_bar_widget.dart';
 
-
-void main(){
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(); // Inicializa Firebase
   runApp(
     MultiBlocProvider(
       providers: [
@@ -28,7 +33,7 @@ void main(){
       ], 
       child: const MyApp())
   );
-  }
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

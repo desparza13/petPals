@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_calendar_carousel/classes/event.dart';
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
-import 'package:pet_pals/widgets/app_bar_widget.dart';
+import 'package:intl/intl.dart';
 import 'package:pet_pals/models/to_do.dart';
 import 'package:pet_pals/models/pet.dart';
-import 'package:pet_pals/dummy_data/dummy_pets.dart';
+import 'package:pet_pals/providers/data_provider_pet.dart'; 
+import 'package:pet_pals/providers/data_provider_todos.dart';
 import '../widgets/menu_drawer_widget.dart';
+import '../widgets/app_bar_widget.dart';
 
 final activityIcons = {
   ActivityType.bath: 'assets/images/icons/bath_icon.png',
@@ -17,17 +20,43 @@ final activityIcons = {
 };
 
 class NewTaskPage extends StatefulWidget {
+  const NewTaskPage({super.key});
+
   @override
-  _NewTaskPageState createState() => _NewTaskPageState();
+  NewTaskPageState createState() => NewTaskPageState();
 }
 
-class _NewTaskPageState extends State<NewTaskPage> {
+class NewTaskPageState extends State<NewTaskPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   DateTime selectedDate = DateTime.now();
   TimeOfDay selectedTime = TimeOfDay.now();
   ActivityType? selectedActivity;
   Pet? selectedPet;
+  List<Pet> pets = [];
+  bool isLoading = true;
+  String? errorMessage;
+
   TextEditingController taskTitleController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _loadPets();
+  }
+
+  void _loadPets() async {
+    try {
+      pets = await fetchPets('ejemplo');
+      setState(() {
+        isLoading = false;
+      });
+    } catch (error) {
+      setState(() {
+        isLoading = false;
+        errorMessage = "No se pudieron cargar las mascotas. Por favor, intenta nuevamente más tarde.";
+      });
+    }
+  }
 
   Future<void> _selectTime(BuildContext context) async {
     var theme = Theme.of(context);
@@ -60,11 +89,11 @@ class _NewTaskPageState extends State<NewTaskPage> {
       drawer: Menu(),
       appBar: AppBarWidget(scaffoldKey: _scaffoldKey),
       body: Padding(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'New Task',
               style: TextStyle(
                 fontSize: 32,
@@ -72,14 +101,14 @@ class _NewTaskPageState extends State<NewTaskPage> {
                 color: theme.colorScheme.primary,
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.surface,
                   borderRadius: BorderRadius.circular(15),
                 ),
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -195,8 +224,8 @@ class _NewTaskPageState extends State<NewTaskPage> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 20),
-                      Text(
+                      const SizedBox(height: 20),
+                      const Text(
                         'Pet',
                         style: TextStyle(
                           fontSize: 18,
@@ -204,20 +233,20 @@ class _NewTaskPageState extends State<NewTaskPage> {
                         ),
                       ),
                       DropdownButton<Pet>(
-                        value: selectedPet,
-                        onChanged: (Pet? newValue) {
-                          setState(() {
-                            selectedPet = newValue;
-                          });
-                        },
-                        items: dummyPets.map((Pet pet) {
-                          return DropdownMenuItem<Pet>(
-                            value: pet,
-                            child: Text(pet.name),
-                          );
-                        }).toList(),
-                      ),
-                      SizedBox(height: 20),
+                          value: selectedPet,
+                          onChanged: (Pet? newValue) {
+                            setState(() {
+                              selectedPet = newValue;
+                            });
+                          },
+                          items: pets.map((Pet pet) {
+                            return DropdownMenuItem<Pet>(
+                              value: pet,
+                              child: Text(pet.name),
+                            );
+                          }).toList(),
+                        ),
+                      const SizedBox(height: 20),
                       Text(
                         'Title',
                         style: TextStyle(

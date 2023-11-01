@@ -27,8 +27,7 @@ class _BuyPageState extends State<BuyPage> {
               pinned: false,
               floating: false,
               backgroundColor: const Color(0xFFE49FAC),
-              automaticallyImplyLeading: false,
-              
+              automaticallyImplyLeading: false,              
               actions: [],
               flexibleSpace: FlexibleSpaceBar(
                 background: Container(

@@ -18,7 +18,6 @@ class _SignInPageState extends State<SignInPage> {
     var isLandscape =
         MediaQuery.of(context).orientation == Orientation.landscape;
 
-    //Logo widget to change its size depending if the device is in portrait or landscape
     Widget logo = Padding(
       padding: EdgeInsets.only(top: isLandscape ? 0 : 50),
       child: Image.asset(

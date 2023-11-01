@@ -1,5 +1,3 @@
-// models/to_do.dart
-
 import 'package:flutter/material.dart';
 import 'pet.dart';
 
@@ -14,7 +12,7 @@ enum ActivityType {
 }
 
 class ToDo {
-  final int id;
+  final String id;
   final DateTime date;
   final TimeOfDay time;
   final String activityName;

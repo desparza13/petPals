@@ -22,7 +22,6 @@ class _QuestionDetailState extends State<QuestionDetail> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // ... Contenido del encabezado
               Padding(
                 padding: EdgeInsets.only(bottom: 20),
                 child: Row(
@@ -90,7 +89,6 @@ class _QuestionDetailState extends State<QuestionDetail> {
                               size: 20,
                             ),
                             onPressed: () {
-                              // Acciones al presionar el botón
                             },
                           ),
                         ),
@@ -99,8 +97,6 @@ class _QuestionDetailState extends State<QuestionDetail> {
                   ],
                 ),
               ),
-
-              // Contenido de la pregunta y respuestas
               QuestionAndAnswersWidget(),
 
               // Botón para escribir un comentario
@@ -130,8 +126,6 @@ class QuestionAndAnswersWidget extends StatelessWidget {
       ),
       child: Column(
         children: [
-          // Contenido de la pregunta y respuestas
-          //// Generated code for this Text Widget...
           const Padding(
             padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 20),
             child: Column(
