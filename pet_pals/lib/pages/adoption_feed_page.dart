@@ -19,7 +19,7 @@ class _AdoptionFeedPageState extends State<AdoptionFeedPage> {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context).colorScheme;
-    final colors = [
+    final _colors = [
       theme.primaryContainer,
       Color(0xFFDFD2C8),
       theme.secondaryContainer,

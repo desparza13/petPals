@@ -24,10 +24,11 @@ class _ToDoHomeWidgetState extends State<ToDoHomeWidget> {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
     return Container(
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
-        color: theme.surface,
+        color: theme.colorScheme.surface,
         borderRadius: BorderRadius.circular(40),
       ),
       child: Column(
