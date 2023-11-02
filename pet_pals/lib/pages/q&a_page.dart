@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pet_pals/models/question.dart';
 import 'package:pet_pals/providers/data_provider_questions.dart';
+import 'package:pet_pals/pages/question_detail_page.dart';
 
 class QAPage extends StatefulWidget {
   @override
@@ -10,6 +10,7 @@ class QAPage extends StatefulWidget {
 
 class _QandAPageState extends State<QAPage> {
   late QuestionsDataProvider _questionsDataProvider;
+  final userId = 't5unAPjpCvZbg6nJl52Y';
 
   @override
   void initState() {
@@ -20,9 +21,7 @@ class _QandAPageState extends State<QAPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Q&A"),
-      ),
+      appBar: AppBar(),
       body: Column(
         children: [
           Container(
@@ -38,9 +37,13 @@ class _QandAPageState extends State<QAPage> {
             child: ListView(
               children: [
                 Text('Most Voted', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
-                _buildQuestionsList(),
+                _buildQuestionsList(Mode.MOST_VOTED),
+                SizedBox(height: 30),
                 Text('Most Recent', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
-                _buildQuestionsList(),
+                _buildQuestionsList(Mode.MOST_RECENT),
+                SizedBox(height: 30),
+                Text('All', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                _buildQuestionsList(Mode.ALL),
               ],
             ),
           ),
@@ -49,16 +52,17 @@ class _QandAPageState extends State<QAPage> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
+          // Aquí puedes añadir un método para crear una nueva pregunta
         },
       ),
     );
   }
 
-  Widget _buildQuestionsList() {
+  Widget _buildQuestionsList(Mode mode) {
     var theme = Theme.of(context).colorScheme;
     final colors = [
       theme.primaryContainer,
-      Color(0xFFDFD2C8),
+      theme.background,
       theme.secondaryContainer,
       theme.tertiaryContainer
     ];
@@ -71,15 +75,32 @@ class _QandAPageState extends State<QAPage> {
         if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         }
-        final questions = snapshot.data!;
+        final allQuestions = snapshot.data!;
+        List<Question> questions;
+        switch(mode) {
+          case Mode.MOST_VOTED:
+            questions = allQuestions.where((q) => q.likes.length > 0).toList() // Filtrar preguntas con más de 0 likes
+              ..sort((a, b) => b.likes.length.compareTo(a.likes.length));
+            questions = questions.take(5).toList();
+            break;
+          case Mode.MOST_RECENT:
+            questions = allQuestions..sort((a, b) => b.timestamp.compareTo(a.timestamp));
+            questions = questions.take(5).toList();
+            break;
+          case Mode.ALL:
+          default:
+            questions = allQuestions;
+            break;
+        }
         return ListView.builder(
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
           itemCount: questions.length,
           itemBuilder: (context, index) {
             final question = questions[index];
+            final isLikedByUser = question.likes.contains(userId);
             return Card(
-              color: colors[index % colors.length], // Selecciona el color basado en el índice
+              color: colors[index % colors.length],
               margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
               elevation: 5,
               child: ListTile(
@@ -89,8 +110,34 @@ class _QandAPageState extends State<QAPage> {
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
                 ),
-                trailing: Icon(Icons.favorite, color: question.likes.isNotEmpty ? Colors.red : null),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(question.likes.length.toString()),  // Muestra la cantidad de "likes"
+                    IconButton(
+                      icon: Icon(
+                        Icons.favorite,
+                        color: isLikedByUser ? Colors.red : Colors.grey, 
+                      ),
+                      onPressed: () async {
+                        if (isLikedByUser) {
+                          question.likes.remove(userId);
+                        } else {
+                          question.likes.add(userId);
+                        }
+                        await _questionsDataProvider.updateLikes(question.id, question.likes);
+                        setState(() {});
+                      },
+                    ),
+                  ],
+                ),
                 onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => QuestionDetail(question: question),
+                    ),
+                  );
                 },
               ),
             );
@@ -100,3 +147,5 @@ class _QandAPageState extends State<QAPage> {
     );
   }
 }
+
+enum Mode { MOST_VOTED, MOST_RECENT, ALL }

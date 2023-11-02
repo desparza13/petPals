@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pet_pals/pages/add_image.dart';
 import 'package:pet_pals/widgets/app_bar_widget.dart';
 import 'package:pet_pals/widgets/bottom_nav_bar_widget.dart';
 import 'package:pet_pals/widgets/menu_drawer_widget.dart';
@@ -21,7 +22,6 @@ class _AddPetPageState extends State<AddPetPage> {
   InputDecoration getInputDecoration({required String hint}) {
     return InputDecoration(
       contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-      fillColor: Colors.white,
       filled: true,
       hintText: hint,
       enabledBorder: OutlineInputBorder(
@@ -47,7 +47,7 @@ class _AddPetPageState extends State<AddPetPage> {
           Align(
             alignment: Alignment.topCenter,
             child: Container(
-              color: const Color.fromARGB(255, 255, 203, 220),
+              color: theme.colorScheme.secondary,
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
             ),
@@ -65,18 +65,7 @@ class _AddPetPageState extends State<AddPetPage> {
                   child: Container(
                     padding: const EdgeInsets.all(20),
                     child: Column(children: [
-                      ElevatedButton(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: theme.colorScheme.primary,
-                              foregroundColor: theme.colorScheme.onPrimary),
-                          child: Text('upload image')),
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text('Name'),
-                        ],
-                      ),
+                      AddImage(),
                       TextFormField(
                         decoration: getInputDecoration(hint: 'Name'),
                       ),

@@ -48,6 +48,7 @@ class MyApp extends StatelessWidget {
             '/addPet': (context) => const AddPetPage(), // Página para agregar mascota
             '/todo': (context) => const ToDoPage(), // Página de To-do
             '/qa': (context) => QAPage(), // Página de Q&A
+            '/welcomePage': (context) => WelcomePage()
           },
         );
       },

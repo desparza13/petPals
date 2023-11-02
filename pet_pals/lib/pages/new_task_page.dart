@@ -121,7 +121,6 @@ class NewTaskPageState extends State<NewTaskPage> {
                       SizedBox(height: 20),
                       Container(
                         decoration: BoxDecoration(
-                          color: Colors.white,
                           borderRadius: BorderRadius.circular(15),
                         ),
                         child: CalendarCarousel(
@@ -149,6 +148,7 @@ class NewTaskPageState extends State<NewTaskPage> {
                           todayBorderColor: theme.colorScheme.tertiary,
                           weekdayTextStyle: TextStyle(color: theme.colorScheme.primary),
                           todayButtonColor: Colors.white,
+                          daysTextStyle: TextStyle(color:theme.colorScheme.tertiary),
                           todayTextStyle: TextStyle(color: theme.colorScheme.tertiary),
                         ),
                       ),

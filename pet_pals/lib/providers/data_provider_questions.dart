@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pet_pals/models/question.dart';
-import 'package:pet_pals/models/comment.dart';
 
 class QuestionsDataProvider {
   final CollectionReference questionsCollection = FirebaseFirestore.instance.collection('questions');
@@ -49,6 +48,17 @@ class QuestionsDataProvider {
       List<String> currentComments = List<String>.from(questionDocData['comments'] ?? []);
       currentComments.add(commentRef.id);
       await questionsCollection.doc(questionId).update({'comments': currentComments});
+    }
+  }
+
+  //Actualizar likes
+  Future<void> updateLikes(String questionId, List<String> updatedLikes) async {
+    try {
+      await questionsCollection.doc(questionId).update({
+        'likes': updatedLikes
+      });
+    } catch (e) {
+      rethrow;
     }
   }
 }

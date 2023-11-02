@@ -7,16 +7,16 @@ import 'package:pet_pals/theme/bloc/theme_bloc.dart';
 import 'package:provider/provider.dart';
 
 class Menu extends StatefulWidget {
-
   @override
   State<Menu> createState() => _MenuState();
 }
 
 class _MenuState extends State<Menu> {
   final String username = "Jennifer";
-  
+
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context).colorScheme;
     // Determine if the device is in landscape or portrait
     var isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
     DarkModeProvider darkModeProvider = Provider.of<DarkModeProvider>(context);
@@ -37,7 +37,7 @@ class _MenuState extends State<Menu> {
         child: Stack(
           children: [
             // Color overlay for the background but that allows the dog to be seen
-            Container(color: Color(0xFF8F4152).withOpacity(0.7)),
+            Container(color: theme.primary.withOpacity(0.7)),
             // Drawer content
             SafeArea(
               child: Column(
@@ -96,11 +96,14 @@ class _MenuState extends State<Menu> {
                         // Change the colors to darkmode
                         setState(() {
                           darkModeProvider.toggleDarkMode();
-                          darkMode = darkModeProvider.darkMode;                          
+                          darkMode = darkModeProvider.darkMode;
                         });
 
-                        BlocProvider.of<ThemeBloc>(context)
-                            .add(ThemeChangedEvent(theme: darkMode == true ? AppTheme.themeDark : AppTheme.themeLight ));
+                        BlocProvider.of<ThemeBloc>(context).add(
+                            ThemeChangedEvent(
+                                theme: darkMode == true
+                                    ? AppTheme.themeDark
+                                    : AppTheme.themeLight));
                       },
                     ),
                   ),
@@ -109,7 +112,7 @@ class _MenuState extends State<Menu> {
                     title: const Text('Log out',
                         style: TextStyle(fontSize: 18, color: Colors.white)),
                     onTap: () {
-                      // Implementa la lógica de cerrar sesión aquí
+                      Navigator.pushNamedAndRemoveUntil(context, '/welcomePage', (route) => false);
                     },
                   ),
                 ],

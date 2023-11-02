@@ -32,7 +32,6 @@ class _SignInPageState extends State<SignInPage> {
       return InputDecoration(
         contentPadding:
             const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-        fillColor: Colors.white,
         filled: true,
         hintText: hint,
         enabledBorder: OutlineInputBorder(
@@ -70,7 +69,7 @@ class _SignInPageState extends State<SignInPage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-             Text(
+            Text(
               "Let's start the fun",
               style: TextStyle(
                 fontSize: 30,
@@ -92,7 +91,6 @@ class _SignInPageState extends State<SignInPage> {
             'Sign in to continue',
             style: TextStyle(
               fontSize: 16,
-              color: Colors.black,
             ),
           ),
         ),
@@ -146,8 +144,6 @@ class _SignInPageState extends State<SignInPage> {
             label: const Text("Sign in with Google"),
             style: ButtonStyle(
               minimumSize: MaterialStateProperty.all(const Size(220, 50)),
-              backgroundColor: MaterialStateProperty.all(Colors.white),
-              foregroundColor: MaterialStateProperty.all(Colors.black),
             ),
           ),
         ),

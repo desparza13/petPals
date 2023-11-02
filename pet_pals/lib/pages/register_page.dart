@@ -16,7 +16,6 @@ class _RegisterPageState extends State<RegisterPage> {
   InputDecoration getInputDecoration({required String hint}) {
     return InputDecoration(
       contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-      fillColor: Colors.white,
       filled: true,
       hintText: hint,
       enabledBorder: OutlineInputBorder(
@@ -84,7 +83,6 @@ class _RegisterPageState extends State<RegisterPage> {
           'Sign up to continue',
           style: TextStyle(
             fontSize: 16,
-            color: Colors.black,
           ),
         ),
         SizedBox(height: 20),
@@ -134,8 +132,6 @@ class _RegisterPageState extends State<RegisterPage> {
             label: const Text("Continue with Google"),
             style: ButtonStyle(
               minimumSize: MaterialStateProperty.all(const Size(220, 50)),
-              backgroundColor: MaterialStateProperty.all(Colors.white),
-              foregroundColor: MaterialStateProperty.all(Colors.black),
             ),
           ),
         ),

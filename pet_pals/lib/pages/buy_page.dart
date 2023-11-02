@@ -159,11 +159,11 @@ class _BuyPageState extends State<BuyPage> {
                               children: [
                                 Container(
                                   width: double.infinity,
-                                  decoration: const BoxDecoration(
+                                  decoration:  BoxDecoration(
                                     gradient: LinearGradient(
                                       colors: [
-                                        Color(0xFFF3A4B3),
-                                        Color(0xFFF8DDE3)
+                                        Theme.of(context).colorScheme.primary,
+                                        Theme.of(context).colorScheme.secondary
                                       ],
                                       stops: [0, 1],
                                       begin: AlignmentDirectional(1, -1),
@@ -185,8 +185,7 @@ class _BuyPageState extends State<BuyPage> {
                                                     fontFamily: 'Ubuntu',
                                                     fontSize:
                                                         16, // Tamaño del texto
-                                                    color: Color(
-                                                        0xFF5D5D5D), // Color del texto
+ // Color del texto
                                                   ),
                                             ),
                                                ],

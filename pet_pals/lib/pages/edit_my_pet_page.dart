@@ -17,7 +17,6 @@ class _EditMyPetPageState extends State<EditMyPetPage> {
   InputDecoration getInputDecoration({required String hint}) {
     return InputDecoration(
       contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-      fillColor: Colors.white,
       filled: true,
       hintText: hint,
       enabledBorder: OutlineInputBorder(

@@ -40,14 +40,12 @@ class WelcomePage extends StatelessWidget {
                         'Join Our',
                         style: TextStyle(
                           fontSize: getFontSize(30, 20),
-                          color: Colors.black,
                         ),
                       ),
                       Text(
                         'Animal Lovers',
                         style: TextStyle(
                           fontSize: getFontSize(35, 25),
-                          color: Colors.black,
                         ),
                       ),
                       Text(
@@ -55,7 +53,6 @@ class WelcomePage extends StatelessWidget {
                         style: TextStyle(
                           fontSize: getFontSize(40, 35),
                           fontWeight: FontWeight.bold,
-                          color: Colors.black,
                         ),
                       ),
                     ],
