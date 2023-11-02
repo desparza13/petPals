@@ -20,7 +20,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(); // Inicializa Firebase
   runApp(
-    MultiBlocProvider(
+    MultiProvider(
       providers: [
         //Bloc Provider para los temas de la aplicación
         BlocProvider( 

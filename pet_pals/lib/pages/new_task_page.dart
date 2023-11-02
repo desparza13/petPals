@@ -93,7 +93,7 @@ class NewTaskPageState extends State<NewTaskPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+            Text(
               'New Task',
               style: TextStyle(
                 fontSize: 32,
@@ -271,7 +271,7 @@ class NewTaskPageState extends State<NewTaskPage> {
                             if (selectedActivity != null && selectedPet != null) {
                               // Add new ToDo item to dummyToDos
                               final newTodo = ToDo(
-                                id: DateTime.now().millisecondsSinceEpoch,
+                                id: DateTime.now().millisecondsSinceEpoch.toString(),
                                 date: selectedDate,
                                 time: selectedTime,
                                 activityName: taskTitleController.text,

@@ -29,7 +29,6 @@ class WelcomePage extends StatelessWidget {
               children: [
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 35),
-                  //Alignment depending on the orientation
                   alignment:
                       isLandscape ? Alignment.center : Alignment.centerLeft,
                   child: Column(
@@ -54,7 +53,7 @@ class WelcomePage extends StatelessWidget {
                       Text(
                         'Community',
                         style: TextStyle(
-                          fontSize: getFontSize(50, 35),
+                          fontSize: getFontSize(40, 35),
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
                         ),
@@ -66,7 +65,6 @@ class WelcomePage extends StatelessWidget {
                 Center(
                   child: Image.asset(
                     'assets/images/welcome.png',
-                    //Change image size depending on orientation
                     width: isLandscape ? 250 : null,
                     fit: BoxFit.contain,
                   ),
@@ -75,7 +73,6 @@ class WelcomePage extends StatelessWidget {
                 Center(
                   child: ElevatedButton(
                     onPressed: () {
-                      //Go to register
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(builder: (context) => RegisterPage()),
@@ -88,7 +85,7 @@ class WelcomePage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(30.0),
                       ),
                       padding: const EdgeInsets.symmetric(
-                              horizontal: 50, vertical: 10)
+                          horizontal: 50, vertical: 10),
                     ),
                     child: const Text(
                       "Let's Go",
@@ -96,6 +93,7 @@ class WelcomePage extends StatelessWidget {
                     ),
                   ),
                 ),
+                const SizedBox(height: 20), // Espaciado adicional
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -108,7 +106,6 @@ class WelcomePage extends StatelessWidget {
                     ),
                     TextButton(
                       onPressed: () {
-                        //Go to sign in
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => SignInPage()),
@@ -123,12 +120,7 @@ class WelcomePage extends StatelessWidget {
                     )
                   ],
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    TermsOfUseWidget()
-                  ],
-                )
+                TermsOfUseWidget(),
               ],
             ),
           ),

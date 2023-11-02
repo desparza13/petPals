@@ -138,7 +138,6 @@ class _ToDoHomeWidgetState extends State<ToDoHomeWidget> {
                           // Hora formateada - Titulo de la actividad
                           Text(
                             '${toDo.time.hour}:${toDo.time.minute.toString().padLeft(2, '0')} - ${toDo.activityName}',
-                            style: TextStyle(color: Colors.black),
                           ),
                           const SizedBox(width: 5),
                           // Nombre de la mascota

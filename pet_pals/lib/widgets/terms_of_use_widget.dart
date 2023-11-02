@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 
 class TermsOfUseWidget extends StatelessWidget {
   const TermsOfUseWidget({super.key});
+
   void _showDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -22,7 +23,7 @@ class TermsOfUseWidget extends StatelessWidget {
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
-                    color: Theme.of(context).colorScheme.primary
+                    color: Theme.of(context).colorScheme.primary,
                   ),
                 ),
                 SizedBox(height: 12.0),
@@ -68,21 +69,20 @@ class TermsOfUseWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.all(16),
-        child: Row(
-          children: [
-            Text('By creating an account, you are agreeing to our'),
-            GestureDetector(
-              child: Text(
-                ' Terms & Conditions',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              onTap: () {
-                print('aaa');
-                _showDialog(context);
-              },
-            )
-          ],
-        ));
+      padding: EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('By creating an account, you are agreeing to our'),
+          GestureDetector(
+            child: Text(
+              'Terms & Conditions',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            onTap: () => _showDialog(context),
+          ),
+        ],
+      ),
+    );
   }
 }
