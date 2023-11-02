@@ -1,618 +1,102 @@
 import 'package:flutter/material.dart';
-import 'package:pet_pals/pages/add_question_page.dart';
-import 'package:pet_pals/pages/question_detail_page.dart';
-import 'package:pet_pals/widgets/app_bar_widget.dart';
-import 'package:pet_pals/widgets/menu_drawer_widget.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:pet_pals/models/question.dart';
+import 'package:pet_pals/providers/data_provider_questions.dart';
 
-class QAPage extends StatelessWidget {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  QAPage({Key? key}) : super(key: key);
+class QAPage extends StatefulWidget {
+  @override
+  _QandAPageState createState() => _QandAPageState();
+}
+
+class _QandAPageState extends State<QAPage> {
+  late QuestionsDataProvider _questionsDataProvider;
+
+  @override
+  void initState() {
+    super.initState();
+    _questionsDataProvider = QuestionsDataProvider();
+  }
 
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context);
     return Scaffold(
-      key: _scaffoldKey,
-      appBar: AppBarWidget(scaffoldKey: _scaffoldKey),
-      drawer: Menu(),
-      body: SafeArea(
-        top: true,
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Container(
-              width: double.infinity, 
-              padding: EdgeInsets.all(10),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.only(right: 10),
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Search Question',
-                          prefixIcon: Icon(Icons.search),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => AddQuestionPage()),
-                      );
-                    },
-                    child: Container(
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF5E17EB),
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(
-                            color: const Color(0xFF5E17EB), width: 1),
-                      ),
-                      child: const Center(
-                        child: Icon(
-                          Icons.add,
-                          color: Colors
-                              .white, 
-                          size: 24,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-             Align(
-              alignment: AlignmentDirectional(-1.00, 0.00),
-              child: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(20, 15, 0, 0),
-                child: Text(
-                  'Most Voted',
-                  style: TextStyle(
-                    fontFamily: 'Ubuntu',
-                    color: theme.colorScheme.primary,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => QuestionDetail()),
-                      );
-                    },
-                    child: Align(
-                      alignment: const AlignmentDirectional(-1.00, 0.00),
-                      child: Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            16, 15, 12, 12),
-                        child: Container(
-                          width: 200,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: const [
-                              BoxShadow(
-                                blurRadius: 4,
-                                color: Color(0x34090F13),
-                                offset: Offset(0, 2),
-                              )
-                            ],
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Align(
-                                alignment:
-                                    const AlignmentDirectional(1.00, -1.00),
-                                child: Container(
-                                  width: double.infinity,
-                                  height: 140,
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xFFC0F6FF),
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  child: const Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        12, 12, 12, 12),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              'Question Title',
-                                              style: TextStyle(
-                                                fontFamily: 'Ubuntu',
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                            ),
-                                            Align(
-                                              alignment: AlignmentDirectional(
-                                                  1.00, 0.00),
-                                              child: Icon(
-                                                Icons.favorite,
-                                                color: Color(0xFFD51A1A),
-                                                size: 20,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        Text(
-                                          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor...',
-                                          style: TextStyle(
-                                            fontFamily: 'Readex Pro',
-                                            color: Color(0xFF232121),
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.normal,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Align(
-                    alignment: const AlignmentDirectional(-1.00, 0.00),
-                    child: Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(16, 15, 12, 12),
-                      child: Container(
-                        width: 200,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          boxShadow: const [
-                            BoxShadow(
-                              blurRadius: 4,
-                              color: Color(0x34090F13),
-                              offset: Offset(0, 2),
-                            )
-                          ],
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => QuestionDetail()),
-                                );
-                              },
-                              child: Container(
-                                width: double.infinity,
-                                height: 140,
-                                decoration: BoxDecoration(
-                                  color: const Color(0xFF82E47A),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: const Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      12, 12, 12, 12),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            'Question Title',
-                                            style: TextStyle(
-                                              fontFamily: 'Readex Pro',
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                          ),
-                                          Align(
-                                            alignment: AlignmentDirectional(
-                                                1.00, 0.00),
-                                            child: Icon(
-                                              Icons.favorite,
-                                              color: Color(0xFFD51A1A),
-                                              size: 20,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      Text(
-                                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor...',
-                                        style: TextStyle(
-                                          fontFamily: 'Readex Pro',
-                                          color: Color(0xFF232121),
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Align(
-                    alignment: const AlignmentDirectional(-1.00, 0.00),
-                    child: Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(16, 15, 12, 12),
-                      child: Container(
-                        width: 200,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          boxShadow: const [
-                            BoxShadow(
-                              blurRadius: 4,
-                              color: Color(0x34090F13),
-                              offset: Offset(0, 2),
-                            )
-                          ],
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Container(
-                              width: double.infinity,
-                              height: 140,
-                              decoration: BoxDecoration(
-                                color: const Color(0xFF9865FF),
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: const Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    12, 12, 12, 12),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          'Question Title',
-                                          style: TextStyle(
-                                            fontFamily: 'Readex Pro',
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                        Align(
-                                          alignment:
-                                              AlignmentDirectional(1.00, 0.00),
-                                          child: Icon(
-                                            Icons.favorite,
-                                            color: Color(0xFFD51A1A),
-                                            size: 20,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Text(
-                                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor...',
-                                      style: TextStyle(
-                                        fontFamily: 'Readex Pro',
-                                        color: Color(0xFF232121),
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const Align(
-              alignment: AlignmentDirectional(-1.00, 0.00),
-              child: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
-                child: Text(
-                  'Most Recent',
-                  style: TextStyle(
-                    fontFamily: 'Ubuntu',
-                    color: Color(0xFFF5A688),
-                    fontWeight: FontWeight.w800,
-                  ),
-                ),
-              ),
-            ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Align(
-                    alignment: const AlignmentDirectional(-1.00, 0.00),
-                    child: Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(16, 15, 12, 12),
-                      child: Container(
-                        width: 200,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          boxShadow: const [
-                            BoxShadow(
-                              blurRadius: 4,
-                              color: Color(0x34090F13),
-                              offset: Offset(0, 2),
-                            )
-                          ],
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Container(
-                              width: double.infinity,
-                              height: 140,
-                              decoration: BoxDecoration(
-                                color: const Color(0xFFA0C4FF),
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: const Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    12, 12, 12, 12),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          'Question Title',
-                                          style: TextStyle(
-                                            fontFamily: 'Readex Pro',
-                                            fontSize: 16, 
-                                            color: Color(
-                                                0xFF232121), 
-                                            fontWeight: FontWeight
-                                                .w600, 
-                                          ),
-                                        ),
-                                        Align(
-                                          alignment:
-                                              AlignmentDirectional(1.00, 0.00),
-                                          child: Icon(
-                                            Icons.favorite,
-                                            color: Color(0xFFD51A1A),
-                                            size: 20,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Text(
-                                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor...',
-                                      style: TextStyle(
-                                        fontSize: 15, 
-                                        color: Color(
-                                            0xFF232121), 
-                                        fontWeight: FontWeight
-                                            .normal, 
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Align(
-                    alignment: const AlignmentDirectional(-1.00, 0.00),
-                    child: Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(16, 15, 12, 12),
-                      child: Container(
-                        width: 200,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          boxShadow: const [
-                            BoxShadow(
-                              blurRadius: 4,
-                              color: Color(0x34090F13),
-                              offset: Offset(0, 2),
-                            )
-                          ],
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Container(
-                              width: double.infinity,
-                              height: 140,
-                              decoration: BoxDecoration(
-                                color: const Color(0xFFFCBF49),
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: const Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    12, 12, 12, 12),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          'Question Title',
-                                          style: TextStyle(
-                                            fontFamily: 'Readex Pro',
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                        Align(
-                                          alignment:
-                                              AlignmentDirectional(1.00, 0.00),
-                                          child: Icon(
-                                            Icons.favorite,
-                                            color: Color(0xFFD51A1A),
-                                            size: 20,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Text(
-                                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor...',
-                                      style: TextStyle(
-                                        fontFamily: 'Readex Pro',
-                                        color: Color(0xFF232121),
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Align(
-                    alignment: const AlignmentDirectional(-1.00, 0.00),
-                    child: Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(16, 15, 12, 12),
-                      child: Container(
-                        width: 200,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          boxShadow: const [
-                            BoxShadow(
-                              blurRadius: 4,
-                              color: Color(0x34090F13),
-                              offset: Offset(0, 2),
-                            )
-                          ],
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Container(
-                              width: double.infinity,
-                              height: 140,
-                              decoration: BoxDecoration(
-                                color: const Color(0xFFFB6F92),
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: const Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    12, 12, 12, 12),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          'Question Title',
-                                          style: TextStyle(
-                                            fontFamily: 'Readex Pro',
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                        Align(
-                                          alignment:
-                                              AlignmentDirectional(1.00, 0.00),
-                                          child: Icon(
-                                            Icons.favorite,
-                                            color: Color(0xFFD51A1A),
-                                            size: 20,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Text(
-                                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor...',
-                                      style: TextStyle(
-                                        fontFamily: 'Readex Pro',
-                                        color: Color(0xFF232121),
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+      appBar: AppBar(
+        title: Text("Q&A"),
       ),
+      body: Column(
+        children: [
+          Container(
+            padding: EdgeInsets.all(16),
+            child: TextField(
+              decoration: InputDecoration(
+                hintText: 'Search Question',
+                prefixIcon: Icon(Icons.search),
+              ),
+            ),
+          ),
+          Expanded(
+            child: ListView(
+              children: [
+                Text('Most Voted', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                _buildQuestionsList(),
+                Text('Most Recent', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                _buildQuestionsList(),
+              ],
+            ),
+          ),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+        },
+      ),
+    );
+  }
+
+  Widget _buildQuestionsList() {
+    var theme = Theme.of(context).colorScheme;
+    final colors = [
+      theme.primaryContainer,
+      Color(0xFFDFD2C8),
+      theme.secondaryContainer,
+      theme.tertiaryContainer
+    ];
+    return FutureBuilder<List<Question>>(
+      future: _questionsDataProvider.fetchAllQuestions(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator();
+        }
+        if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        }
+        final questions = snapshot.data!;
+        return ListView.builder(
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          itemCount: questions.length,
+          itemBuilder: (context, index) {
+            final question = questions[index];
+            return Card(
+              color: colors[index % colors.length], // Selecciona el color basado en el índice
+              margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+              elevation: 5,
+              child: ListTile(
+                title: Text(question.content),
+                subtitle: Text(
+                  question.answer,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                ),
+                trailing: Icon(Icons.favorite, color: question.likes.isNotEmpty ? Colors.red : null),
+                onTap: () {
+                },
+              ),
+            );
+          },
+        );
+      },
     );
   }
 }

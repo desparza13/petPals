@@ -17,7 +17,7 @@ class Pet {
   String size;
 
   Pet({
-    this.id = 'ejemplo',
+    required this.id,
     required this.name,
     required this.location,
     required this.type,
@@ -35,6 +35,7 @@ class Pet {
   factory Pet.fromDocument(DocumentSnapshot doc) {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
     return Pet(
+      id: doc.id,
       name: data['name'],
       location: data['location'],
       type: data['type'],

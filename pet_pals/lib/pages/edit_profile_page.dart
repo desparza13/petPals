@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pet_pals/models/user.dart';
 import 'package:pet_pals/providers/data_provider_users.dart';
-import 'package:pet_pals/widgets/menu_drawer_widget.dart';
 
 class EditProfile extends StatefulWidget {
   @override

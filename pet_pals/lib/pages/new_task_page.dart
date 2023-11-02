@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_calendar_carousel/classes/event.dart';
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
-import 'package:intl/intl.dart';
 import 'package:pet_pals/models/to_do.dart';
 import 'package:pet_pals/models/pet.dart';
 import 'package:pet_pals/providers/data_provider_pet.dart'; 
@@ -46,7 +44,7 @@ class NewTaskPageState extends State<NewTaskPage> {
 
   void _loadPets() async {
     try {
-      pets = await fetchPets('ejemplo');
+      pets = await fetchPets('t5unAPjpCvZbg6nJl52Y');
       setState(() {
         isLoading = false;
       });
@@ -254,22 +252,17 @@ class NewTaskPageState extends State<NewTaskPage> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(height: 10),
                       TextField(
                         controller: taskTitleController,
                         decoration: InputDecoration(
-                          hintText: "Write the task's name",
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
+                          hintText: 'Enter Task Title',
                         ),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       Center(
                         child: ElevatedButton(
-                          onPressed: () {
-                            if (selectedActivity != null && selectedPet != null) {
-                              // Add new ToDo item to dummyToDos
+                          onPressed: () async {
+                            if (selectedActivity != null && selectedPet != null && taskTitleController.text.isNotEmpty) {
                               final newTodo = ToDo(
                                 id: DateTime.now().millisecondsSinceEpoch.toString(),
                                 date: selectedDate,
@@ -277,17 +270,38 @@ class NewTaskPageState extends State<NewTaskPage> {
                                 activityName: taskTitleController.text,
                                 relatedPet: selectedPet!,
                                 activityType: selectedActivity!,
+                                completed: false,
                               );
-                              // Here you can append newTodo to dummyToDos.
-                              // Since dummyToDos is outside this file, you might want to
-                              // handle this addition in a different manner or ensure
-                              // proper imports and state management.
+
+                              try {
+                                await addToDo(newTodo);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('Task added successfully'),
+                                    duration: Duration(seconds: 2),
+                                  ),
+                                );
+                              } catch (error) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('Error adding task. Please try again.'),
+                                    duration: Duration(seconds: 2),
+                                  ),
+                                );
+                              }
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('Please fill in all fields'),
+                                  duration: Duration(seconds: 2),
+                                ),
+                              );
                             }
                           },
                           child: Text('Save'),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: theme.colorScheme.primary,
-                            foregroundColor: theme.colorScheme.onPrimary
+                            foregroundColor: theme.colorScheme.onPrimary,
                           ),
                         ),
                       ),

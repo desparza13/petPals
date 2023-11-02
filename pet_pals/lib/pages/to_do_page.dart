@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pet_pals/widgets/app_bar_widget.dart';
-import 'package:pet_pals/widgets/bottom_nav_bar_widget.dart';
 import 'package:pet_pals/providers/data_provider_todos.dart';
 import 'package:pet_pals/models/to_do.dart';
 import '../widgets/menu_drawer_widget.dart';

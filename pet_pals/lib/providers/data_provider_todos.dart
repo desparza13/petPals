@@ -79,3 +79,22 @@ Future<void> toggleToDoCompletion(BuildContext context, String taskId) async {
     throw Exception("The document doesn't exist");
   }
 }
+
+//Añadir elemento
+Future<void> addToDo(ToDo toDo) async {
+  CollectionReference todos = FirebaseFirestore.instance.collection('todos');
+  try {
+    await todos.add({
+      'date': toDo.date,
+      'time': '${toDo.time.hour}:${toDo.time.minute}',
+      'activityName': toDo.activityName,
+      'relatedPetId': toDo.relatedPet.id,
+      'activityType': toDo.activityType.toString().split('.').last, 
+      'completed': toDo.completed,
+      'user' : 't5unAPjpCvZbg6nJl52Y'
+    });
+  } catch (error) {
+    rethrow;
+  }
+}
+

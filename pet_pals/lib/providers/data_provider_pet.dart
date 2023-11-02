@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:pet_pals/models/pet.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -13,6 +12,7 @@ Future<List<Pet>> fetchPets(String userId) async {
   List<Pet> pets = petQuerySnapshot.docs.map((doc) {
     Map<String, dynamic> petData = doc.data() as Map<String, dynamic>;
     return Pet(
+      id: doc.id,
       name: petData['name'],
       location: petData['location'],
       type: petData['type'],
@@ -39,6 +39,7 @@ Future<Pet?> fetchPetById(String petId) async {
   if (petDoc.exists) {
     Map<String, dynamic> petData = petDoc.data() as Map<String, dynamic>;
     return Pet(
+        id: petDoc.id,
         name: petData['name'],
         location: petData['location'],
         type: petData['type'],
@@ -68,6 +69,7 @@ Future<List<Pet>> fetchPetsInAdoption() async {
   for (DocumentSnapshot doc in petQuerySnapshot.docs) {
     Map<String, dynamic> petData = doc.data() as Map<String, dynamic>;
     pets.add(Pet(
+        id: doc.id,
         name: petData['name'],
         location: petData['location'],
         type: petData['type'],

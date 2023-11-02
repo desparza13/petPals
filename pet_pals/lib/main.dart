@@ -3,11 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pet_pals/providers/dark_mode_provider.dart';
 import 'package:pet_pals/theme/bloc/theme_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:pet_pals/pages/home_page.dart';
-import 'widgets/menu_drawer_widget.dart';
 // Rutas
-import 'package:pet_pals/pages/adoption_feed_page.dart';
 import 'package:pet_pals/pages/add_pet_page.dart';
 import 'package:pet_pals/pages/q&a_page.dart';
 import 'package:pet_pals/pages/to_do_page.dart';
