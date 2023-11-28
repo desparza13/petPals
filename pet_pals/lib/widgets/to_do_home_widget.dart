@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:pet_pals/models/to_do.dart';
 import 'package:pet_pals/providers/data_provider_todos.dart';
 
-
 class ToDoHomeWidget extends StatefulWidget {
+
+  const ToDoHomeWidget({super.key});
   @override
   _ToDoHomeWidgetState createState() => _ToDoHomeWidgetState();
 }
@@ -75,7 +76,7 @@ class _ToDoHomeWidgetState extends State<ToDoHomeWidget> {
           ),
           const SizedBox(height: 10),
           FutureBuilder<List<ToDo>>(
-            future: fetchToDos('t5unAPjpCvZbg6nJl52Y'),
+            future: fetchToDos(),
             builder:
                 (BuildContext context, AsyncSnapshot<List<ToDo>> snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {

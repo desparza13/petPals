@@ -6,7 +6,6 @@ import '../widgets/menu_drawer_widget.dart';
 
 class ToDoPage extends StatefulWidget {
   const ToDoPage({super.key});
-
   @override
   ToDoPageState createState() => ToDoPageState();
 }
@@ -28,7 +27,7 @@ class ToDoPageState extends State<ToDoPage> {
   };
 
   Future<void> initToDos() async {
-    List<ToDo> fetchedToDos = await fetchToDos('t5unAPjpCvZbg6nJl52Y');
+    List<ToDo> fetchedToDos = await fetchToDos();
     setState(() {
       todos = fetchedToDos;
       isLoading = false;
@@ -99,138 +98,139 @@ class ToDoPageState extends State<ToDoPage> {
       key: _scaffoldKey,
       drawer: Menu(),
       appBar: AppBarWidget(scaffoldKey: _scaffoldKey),
-      body: isLoading 
-      ? Center(child: CircularProgressIndicator())
-      : Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Text(
-              'My To-Do list',
-              style: TextStyle(
-                color: theme.primary,
-                fontWeight: FontWeight.bold,
-                fontSize: 32,
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+      body: isLoading
+          ? Center(child: CircularProgressIndicator())
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                DropdownButton<String>(
-                  value: timeFilter,
-                  items: ['Today', 'This week', 'This month', 'All']
-                      .map((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                  onChanged: (value) {
-                    setState(() {
-                      timeFilter = value!;
-                    });
-                  },
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Text(
+                    'My To-Do list',
+                    style: TextStyle(
+                      color: theme.primary,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 32,
+                    ),
+                  ),
                 ),
-                SizedBox(width: 10),
-                DropdownButton<String>(
-                  value: completionFilter,
-                  items: ['Not done', 'Done', 'All'].map((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                  onChanged: (value) {
-                    setState(() {
-                      completionFilter = value!;
-                    });
-                  },
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      DropdownButton<String>(
+                        value: timeFilter,
+                        items: ['Today', 'This week', 'This month', 'All']
+                            .map((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                        onChanged: (value) {
+                          setState(() {
+                            timeFilter = value!;
+                          });
+                        },
+                      ),
+                      SizedBox(width: 10),
+                      DropdownButton<String>(
+                        value: completionFilter,
+                        items: ['Not done', 'Done', 'All'].map((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                        onChanged: (value) {
+                          setState(() {
+                            completionFilter = value!;
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.surface,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: ListView.builder(
+                      padding: const EdgeInsets.all(10.0),
+                      itemCount: filteredTodos().length,
+                      itemBuilder: (ctx, index) {
+                        final toDo = filteredTodos()[index];
+                        List<Widget> widgets = [];
+
+                        if (previousDate == null ||
+                            previousDate?.day != toDo.date.day) {
+                          widgets.add(
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 8.0),
+                                child: Text(
+                                  _formatDate(toDo.date),
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: theme.tertiary,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+
+                          previousDate = toDo.date;
+                        }
+
+                        widgets.add(
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            child: Row(
+                              children: [
+                                Image.asset(
+                                  activityIcons[toDo.activityType]!,
+                                  width: 40,
+                                  height: 40,
+                                ),
+                                SizedBox(width: 10),
+                                Text(
+                                  toDo.time.format(context),
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                                SizedBox(width: 10),
+                                Text(
+                                  toDo.activityName,
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                                SizedBox(width: 10),
+                                Text(
+                                  toDo.relatedPet.name,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: theme.tertiary,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+
+                        return Column(
+                          children: widgets,
+                        );
+                      },
+                    ),
+                  ),
                 ),
               ],
             ),
-          ),
-          Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surface,
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: ListView.builder(
-                padding: const EdgeInsets.all(10.0),
-                itemCount: filteredTodos().length,
-                itemBuilder: (ctx, index) {
-                  final toDo = filteredTodos()[index];
-                  List<Widget> widgets = [];
-
-                  if (previousDate == null ||
-                      previousDate?.day != toDo.date.day) {
-                    widgets.add(
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: Text(
-                            _formatDate(toDo.date),
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: theme.tertiary,
-                            ),
-                          ),
-                        ),
-                      ),
-                    );
-
-                    previousDate = toDo.date;
-                  }
-
-                  widgets.add(
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: Row(
-                        children: [
-                          Image.asset(
-                            activityIcons[toDo.activityType]!,
-                            width: 40,
-                            height: 40,
-                          ),
-                          SizedBox(width: 10),
-                          Text(
-                            toDo.time.format(context),
-                            style: TextStyle(fontSize: 18),
-                          ),
-                          SizedBox(width: 10),
-                          Text(
-                            toDo.activityName,
-                            style: TextStyle(fontSize: 18),
-                          ),
-                          SizedBox(width: 10),
-                          Text(
-                            toDo.relatedPet.name,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: theme.tertiary,
-                              fontSize: 18,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-
-                  return Column(
-                    children: widgets,
-                  );
-                },
-              ),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

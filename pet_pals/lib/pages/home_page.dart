@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pet_pals/providers/user_provider.dart';
 import '../models/pet.dart';
 import '../widgets/menu_drawer_widget.dart';
 import '../widgets/pet_home_item.dart';
@@ -8,8 +11,10 @@ import 'package:pet_pals/providers/data_provider_pet.dart';
 
 class HomePage extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  
+
   HomePage({super.key});
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -82,19 +87,18 @@ class HomePage extends StatelessWidget {
             ),
             Container(
               width: double.infinity,
-              padding:const EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
                     'Your pets',
-                    style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                   ),
                   FutureBuilder<List<Pet>>(
-                    future: fetchPets('t5unAPjpCvZbg6nJl52Y'), 
-                    builder: (BuildContext context, AsyncSnapshot<List<Pet>> snapshot) {
+                    future: fetchPets(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<List<Pet>> snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const Center(child: CircularProgressIndicator());
                       }
@@ -110,7 +114,8 @@ class HomePage extends StatelessWidget {
                         child: ListView.separated(
                           scrollDirection: Axis.horizontal,
                           itemCount: pets.length,
-                          separatorBuilder: (context, index) => const SizedBox(width: 10),
+                          separatorBuilder: (context, index) =>
+                              const SizedBox(width: 10),
                           itemBuilder: (context, index) {
                             Pet pet = pets[index];
                             return PetHomeItem(
@@ -121,7 +126,7 @@ class HomePage extends StatelessWidget {
                         ),
                       );
                     },
-                  ),
+                  )
                 ],
               ),
             ),
@@ -135,3 +140,4 @@ class HomePage extends StatelessWidget {
     );
   }
 }
+

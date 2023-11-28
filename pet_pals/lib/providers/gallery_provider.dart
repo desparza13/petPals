@@ -31,7 +31,7 @@ class GalleryProvider extends ChangeNotifier{
     if(Platform.isAndroid){
       result = await Permission.storage.request();
     }else{
-      result = await Permission.photos.request();
+      result = await Permission.storage.request();
     }
     print(result);
     if(result.isGranted){

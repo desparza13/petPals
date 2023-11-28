@@ -1,3 +1,4 @@
+import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pet_pals/pages/profile_page.dart';
@@ -107,14 +108,7 @@ class _MenuState extends State<Menu> {
                       },
                     ),
                   ),
-                  ListTile(
-                    leading: Icon(Icons.logout, color: Colors.white),
-                    title: const Text('Log out',
-                        style: TextStyle(fontSize: 18, color: Colors.white)),
-                    onTap: () {
-                      Navigator.pushNamedAndRemoveUntil(context, '/welcomePage', (route) => false);
-                    },
-                  ),
+                  const SignOutButton(),
                 ],
               ),
             ),

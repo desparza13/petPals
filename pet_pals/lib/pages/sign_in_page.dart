@@ -2,8 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart' hide EmailAuthProvider;
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:firebase_ui_oauth_google/firebase_ui_oauth_google.dart'; // new
 import 'package:flutter/material.dart';
+import 'package:pet_pals/providers/user_provider.dart';
 import 'package:pet_pals/widgets/bottom_nav_bar_widget.dart';
 import 'package:pet_pals/widgets/terms_of_use_widget.dart';
+import 'package:provider/provider.dart';
 // import 'home.dart';
 
 class SignInPage extends StatelessWidget {
@@ -12,6 +14,8 @@ class SignInPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context).colorScheme;
+    String uid = '';
+
     return StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
@@ -20,17 +24,12 @@ class SignInPage extends StatelessWidget {
             showPasswordVisibilityToggle: true,
             providers: [
               EmailAuthProvider(),
-              //  GoogleSignInProvider(clientId: "YOUR_WEBCLIENT_ID"),
-               GoogleProvider(clientId: "1069943460237-4ln6ct15ipljstraarn46ratd8edeqqs.apps.googleusercontent.com"),  // new
+              GoogleProvider(
+                  clientId:
+                      "1069943460237-4ln6ct15ipljstraarn46ratd8edeqqs.apps.googleusercontent.com"), // new
             ],
             headerBuilder: (context, constraints, shrinkOffset) {
-              return Padding(
-                padding: const EdgeInsets.all(20),
-                child: AspectRatio(
-                  aspectRatio: 1,
-                  child: Image.asset('assets/images/sign_in.png'),
-                ),
-              );
+              return Image.asset('assets/images/sign_in.png');
             },
             subtitleBuilder: (context, action) {
               return Column(
@@ -48,16 +47,16 @@ class SignInPage extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 10),
-                      Image.asset(
-                        'assets/images/paw_icon.png',
-                        width: 70,
-                        height: 70,
-                      ),
+                      // Image.asset(
+                      //   'assets/images/paw_icon.png',
+                      //   width: 70,
+                      //   height: 70,
+                      // ),
                     ],
                   ),
                   action == AuthAction.signIn
-                   ? const Text('Welcome to PetPals, please sign in!')
-                   : const Text('Welcome to PetPals, please sign up!'),
+                      ? const Text('Welcome to PetPals, please sign in!')
+                      : const Text('Welcome to PetPals, please sign up!'),
                 ],
               );
             },
@@ -75,8 +74,7 @@ class SignInPage extends StatelessWidget {
             },
           );
         }
-
-        return const BottomNavBar();
+        return BottomNavBar();
       },
     );
   }

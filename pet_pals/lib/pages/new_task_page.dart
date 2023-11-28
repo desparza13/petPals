@@ -44,7 +44,7 @@ class NewTaskPageState extends State<NewTaskPage> {
 
   void _loadPets() async {
     try {
-      pets = await fetchPets('t5unAPjpCvZbg6nJl52Y');
+      pets = await fetchPets();
       setState(() {
         isLoading = false;
       });
@@ -271,6 +271,7 @@ class NewTaskPageState extends State<NewTaskPage> {
                                 relatedPet: selectedPet!,
                                 activityType: selectedActivity!,
                                 completed: false,
+                                user: ''
                               );
 
                               try {
