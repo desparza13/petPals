@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:pet_pals/models/pet.dart';
 import 'package:pet_pals/pages/add_image.dart';
+import 'package:pet_pals/providers/data_provider_pet.dart';
 import 'package:pet_pals/widgets/app_bar_widget.dart';
 import 'package:pet_pals/widgets/bottom_nav_bar_widget.dart';
 import 'package:pet_pals/widgets/menu_drawer_widget.dart';
@@ -13,26 +16,36 @@ class AddPetPage extends StatefulWidget {
 
 class _AddPetPageState extends State<AddPetPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController breedController = TextEditingController();
+  TextEditingController typeController = TextEditingController();
+  TextEditingController ageController = TextEditingController();
+  TextEditingController colorController = TextEditingController();
+  TextEditingController locationController = TextEditingController();
 
   final List<String> _sex = ['Female', 'Male'];
   String _sexSelected = 'Female';
   final List<String> _sterilized = ['Yes', 'No'];
   String _sterilizedSelected = 'No';
 
-  InputDecoration getInputDecoration({required String hint}) {
-    return InputDecoration(
-      contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-      filled: true,
-      hintText: hint,
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(25),
-        borderSide: const BorderSide(color: Color(0xFFEE8454)),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(25),
-        borderSide: const BorderSide(color: Color(0xFF5E17EB)),
-      ),
-    );
+  String getuid() {
+    String uid = '';
+
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      if (user != null) {
+        uid = user.uid;
+        print('AAAAAAA');
+        print(uid);
+      }
+    });
+
+    return uid;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
   }
 
   @override
@@ -53,6 +66,12 @@ class _AddPetPageState extends State<AddPetPage> {
             ),
           ),
           Positioned(
+              top: 10,
+              bottom: 500,
+              left: 0,
+              right: 0,
+              child: AddImage()),
+          Positioned(
               top: MediaQuery.of(context).size.height / 4,
               bottom: 0,
               left: 0,
@@ -65,36 +84,29 @@ class _AddPetPageState extends State<AddPetPage> {
                   child: Container(
                     padding: const EdgeInsets.all(20),
                     child: Column(children: [
-                      AddImage(),
-                      TextFormField(
-                        decoration: getInputDecoration(hint: 'Name'),
+                      TextField(
+                        controller: nameController,
+                        decoration: InputDecoration(
+                            hintText: 'Name', labelText: 'Name'),
                       ),
-                      SizedBox(
-                        height: 10,
+                      const SizedBox(
+                        height: 15,
                       ),
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text('Type'),
-                        ],
+                      TextField(
+                        controller: typeController,
+                        decoration: const InputDecoration(
+                            hintText: 'Type', labelText: 'Type'),
                       ),
-                      TextFormField(
-                        decoration: getInputDecoration(hint: 'Type'),
+                      const SizedBox(
+                        height: 15,
                       ),
-                      SizedBox(
-                        height: 10,
+                      TextField(
+                        controller: breedController,
+                        decoration: InputDecoration(
+                            hintText: 'Breed', labelText: 'Breed'),
                       ),
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text('Breed'),
-                        ],
-                      ),
-                      TextFormField(
-                        decoration: getInputDecoration(hint: 'Breed'),
-                      ),
-                      SizedBox(
-                        height: 10,
+                      const SizedBox(
+                        height: 15,
                       ),
                       const Row(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -103,7 +115,6 @@ class _AddPetPageState extends State<AddPetPage> {
                         ],
                       ),
                       DropdownButtonFormField<String>(
-                        decoration: getInputDecoration(hint: 'Sex'),
                         value: _sexSelected,
                         items: _sex.map((option) {
                           return DropdownMenuItem<String>(
@@ -111,34 +122,35 @@ class _AddPetPageState extends State<AddPetPage> {
                             child: Text(option),
                           );
                         }).toList(),
-                        onChanged: (Object? value) {},
+                        onChanged: (String? value) {
+                          setState(() {
+                            _sexSelected = value!;
+                          });
+                        },
                       ),
                       SizedBox(
-                        height: 10,
+                        height: 15,
                       ),
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text('Age'),
-                        ],
-                      ),
-                      TextFormField(
-                        decoration: getInputDecoration(hint: 'Age'),
+                      TextField(
+                        controller: ageController,
+                        decoration:
+                            InputDecoration(hintText: 'Age', labelText: 'Age'),
                       ),
                       SizedBox(
-                        height: 10,
+                        height: 15,
                       ),
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text('Color'),
-                        ],
-                      ),
-                      TextFormField(
-                        decoration: getInputDecoration(hint: 'Color'),
+                      TextField(
+                        controller: colorController,
+                        decoration: InputDecoration(
+                            hintText: 'Color', labelText: 'Color'),
                       ),
                       SizedBox(
-                        height: 10,
+                        height: 15,
+                      ),
+                      TextField(
+                        controller: locationController,
+                        decoration: InputDecoration(
+                            hintText: 'Location', labelText: 'Location'),
                       ),
                       const Row(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -147,7 +159,6 @@ class _AddPetPageState extends State<AddPetPage> {
                         ],
                       ),
                       DropdownButtonFormField<String>(
-                        decoration: getInputDecoration(hint: 'sterilized'),
                         value: _sterilizedSelected,
                         items: _sterilized.map((option) {
                           return DropdownMenuItem<String>(
@@ -164,11 +175,42 @@ class _AddPetPageState extends State<AddPetPage> {
                               style: ElevatedButton.styleFrom(
                                   backgroundColor: theme.colorScheme.primary,
                                   foregroundColor: theme.colorScheme.onPrimary),
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => BottomNavBar()));
+                              onPressed: () async {
+                                final newPet = Pet(
+                                    name: nameController.text,
+                                    type: typeController.text,
+                                    breed: breedController.text,
+                                    sex: _sexSelected,
+                                    age: int.parse(ageController.text),
+                                    color: colorController.text,
+                                    sterilized: _sterilizedSelected == 'Yes'
+                                        ? true
+                                        : false,
+                                    location: locationController.text,
+                                    propietario: '',
+                                    image:
+                                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnDO-fiT9BHhY4J4tFgVWtgMmqwSXxIIP90bq_rJwygHD_cq6rSXtfEDVTdPStRGLYzZo&usqp=CAU");
+                                try {
+                                  await addPet(newPet);
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text('Pet added successfully'),
+                                      duration: Duration(seconds: 2),
+                                    ),
+                                  );
+                                } catch (error) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                          'Error adding pet. Please try again.'),
+                                      duration: Duration(seconds: 2),
+                                    ),
+                                  );
+                                }
+                                // Navigator.push(
+                                //     context,
+                                //     MaterialPageRoute(
+                                //         builder: (context) => BottomNavBar()));
                               },
                               child: Text('Add pet'))
                         ],

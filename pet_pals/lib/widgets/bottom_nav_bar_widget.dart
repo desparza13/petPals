@@ -21,17 +21,18 @@ class _BottomNavBarState extends State<BottomNavBar> {
     });
   }
 
-  final List<Widget> _pages = [
-    HomePage(),
-    NewTaskPage(),
-    const ToDoPage(),
-    const AdoptionFeedPage(),
-    QAPage(),
-  ];
-
+  
   @override
   Widget build(BuildContext context) {
+    final List<Widget> _pages = [
+      HomePage(),
+      NewTaskPage(),
+      ToDoPage(),
+      const AdoptionFeedPage(),
+      QAPage(),
+    ];
     var theme = Theme.of(context).colorScheme;
+
     return Scaffold(
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(

@@ -62,9 +62,7 @@ class _AddImageState extends State<AddImage> {
             widget = _selectedImage(_model.file!);
             break;
         }
-        return Container(
-          child: widget,
-        );
+        return widget;
       }),
     );
   }
@@ -73,8 +71,9 @@ class _AddImageState extends State<AddImage> {
     var theme = Theme.of(context);
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
-            backgroundColor: theme.colorScheme.primary,
-            foregroundColor: theme.colorScheme.onPrimary),
+          backgroundColor: theme.colorScheme.secondary,
+          foregroundColor: theme.colorScheme.onPrimary,
+        ),
         onPressed: () {
           _checkPermissions();
         },
@@ -86,20 +85,47 @@ class _AddImageState extends State<AddImage> {
     return Container(
       child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-            backgroundColor: theme.colorScheme.primary,
-            foregroundColor: theme.colorScheme.onPrimary),
+              backgroundColor: theme.colorScheme.primary,
+              foregroundColor: theme.colorScheme.onPrimary),
           onPressed: () {
             isPermanent ? openAppSettings() : _checkPermissions();
           },
           child: Text(isPermanent ? 'Open settings' : 'Allow access')),
     );
   }
-}
 
-Widget _selectedImage(File? newSelectedImage) => newSelectedImage == null
-    ? Container()
-    : Image.file(
-        newSelectedImage,
-        height: 200,
-        fit: BoxFit.fill,
-      );
+  Widget _selectedImage(File? newSelectedImage) {
+    var theme = Theme.of(context);
+
+    return newSelectedImage == null
+        ? Container()
+        : Stack(
+            children: [
+              Align(
+                alignment: Alignment.topCenter,
+                child: Container(
+                    color: Colors.red,
+                    child: Image.file(
+                      newSelectedImage,
+                      height: 190,
+                      fit: BoxFit.fill,
+                    )),
+              ),
+              Positioned(
+                  top: 140,
+                  bottom: 40,
+                  left: 100,
+                  right: 100,
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: theme.colorScheme.primary,
+                        foregroundColor: theme.colorScheme.onPrimary,
+                      ),
+                      onPressed: () {
+                        _checkPermissions();
+                      },
+                      child: Text('Change image'))),
+            ],
+          );
+  }
+}

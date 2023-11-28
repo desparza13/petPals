@@ -1,3 +1,4 @@
+import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_pals/pages/edit_profile_page.dart';
 import 'package:pet_pals/widgets/menu_drawer_widget.dart';

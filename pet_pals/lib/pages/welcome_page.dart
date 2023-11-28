@@ -72,7 +72,7 @@ class WelcomePage extends StatelessWidget {
                     onPressed: () {
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (context) => RegisterPage()),
+                        MaterialPageRoute(builder: (context) => SignInPage()),
                       );
                     },
                     style: ElevatedButton.styleFrom(
@@ -91,33 +91,33 @@ class WelcomePage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 20), // Espaciado adicional
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Already have an account?',
-                      style: TextStyle(
-                        fontSize: getFontSize(20, 16),
-                        color: Colors.grey,
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => SignInPage()),
-                        );
-                      },
-                      child: Text(
-                        'Sign in',
-                        style: TextStyle(
-                            fontSize: getFontSize(20, 16),
-                            color: Theme.of(context).colorScheme.secondary),
-                      ),
-                    )
-                  ],
-                ),
-                TermsOfUseWidget(),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [
+                //     Text(
+                //       'Already have an account?',
+                //       style: TextStyle(
+                //         fontSize: getFontSize(20, 16),
+                //         color: Colors.grey,
+                //       ),
+                //     ),
+                //     TextButton(
+                //       onPressed: () {
+                //         Navigator.push(
+                //           context,
+                //           MaterialPageRoute(builder: (context) => SignInPage()),
+                //         );
+                //       },
+                //       child: Text(
+                //         'Sign in',
+                //         style: TextStyle(
+                //             fontSize: getFontSize(20, 16),
+                //             color: Theme.of(context).colorScheme.secondary),
+                //       ),
+                //     )
+                //   ],
+                // ),
+                
               ],
             ),
           ),

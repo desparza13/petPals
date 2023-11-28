@@ -17,7 +17,7 @@ class Pet {
   String size;
 
   Pet({
-    required this.id,
+    this.id = '',
     required this.name,
     required this.location,
     required this.type,

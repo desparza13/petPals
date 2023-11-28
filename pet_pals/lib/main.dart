@@ -1,6 +1,8 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pet_pals/providers/dark_mode_provider.dart';
+import 'package:pet_pals/providers/user_provider.dart';
 import 'package:pet_pals/theme/bloc/theme_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 // Rutas
@@ -26,6 +28,8 @@ void main() async {
         ChangeNotifierProvider(
           create: (context) => DarkModeProvider()
           ),
+        ChangeNotifierProvider(
+          create: (context) => UserProvider())
       ], 
       child: const MyApp())
   );

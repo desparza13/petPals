@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'pet.dart';
 
 enum ActivityType {
-  bath,     // bañar
-  eat,      // comer
+  bath, // bañar
+  eat, // comer
   medicine, // medicina
-  vaccine,  // vacuna
-  vet,      // veterinario
-  walk,     // pasear
-  play      // jugar
+  vaccine, // vacuna
+  vet, // veterinario
+  walk, // pasear
+  play // jugar
 }
 
 class ToDo {
@@ -19,6 +19,7 @@ class ToDo {
   final Pet relatedPet;
   final ActivityType activityType;
   bool completed;
+  final String user;
 
   ToDo({
     required this.id,
@@ -28,5 +29,6 @@ class ToDo {
     required this.relatedPet,
     required this.activityType,
     this.completed = false,
+    required this.user
   });
 }
