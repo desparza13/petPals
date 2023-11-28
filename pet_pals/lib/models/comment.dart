@@ -5,12 +5,14 @@ class Comment {
   final String content; // Contenido del comentario
   final String userId; // ID del usuario que hizo el comentario
   final DateTime timestamp; // Fecha y hora de creación del comentario
+  final String questionId;
 
   Comment({
     required this.id,
     required this.content,
     required this.userId,
     required this.timestamp,
+    required this.questionId
   });
 
   // Conversión de un documento Firestore a una instancia de Comment
@@ -21,6 +23,7 @@ class Comment {
       content: data['content'],
       userId: data['userId'],
       timestamp: data['timestamp'].toDate(),
+      questionId: data['questionId']
     );
   }
 
@@ -30,6 +33,7 @@ class Comment {
       'content': content,
       'userId': userId,
       'timestamp': timestamp,
+      'questionId': questionId
     };
   }
 }

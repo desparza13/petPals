@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pet_pals/models/question.dart';
 
+import '../models/comment.dart';
+
 class QuestionsDataProvider {
   final CollectionReference questionsCollection = FirebaseFirestore.instance.collection('questions');
   final CollectionReference commentsCollection = FirebaseFirestore.instance.collection('comments');
@@ -9,6 +11,16 @@ class QuestionsDataProvider {
   Future<List<Question>> fetchAllQuestions() async {
     QuerySnapshot querySnapshot = await questionsCollection.get();
     return querySnapshot.docs.map((doc) => Question.fromFirestore(doc)).toList();
+  }
+
+    // Obtener una pregunta por ID
+  Future<Question> fetchQuestion(String questionId) async {
+    DocumentSnapshot doc = await questionsCollection.doc(questionId).get();
+    if (doc.exists && doc.data() != null) {
+      return Question.fromFirestore(doc);
+    } else {
+      throw Exception('Question not found');
+    }
   }
 
   // Agregar una nueva pregunta
@@ -33,6 +45,11 @@ class QuestionsDataProvider {
       }
     }
   }
+  // Obtener comentarios para una pregunta específica
+  Future<List<Comment>> fetchCommentsForQuestion(String questionId) async {
+    QuerySnapshot querySnapshot = await commentsCollection.where('questionId', isEqualTo: questionId).get();
+    return querySnapshot.docs.map((doc) => Comment.fromFirestore(doc)).toList();
+  }
 
   // Agregar un comentario a una pregunta
   Future<void> addComment(String questionId, String commentContent, String userId) async {
@@ -40,6 +57,7 @@ class QuestionsDataProvider {
       'content': commentContent,
       'userId': userId,
       'timestamp': Timestamp.now(),
+      'questionId': questionId
     });
 
     DocumentSnapshot questionDoc = await questionsCollection.doc(questionId).get();
