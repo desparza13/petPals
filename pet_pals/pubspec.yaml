@@ -104,6 +104,8 @@ flutter:
     - assets/images/icons/bunnie_icon.png
     - assets/terms_and_conditions.md
     - assets/lottie/no_results.json
+    - assets/lottie/question.json
+    - assets/lottie/Animation - 1701151008730.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
