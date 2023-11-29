@@ -59,7 +59,15 @@ class HomePage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Hi Jenny!',
+                        'Hello',
+                        style: TextStyle(
+                            color: theme.primary,
+                            fontSize: 32,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        FirebaseAuth.instance.currentUser!.displayName == null? '': 
+                        FirebaseAuth.instance.currentUser!.displayName.toString(),
                         style: TextStyle(
                             color: theme.primary,
                             fontSize: 32,
@@ -98,7 +106,7 @@ class HomePage extends StatelessWidget {
                   FutureBuilder<List<Pet>>(
                     future: fetchPets(),
                     builder: (BuildContext context,
-                        AsyncSnapshot<List<Pet>> snapshot) {
+                      AsyncSnapshot<List<Pet>> snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const Center(child: CircularProgressIndicator());
                       }

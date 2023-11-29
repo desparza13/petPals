@@ -6,37 +6,35 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 //Obtener todas las mascotas de un usuario
 Future<List<Pet>> fetchPets() async {
   List<Pet> pets = [];
-  FirebaseAuth.instance.authStateChanges().listen((User? user) async {
-    if (user != null) {
-      String uid = user.uid;
-      print('TURBIO');
-      print(uid);
+  String uid = FirebaseAuth.instance.currentUser!.uid;
+  print('AAAAAAAAAAA');
+  print(uid);
 
-      QuerySnapshot petQuerySnapshot = await FirebaseFirestore.instance
-          .collection('pets')
-          .where('propietario', isEqualTo: uid)
-          .get();
+  QuerySnapshot petQuerySnapshot = await FirebaseFirestore.instance
+      .collection('pets')
+      .where('propietario', isEqualTo: uid)
+      .get();
 
-      List<Pet> pets = petQuerySnapshot.docs.map((doc) {
-        Map<String, dynamic> petData = doc.data() as Map<String, dynamic>;
-        return Pet(
-          id: doc.id,
-          name: petData['name'],
-          location: petData['location'],
-          type: petData['type'],
-          breed: petData['breed'],
-          age: petData['age'],
-          sex: petData['sex'],
-          color: petData['color'],
-          sterilized: petData['sterilized'],
-          image: petData['image'],
-          size: petData['size'] ?? '',
-          propietario: petData['propietario'],
-          inAdoption: petData['inAdoption'],
-        );
-      }).toList();
-    }
-  });
+  pets = petQuerySnapshot.docs.map((doc) {
+    Map<String, dynamic> petData = doc.data() as Map<String, dynamic>;
+    print('pets');
+    print(petData);
+    return Pet(
+      id: doc.id,
+      name: petData['name'],
+      location: petData['location'],
+      type: petData['type'],
+      breed: petData['breed'],
+      age: petData['age'],
+      sex: petData['sex'],
+      color: petData['color'],
+      sterilized: petData['sterilized'],
+      image: petData['image'],
+      size: petData['size'] ?? '',
+      propietario: petData['propietario'],
+      inAdoption: petData['inAdoption'],
+    );
+  }).toList();
 
   return pets;
 }
@@ -99,30 +97,25 @@ Future<List<Pet>> fetchPetsInAdoption() async {
 
 //Añadir mascota
 Future<void> addPet(Pet pet) async {
-  FirebaseAuth.instance.authStateChanges().listen((User? user) async {
-    if (user != null) {
-      String uid = '';
-      uid = user.uid;
-      
-      CollectionReference pets = FirebaseFirestore.instance.collection('pets');
-      try {
-        await pets.add({
-          'name': pet.name,
-          'location': pet.location,
-          'type': pet.type,
-          'breed': pet.breed,
-          'age': pet.age,
-          'sex': pet.sex,
-          'color': pet.color,
-          'sterilized': pet.sterilized,
-          'image': pet.image,
-          'propietario': uid,
-          'inAdoption': pet.inAdoption,
-          'size': pet.size
-        });
-      } catch (error) {
-        rethrow;
-      }
-    }
-  });
+  String uid = FirebaseAuth.instance.currentUser!.uid;
+
+  CollectionReference pets = FirebaseFirestore.instance.collection('pets');
+  try {
+    await pets.add({
+      'name': pet.name,
+      'location': pet.location,
+      'type': pet.type,
+      'breed': pet.breed,
+      'age': pet.age,
+      'sex': pet.sex,
+      'color': pet.color,
+      'sterilized': pet.sterilized,
+      'image': pet.image,
+      'propietario': uid,
+      'inAdoption': pet.inAdoption,
+      'size': pet.size
+    });
+  } catch (error) {
+    rethrow;
+  }
 }

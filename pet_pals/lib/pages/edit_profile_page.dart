@@ -1,31 +1,24 @@
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:pet_pals/models/user.dart';
-import 'package:pet_pals/providers/data_provider_users.dart';
+import 'package:pet_pals/pages/sign_in_page.dart';
 
-class Editprofile extends StatelessWidget {
-  const Editprofile({super.key});
+class EditProfile extends StatelessWidget {
+  const EditProfile({super.key});
 
   @override
   Widget build(BuildContext context) {
     return ProfileScreen(
       appBar: AppBar(
-        title: const Text('User Profile'),
+        title: const Text('User Profile', style: TextStyle(color: Colors.white),),
       ),
       actions: [
         SignedOutAction((context) {
-          Navigator.of(context).pop();
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => SignInPage()));
         })
       ],
       children: [
-        const Divider(),
-        Padding(
-          padding: const EdgeInsets.all(2),
-          child: AspectRatio(
-            aspectRatio: 1,
-            child: Image.asset('assets/flutterfire_300x.png'),
-          ),
-        ),
+        
       ],
     );
   }

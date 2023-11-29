@@ -207,10 +207,10 @@ class _AddPetPageState extends State<AddPetPage> {
                                     ),
                                   );
                                 }
-                                // Navigator.push(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //         builder: (context) => BottomNavBar()));
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => BottomNavBar()));
                               },
                               child: Text('Add pet'))
                         ],

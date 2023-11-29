@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_pals/pages/edit_profile_page.dart';
@@ -16,23 +17,9 @@ class _ProfilePageState extends State<ProfilePage> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final usersDataProvider = UsersDataProvider();
 
-  User? _user;
-
   @override
   void initState() {
     super.initState();
-    _getUserData();
-  }
-
-  _getUserData() async {
-    try {
-      User userData = await usersDataProvider.getUserById("t5unAPjpCvZbg6nJl52Y");
-      setState(() {
-        _user = userData;
-      });
-    } catch (e) {
-      print("Error getting user data: $e");
-    }
   }
 
   @override
@@ -50,12 +37,12 @@ class _ProfilePageState extends State<ProfilePage> {
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-              if (_user != null) 
+              if (FirebaseAuth.instance.currentUser != null) 
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20.0),
                   child: CircleAvatar(
                     radius: 80.0,
-                    backgroundImage: NetworkImage(_user!.image),
+                    backgroundImage: NetworkImage(''),
                   ),
                 ),
               Container(
