@@ -22,8 +22,6 @@ class _AddQuestionPageState extends State<AddQuestionPage> {
 
   void _submitQuestion() async {
     if (_formKey.currentState!.validate()) {
-      // Aquí iría la lógica para enviar la pregunta
-      // Utilizando el _dataProvider para añadir la pregunta a la base de datos
     }
   }
 
@@ -42,8 +40,8 @@ class _AddQuestionPageState extends State<AddQuestionPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                          Lottie.asset('assets/lottie/Animation - 1701151008730.json', width: 200, height: 200),
-                SizedBox(height: 20), // Añade un espacio después de la animación
+                          Lottie.asset('assets/lottie/question.json', width: 200, height: 200),
+                SizedBox(height: 20), 
                 TextFormField(
                   controller: _questionController,
                   decoration: InputDecoration(
