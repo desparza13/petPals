@@ -1,6 +1,9 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:pet_pals/models/pet.dart';
 import 'package:pet_pals/pages/edit_my_pet_page.dart';
+import 'package:pet_pals/providers/data_provider_pet.dart';
 import 'package:pet_pals/widgets/info_my_pet_widget.dart';
 
 class MyPetPage extends StatelessWidget {
@@ -27,7 +30,22 @@ class MyPetPage extends StatelessWidget {
             child: SizedBox(
               height: MediaQuery.of(context).size.height / 2.7,
               width: MediaQuery.of(context).size.width,
-              child: Image.network(pet.image, fit: BoxFit.fill),
+              child: FutureBuilder<Uint8List>(
+                      future: getFirebaseImage(pet.image),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return CircularProgressIndicator();
+                        } else if (snapshot.hasError) {
+                          return Image.asset(
+                            "assets/images/icons/paws.png",
+                            fit: BoxFit.cover,
+                          );
+                        } else {
+                          return Image.memory(snapshot.data!,
+                              width: double.infinity, height: double.infinity, fit: BoxFit.cover,);
+                        }
+                      }),
             ),
           ),
           Positioned(

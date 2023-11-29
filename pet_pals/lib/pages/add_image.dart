@@ -23,6 +23,7 @@ class _AddImageState extends State<AddImage> {
 
   Future<void> _checkPermissions() async {
     final hasFilePermission = await _model.requestPermission();
+
     if (hasFilePermission) {
       try {
         await _model.pickFile();
@@ -96,7 +97,8 @@ class _AddImageState extends State<AddImage> {
 
   Widget _selectedImage(File? newSelectedImage) {
     var theme = Theme.of(context);
-
+    Provider.of<GalleryProvider>(context, listen: false).file =
+        File(newSelectedImage!.path);
     return newSelectedImage == null
         ? Container()
         : Stack(

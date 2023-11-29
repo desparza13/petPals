@@ -59,6 +59,7 @@ dependencies:
   google_sign_in: ^6.1.6
   firebase_ui_oauth_google: ^1.2.14
   lottie: ^2.7.0
+  firebase_storage: ^11.5.3
 
 dev_dependencies:
   flutter_test:
@@ -113,6 +114,8 @@ flutter:
     - assets/lottie/question.json
     - assets/lottie/Animation - 1701151008730.json
     - assets/lottie/sleepy.json
+    - assets/images/icons/paws.png
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

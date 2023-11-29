@@ -14,8 +14,6 @@ class HomePage extends StatelessWidget {
 
   HomePage({super.key});
 
-  
-
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context).colorScheme;
@@ -25,6 +23,7 @@ class HomePage extends StatelessWidget {
       theme.secondaryContainer,
       theme.tertiaryContainer
     ];
+    var name = FirebaseAuth.instance.currentUser!.displayName;
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBarWidget(scaffoldKey: _scaffoldKey),
@@ -66,8 +65,7 @@ class HomePage extends StatelessWidget {
                             fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        FirebaseAuth.instance.currentUser!.displayName == null? '': 
-                        FirebaseAuth.instance.currentUser!.displayName.toString(),
+                        name == null? '': name.toString().split(' ')[0],
                         style: TextStyle(
                             color: theme.primary,
                             fontSize: 32,
@@ -106,7 +104,7 @@ class HomePage extends StatelessWidget {
                   FutureBuilder<List<Pet>>(
                     future: fetchPets(),
                     builder: (BuildContext context,
-                      AsyncSnapshot<List<Pet>> snapshot) {
+                        AsyncSnapshot<List<Pet>> snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const Center(child: CircularProgressIndicator());
                       }
@@ -148,4 +146,3 @@ class HomePage extends StatelessWidget {
     );
   }
 }
-

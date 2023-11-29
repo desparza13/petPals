@@ -1,6 +1,9 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:pet_pals/pages/my_pet_page.dart';
 import '../models/pet.dart';
+import 'package:pet_pals/providers/data_provider_pet.dart';
 
 class PetHomeItem extends StatelessWidget {
   final Pet pet;
@@ -29,18 +32,29 @@ class PetHomeItem extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                         builder: (context) => MyPetPage(
-                              pet:pet,
+                              pet: pet,
                             )));
               },
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(35),
-                child: Image.network(
-                  pet.image,
-                  fit: BoxFit.cover,
-                  width: double.infinity,
-                  height: double.infinity,
-                ),
-              ),
+                  borderRadius: BorderRadius.circular(35),
+                  child: FutureBuilder<Uint8List>(
+                      future: getFirebaseImage(pet.image),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return CircularProgressIndicator();
+                        } else if (snapshot.hasError) {
+                          return Image.asset(
+                            "assets/images/icons/paws.png",
+                            width: double.infinity,
+                            height: double.infinity,
+                            fit: BoxFit.cover,
+                          );
+                        } else {
+                          return Image.memory(snapshot.data!,
+                              width: double.infinity, height: double.infinity, fit: BoxFit.cover,);
+                        }
+                      })),
             ),
           ),
           // Fondo semi transparente en la parte inferior de la imagen (no se si ponerlo sin opacidad)

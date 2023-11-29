@@ -1,6 +1,12 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:pet_pals/models/pet.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+final _storage = FirebaseStorage.instance;
 
 //Pets
 //Obtener todas las mascotas de un usuario
@@ -96,11 +102,30 @@ Future<List<Pet>> fetchPetsInAdoption() async {
 }
 
 //Añadir mascota
-Future<void> addPet(Pet pet) async {
+Future<void> addPet(Pet pet, File? selectedImage) async {
   String uid = FirebaseAuth.instance.currentUser!.uid;
+  print(selectedImage);
+  var path;
+
+  //Asignar path dependiendo la imagen
+  if (selectedImage != null) {
+    var listPath = selectedImage.path.split('/');
+    path = listPath[listPath.length - 1];
+    final storageRef = _storage.ref();
+    storageRef.child("pets/$path").putFile(selectedImage);
+  } else {
+    path = 'paws.png'; //En caso de que no haya foto, se pone la default
+  }
 
   CollectionReference pets = FirebaseFirestore.instance.collection('pets');
   try {
+    // final storageRef = _storage.refFromURL('gs://petpals-9935f.appspot.com');
+    // var imageRef = storageRef.child('pets/$path');
+    // Uint8List? data = await imageRef.getData();
+    // print('DATAAAAAA');
+
+    // print(data);
+
     await pets.add({
       'name': pet.name,
       'location': pet.location,
@@ -110,7 +135,7 @@ Future<void> addPet(Pet pet) async {
       'sex': pet.sex,
       'color': pet.color,
       'sterilized': pet.sterilized,
-      'image': pet.image,
+      'image': 'pets/$path',
       'propietario': uid,
       'inAdoption': pet.inAdoption,
       'size': pet.size
@@ -118,4 +143,17 @@ Future<void> addPet(Pet pet) async {
   } catch (error) {
     rethrow;
   }
+}
+
+Future<Uint8List> getFirebaseImage(String path) async {
+  final storageRef = _storage.refFromURL('gs://petpals-9935f.appspot.com');
+  var imageRef = storageRef.child(path);
+  const res = 1024 * 1024;
+  Uint8List? data = await imageRef.getData(res);
+  if (data == null) {
+    var imageRef = storageRef.child("pets/paws.png");
+    data = await imageRef.getData(res);
+    return data!;
+  }
+  return data;
 }

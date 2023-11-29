@@ -11,13 +11,13 @@ enum ImageSection {
   imageLoaded,
 }
 
-class GalleryProvider extends ChangeNotifier{
+class GalleryProvider extends ChangeNotifier {
   ImageSection _imageSection = ImageSection.browseFiles;
 
   ImageSection get imageSection => _imageSection;
 
-  set imageSection(ImageSection value){
-    if(value != _imageSection){
+  set imageSection(ImageSection value) {
+    if (value != _imageSection) {
       _imageSection = value;
       notifyListeners();
     }
@@ -25,27 +25,29 @@ class GalleryProvider extends ChangeNotifier{
 
   File? file;
 
+  //Solicitar permisos de galeria
   Future<bool> requestPermission() async {
     PermissionStatus result;
 
-    if(Platform.isAndroid){
+    if (Platform.isAndroid) {
       result = await Permission.storage.request();
-    }else{
+    } else {
       result = await Permission.storage.request();
     }
     print(result);
-    if(result.isGranted){
+    if (result.isGranted) {
       imageSection = ImageSection.browseFiles;
       return true;
-    }else if(Platform.isIOS || result.isPermanentlyDenied){
+    } else if (Platform.isIOS || result.isPermanentlyDenied) {
       imageSection = ImageSection.noStoragePermissionPermanent;
-    }else{
+    } else {
       imageSection = ImageSection.noStoragePermission;
     }
 
     return false;
   }
 
+  //Elegir imagen de galeria
   Future<void> pickFile() async {
     final ImagePicker picker = ImagePicker();
     final XFile? pickedImage = await picker.pickImage(
@@ -59,6 +61,6 @@ class GalleryProvider extends ChangeNotifier{
       // change the path to store in a different directory
       file = File(pickedImage.path!);
       imageSection = ImageSection.imageLoaded;
-    } 
+    }
   }
 }

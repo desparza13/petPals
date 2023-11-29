@@ -1,11 +1,14 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:pet_pals/models/pet.dart';
 import 'package:pet_pals/pages/add_image.dart';
 import 'package:pet_pals/providers/data_provider_pet.dart';
+import 'package:pet_pals/providers/gallery_provider.dart';
 import 'package:pet_pals/widgets/app_bar_widget.dart';
 import 'package:pet_pals/widgets/bottom_nav_bar_widget.dart';
 import 'package:pet_pals/widgets/menu_drawer_widget.dart';
+import 'package:provider/provider.dart';
 
 class AddPetPage extends StatefulWidget {
   const AddPetPage({super.key});
@@ -28,26 +31,6 @@ class _AddPetPageState extends State<AddPetPage> {
   final List<String> _sterilized = ['Yes', 'No'];
   String _sterilizedSelected = 'No';
 
-  String getuid() {
-    String uid = '';
-
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
-      if (user != null) {
-        uid = user.uid;
-        print('AAAAAAA');
-        print(uid);
-      }
-    });
-
-    return uid;
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
@@ -66,11 +49,7 @@ class _AddPetPageState extends State<AddPetPage> {
             ),
           ),
           Positioned(
-              top: 10,
-              bottom: 500,
-              left: 0,
-              right: 0,
-              child: AddImage()),
+              top: 10, bottom: 500, left: 0, right: 0, child: AddImage()),
           Positioned(
               top: MediaQuery.of(context).size.height / 4,
               bottom: 0,
@@ -176,6 +155,12 @@ class _AddPetPageState extends State<AddPetPage> {
                                   backgroundColor: theme.colorScheme.primary,
                                   foregroundColor: theme.colorScheme.onPrimary),
                               onPressed: () async {
+                                File? selectedImage;
+                                selectedImage = Provider.of<GalleryProvider>(
+                                        context,
+                                        listen: false)
+                                    .file;
+                                
                                 final newPet = Pet(
                                     name: nameController.text,
                                     type: typeController.text,
@@ -188,10 +173,9 @@ class _AddPetPageState extends State<AddPetPage> {
                                         : false,
                                     location: locationController.text,
                                     propietario: '',
-                                    image:
-                                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnDO-fiT9BHhY4J4tFgVWtgMmqwSXxIIP90bq_rJwygHD_cq6rSXtfEDVTdPStRGLYzZo&usqp=CAU");
+                                    image: '');
                                 try {
-                                  await addPet(newPet);
+                                  await addPet(newPet, selectedImage);
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                       content: Text('Pet added successfully'),
