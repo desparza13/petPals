@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:confetti/confetti.dart';
+import 'package:lottie/lottie.dart';
 import 'package:pet_pals/widgets/app_bar_widget.dart';
 import 'package:pet_pals/providers/data_provider_todos.dart';
 import 'package:pet_pals/models/to_do.dart';
@@ -15,6 +17,7 @@ class ToDoPageState extends State<ToDoPage> {
   DateTime? previousDate;
   List<ToDo> todos = [];
   bool isLoading = true;
+  bool confettiActive = false; // Agregamos un indicador de confeti activo
 
   final activityIcons = {
     ActivityType.bath: 'assets/images/icons/bath_icon.png',
@@ -37,8 +40,11 @@ class ToDoPageState extends State<ToDoPage> {
   @override
   void initState() {
     super.initState();
+    _confettiController = ConfettiController();
     initToDos();
   }
+
+  late ConfettiController _confettiController;
 
   String timeFilter = 'All';
   String completionFilter = 'All';
@@ -74,10 +80,27 @@ class ToDoPageState extends State<ToDoPage> {
     timeFiltered.sort((a, b) => a.date.compareTo(b.date));
 
     if (completionFilter == 'Not done') {
-      return timeFiltered.where((todo) => !todo.completed).toList();
+      final notDoneList =
+          timeFiltered.where((todo) => !todo.completed).toList();
+      if (notDoneList.isEmpty && !confettiActive) {
+        _showConfetti();
+        confettiActive = true; // Activamos el confeti
+      } else if (notDoneList.isNotEmpty && confettiActive) {
+        _stopConfetti();
+        confettiActive = false; // Desactivamos el confeti
+      }
+      return notDoneList;
     } else if (completionFilter == 'Done') {
+      if (confettiActive) {
+        _stopConfetti();
+        confettiActive = false; // Desactivamos el confeti
+      }
       return timeFiltered.where((todo) => todo.completed).toList();
     } else {
+      if (confettiActive) {
+        _stopConfetti();
+        confettiActive = false; // Desactivamos el confeti
+      }
       return timeFiltered;
     }
   }
@@ -89,6 +112,14 @@ class ToDoPageState extends State<ToDoPage> {
       if (date.day == now.day + 1) return 'Tomorrow';
     }
     return '${date.day}/${date.month}/${date.year}';
+  }
+
+  void _showConfetti() {
+    _confettiController.play();
+  }
+
+  void _stopConfetti() {
+    _confettiController.stop();
   }
 
   @override
@@ -154,79 +185,107 @@ class ToDoPageState extends State<ToDoPage> {
                 ),
                 Expanded(
                   child: Container(
+                    width: double.infinity,
                     decoration: BoxDecoration(
                       color: Theme.of(context).colorScheme.surface,
                       borderRadius: BorderRadius.circular(15),
                     ),
-                    child: ListView.builder(
-                      padding: const EdgeInsets.all(10.0),
-                      itemCount: filteredTodos().length,
-                      itemBuilder: (ctx, index) {
-                        final toDo = filteredTodos()[index];
-                        List<Widget> widgets = [];
-
-                        if (previousDate == null ||
-                            previousDate?.day != toDo.date.day) {
-                          widgets.add(
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 8.0),
-                                child: Text(
-                                  _formatDate(toDo.date),
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: theme.tertiary,
+                    child: filteredTodos().isEmpty
+                        ? ConfettiWidget(
+                            confettiController: _confettiController,
+                            colors: [Theme.of(context).colorScheme.primary, Theme.of(context).colorScheme.secondary, Theme.of(context).colorScheme.secondaryContainer, Theme.of(context).colorScheme.primaryContainer, Theme.of(context).colorScheme.tertiary, Theme.of(context).colorScheme.tertiaryContainer],
+                            blastDirectionality: BlastDirectionality
+                                .explosive,
+                            shouldLoop: false, 
+                            child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Lottie.asset(
+                                    'assets/lottie/sleepy.json', 
+                                    width: 150,
+                                    height: 150,
                                   ),
-                                ),
+                                  Text(
+                                    "You did it!",
+                                    style: TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold,
+                                      color: theme.primary,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                          );
+                          )
+                        : ListView.builder(
+                            padding: const EdgeInsets.all(10.0),
+                            itemCount: filteredTodos().length,
+                            itemBuilder: (ctx, index) {
+                              final toDo = filteredTodos()[index];
+                              List<Widget> widgets = [];
 
-                          previousDate = toDo.date;
-                        }
+                              if (previousDate == null ||
+                                  previousDate?.day != toDo.date.day) {
+                                widgets.add(
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 8.0),
+                                      child: Text(
+                                        _formatDate(toDo.date),
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                          color: theme.tertiary,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                );
 
-                        widgets.add(
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 8.0),
-                            child: Row(
-                              children: [
-                                Image.asset(
-                                  activityIcons[toDo.activityType]!,
-                                  width: 40,
-                                  height: 40,
-                                ),
-                                SizedBox(width: 10),
-                                Text(
-                                  toDo.time.format(context),
-                                  style: TextStyle(fontSize: 18),
-                                ),
-                                SizedBox(width: 10),
-                                Text(
-                                  toDo.activityName,
-                                  style: TextStyle(fontSize: 18),
-                                ),
-                                SizedBox(width: 10),
-                                Text(
-                                  toDo.relatedPet.name,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: theme.tertiary,
-                                    fontSize: 18,
+                                previousDate = toDo.date;
+                              }
+
+                              widgets.add(
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 8.0),
+                                  child: Row(
+                                    children: [
+                                      Image.asset(
+                                        activityIcons[toDo.activityType]!,
+                                        width: 40,
+                                        height: 40,
+                                      ),
+                                      SizedBox(width: 10),
+                                      Text(
+                                        toDo.time.format(context),
+                                        style: TextStyle(fontSize: 18),
+                                      ),
+                                      SizedBox(width: 10),
+                                      Text(
+                                        toDo.activityName,
+                                        style: TextStyle(fontSize: 18),
+                                      ),
+                                      SizedBox(width: 10),
+                                      Text(
+                                        toDo.relatedPet.name,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: theme.tertiary,
+                                          fontSize: 18,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              ],
-                            ),
-                          ),
-                        );
+                              );
 
-                        return Column(
-                          children: widgets,
-                        );
-                      },
-                    ),
+                              return Column(
+                                children: widgets,
+                              );
+                            },
+                          ),
                   ),
                 ),
               ],
