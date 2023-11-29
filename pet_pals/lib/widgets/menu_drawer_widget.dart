@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,7 +14,8 @@ class Menu extends StatefulWidget {
 }
 
 class _MenuState extends State<Menu> {
-  final String username = "Jennifer";
+  final String username =
+      FirebaseAuth.instance.currentUser!.displayName.toString();
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +65,7 @@ class _MenuState extends State<Menu> {
                             radius: 20.0,
                           ),
                           SizedBox(width: 15),
-                          Text(username,
+                          Text(username == null ? '' : username,
                               style:
                                   TextStyle(fontSize: 20, color: Colors.white)),
                         ],
