@@ -263,9 +263,12 @@ class ToDoPageState extends State<ToDoPage> {
                                         style: TextStyle(fontSize: 18),
                                       ),
                                       SizedBox(width: 10),
-                                      Text(
-                                        toDo.activityName,
-                                        style: TextStyle(fontSize: 18),
+                                      Flexible(
+                                        child:
+                                          Text(
+                                            toDo.activityName,
+                                            style: TextStyle(fontSize: 18),
+                                          ),
                                       ),
                                       SizedBox(width: 10),
                                       Text(

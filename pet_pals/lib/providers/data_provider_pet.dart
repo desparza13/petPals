@@ -118,7 +118,6 @@ Future<List<Pet>> fetchPetsByType(String type) async {
           .get();
       return snapshot.docs.map((doc) => Pet.fromDocument(doc)).toList();  
   }
-  return [];
 }
 
 //Añadir mascota
