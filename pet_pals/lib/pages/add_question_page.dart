@@ -58,7 +58,7 @@ class _AddQuestionPageState extends State<AddQuestionPage> {
                 SizedBox(height: 20), // Añade un espacio antes del botón
                 ElevatedButton(
                   onPressed: () async {
-                    if (_questionController.text != null) {
+                    if (_questionController.text != '') {
                       try {
                         await _dataProvider
                             .addQuestion(_questionController.text);
