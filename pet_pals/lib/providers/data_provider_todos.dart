@@ -9,51 +9,44 @@ import 'package:pet_pals/providers/data_provider_pet.dart';
 //Obtener todos los To Do items de un usuario en especifico
 Future<List<ToDo>> fetchToDos() async {
   List<ToDo> toDos = [];
+  String uid = FirebaseAuth.instance.currentUser!.uid;
 
-  FirebaseAuth.instance.authStateChanges().listen((User? user) async {
-    if (user != null) {
-      String uid = user.uid;
-      print('TURBIO');
-      print(uid);
+  QuerySnapshot toDoQuerySnapshot = await FirebaseFirestore.instance
+      .collection('todos')
+      .where('user', isEqualTo: uid)
+      .get();
 
-      QuerySnapshot toDoQuerySnapshot = await FirebaseFirestore.instance
-          .collection('todos')
-          .where('user', isEqualTo: uid)
-          .get();
+  for (QueryDocumentSnapshot doc in toDoQuerySnapshot.docs) {
+    Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+    String relatedPetId = data['relatedPetId'];
 
-      for (QueryDocumentSnapshot doc in toDoQuerySnapshot.docs) {
-        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-        String relatedPetId = data['relatedPetId'];
+    // Busca la mascota correspondiente en Firestore
+    Pet? relatedPet = await fetchPetById(relatedPetId);
 
-        // Busca la mascota correspondiente en Firestore
-        Pet? relatedPet = await fetchPetById(relatedPetId);
+    if (relatedPet != null) {
+      // Convierte el campo 'activityType' de String a ActivityType
+      ActivityType activityType = ActivityType.values.firstWhere(
+        (type) => type.toString() == 'ActivityType.${data['activityType']}',
+        orElse: () =>
+            ActivityType.bath, // Valor predeterminado en caso de no coincidir
+      );
 
-        if (relatedPet != null) {
-          // Convierte el campo 'activityType' de String a ActivityType
-          ActivityType activityType = ActivityType.values.firstWhere(
-            (type) => type.toString() == 'ActivityType.${data['activityType']}',
-            orElse: () => ActivityType
-                .bath, // Valor predeterminado en caso de no coincidir
-          );
-
-          toDos.add(
-            ToDo(
-                id: doc.id,
-                date: data['date'].toDate(),
-                time: TimeOfDay(
-                  hour: int.parse(data['time'].split(':')[0]),
-                  minute: int.parse(data['time'].split(':')[1]),
-                ),
-                activityName: data['activityName'],
-                relatedPet: relatedPet,
-                activityType: activityType,
-                completed: data['completed'],
-                user: uid),
-          );
-        }
-      }
+      toDos.add(
+        ToDo(
+            id: doc.id,
+            date: data['date'].toDate(),
+            time: TimeOfDay(
+              hour: int.parse(data['time'].split(':')[0]),
+              minute: int.parse(data['time'].split(':')[1]),
+            ),
+            activityName: data['activityName'],
+            relatedPet: relatedPet,
+            activityType: activityType,
+            completed: data['completed'],
+            user: uid),
+      );
     }
-  });
+  }
 
   return toDos;
 }
@@ -91,27 +84,20 @@ Future<void> toggleToDoCompletion(BuildContext context, String taskId) async {
 
 //Añadir elemento
 Future<void> addToDo(ToDo toDo) async {
-  FirebaseAuth.instance.authStateChanges().listen((User? user) async {
-    if (user != null) {
-      String uid = user.uid;
-      print('TURBIO');
-      print(uid);
+  String uid = FirebaseAuth.instance.currentUser!.uid;
 
-      CollectionReference todos =
-          FirebaseFirestore.instance.collection('todos');
-      try {
-        await todos.add({
-          'date': toDo.date,
-          'time': '${toDo.time.hour}:${toDo.time.minute}',
-          'activityName': toDo.activityName,
-          'relatedPetId': toDo.relatedPet.id,
-          'activityType': toDo.activityType.toString().split('.').last,
-          'completed': toDo.completed,
-          'user': uid
-        });
-      } catch (error) {
-        rethrow;
-      }
-    }
-  });
+  CollectionReference todos = FirebaseFirestore.instance.collection('todos');
+  try {
+    await todos.add({
+      'date': toDo.date,
+      'time': '${toDo.time.hour}:${toDo.time.minute}',
+      'activityName': toDo.activityName,
+      'relatedPetId': toDo.relatedPet.id,
+      'activityType': toDo.activityType.toString().split('.').last,
+      'completed': toDo.completed,
+      'user': uid
+    });
+  } catch (error) {
+    rethrow;
+  }
 }

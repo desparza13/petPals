@@ -1,7 +1,10 @@
+import 'dart:typed_data';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_pals/pages/edit_profile_page.dart';
+import 'package:pet_pals/providers/data_provider_pet.dart';
 import 'package:pet_pals/widgets/menu_drawer_widget.dart';
 import 'package:pet_pals/models/user.dart';
 import 'package:pet_pals/providers/data_provider_users.dart';
@@ -24,6 +27,9 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    var userImage = FirebaseAuth.instance.currentUser!.photoURL;
+    print('Perfiiiiiiil');
+    print(userImage);
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
@@ -37,12 +43,35 @@ class _ProfilePageState extends State<ProfilePage> {
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-              if (FirebaseAuth.instance.currentUser != null) 
+              if (FirebaseAuth.instance.currentUser != null)
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20.0),
-                  child: CircleAvatar(
-                    radius: 80.0,
-                    backgroundImage: NetworkImage(''),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(70),
+                    child: userImage == null
+                        ? Container(
+                          width: 150,
+                          height: 150,
+                          child: FutureBuilder<Uint8List>(
+                              future: getFirebaseImage('no-profile-picture.png'),
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return CircularProgressIndicator();
+                                } else if (snapshot.hasError) {
+                                  return Image.asset(
+                                    "assets/images/icons/paws.png",
+                                    fit: BoxFit.cover,
+                                  );
+                                } else {
+                                  print(snapshot.data!);
+                                  return Image.memory(
+                                    snapshot.data!,
+                                  );
+                                }
+                              }),
+                        )
+                        : Image.asset('name'),
                   ),
                 ),
               Container(
@@ -56,11 +85,18 @@ class _ProfilePageState extends State<ProfilePage> {
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    _buildTile('Mi Perfil', 'Actualizar datos de mi perfil', EditProfile()),
-                    _buildTile('Entrenamientos', 'Ver mis entrenamientos adquiridos', EditProfile()),
-                    _buildTile('Planes Alimenticios', 'Ver mis planes adquiridos', EditProfile()),
-                    _buildTile('Mi Contraseña', 'Actualizar contraseña', EditProfile()),
-                    _buildTile('Mis Formas de Pago', 'Ver, editar y agregar mis fomas de pago', EditProfile()),
+                    _buildTile('Mi Perfil', 'Actualizar datos de mi perfil',
+                        EditProfile()),
+                    _buildTile('Entrenamientos',
+                        'Ver mis entrenamientos adquiridos', EditProfile()),
+                    _buildTile('Planes Alimenticios',
+                        'Ver mis planes adquiridos', EditProfile()),
+                    _buildTile('Mi Contraseña', 'Actualizar contraseña',
+                        EditProfile()),
+                    _buildTile(
+                        'Mis Formas de Pago',
+                        'Ver, editar y agregar mis fomas de pago',
+                        EditProfile()),
                   ],
                 ),
               ),
@@ -76,7 +112,8 @@ class _ProfilePageState extends State<ProfilePage> {
       padding: const EdgeInsetsDirectional.fromSTEB(36, 15, 35, 15),
       child: InkWell(
         onTap: () {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) => page));
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => page));
         },
         child: ListTile(
           title: Text(
@@ -92,8 +129,8 @@ class _ProfilePageState extends State<ProfilePage> {
             subtitle,
             style: TextStyle(
               fontFamily: 'Ubuntu',
-              color: Color(0xFF0A0909), 
-              fontSize: 12,             
+              color: Color(0xFF0A0909),
+              fontSize: 12,
             ),
           ),
           trailing: const Icon(

@@ -173,7 +173,8 @@ class _AddPetPageState extends State<AddPetPage> {
                                         : false,
                                     location: locationController.text,
                                     propietario: '',
-                                    image: '');
+                                    image: '',
+                                    inAdoption: false);
                                 try {
                                   await addPet(newPet, selectedImage);
                                   ScaffoldMessenger.of(context).showSnackBar(
