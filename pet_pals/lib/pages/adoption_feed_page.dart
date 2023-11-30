@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:pet_pals/widgets/app_bar_widget.dart';
-import 'package:pet_pals/widgets/menu_drawer_widget.dart';
-import 'package:pet_pals/widgets/pet_adoption_item.dart';
 import 'package:pet_pals/widgets/pets_bar_widget.dart';
 import 'package:pet_pals/providers/data_provider_pet.dart';
+import 'package:pet_pals/widgets/pet_adoption_item.dart';
 import 'package:pet_pals/models/pet.dart';
 
 class AdoptionFeedPage extends StatefulWidget {
-  const AdoptionFeedPage({super.key});
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   State<AdoptionFeedPage> createState() => _AdoptionFeedPageState();
@@ -15,111 +14,67 @@ class AdoptionFeedPage extends StatefulWidget {
 
 class _AdoptionFeedPageState extends State<AdoptionFeedPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  
+  List<Pet> pets = [];
+
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
+    _loadPets('All');
+  }
+
+  void _loadPets(String type) async {
+    List<Pet> fetchedPets = await fetchPetsByType(type);
+    setState(() {
+      pets = fetchedPets;
+    });
+  }
+
+  Color _getItemColor(int index) {
     var theme = Theme.of(context).colorScheme;
-    final _colors = [
+    List<Color> colors = [
       theme.primaryContainer,
       Color(0xFFDFD2C8),
       theme.secondaryContainer,
       theme.tertiaryContainer
     ];
+
+    // Return a color based on the item's index
+    return colors[index % colors.length];
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      drawer: Menu(),
       appBar: AppBarWidget(scaffoldKey: _scaffoldKey),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const Padding(
-              padding: EdgeInsets.all(12.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Column(
-                    children: [
-                      Icon(Icons.location_pin, size: 40, color: Color.fromARGB(255, 245, 190, 138)),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Text(
-                        'Location',
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      Text(
-                        'Guadalajara, Jalisco',
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                      )
-                    ],
-                  )
-                ],
-              ),
+      body: Column(
+        children: [
+          const ListTile(
+            title: Text(
+              "Let's start the adoption!",
+              style:
+                  TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
-            Card(
-              color: Theme.of(context).colorScheme.surface,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15.0),
-              ),
-              child: Container(
-                padding: const EdgeInsets.all(10),
-                child: Column(children: [
-                  const ListTile(
-                    title: Text(
-                      "Let's start the adoption!",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                    ),
-                    subtitle: Text('Find your lovely pet'),
-                  ),
-                  TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Search pet',
-                      prefixIcon: const Icon(Icons.search),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                    ),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(top: 15),
-                    child: PetsBarWidget(),
-                  ),
-                  const SizedBox(height: 10),
-                  SizedBox(
-                    height: 300,
-                    child: FutureBuilder<List<Pet>>(
-                      future: fetchPetsInAdoption(),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.waiting) {
-                          return const Center(child: CircularProgressIndicator());
-                        } else if (snapshot.hasError) {
-                          return Center(child: Text('Error: ${snapshot.error}'));
-                        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                          return const Center(child: Text('No pets available for adoption'));
-                        } else {
-                          List<Pet> pets = snapshot.data!;
-                          return ListView.separated(
-                            scrollDirection: Axis.vertical,
-                            itemCount: pets.length,
-                            separatorBuilder: (context, index) => const SizedBox(height: 10),
-                            itemBuilder: (context, index) {
-                              return PetAdoptionItem(
-                                pet: pets[index],
-                                color: _colors[index % _colors.length],
-                              );
-                            },
-                          );
-                        }
-                      },
-                    ),
-                  ),
-                ]),
-              ),
+            subtitle: Text('Find your lovely pet'),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(15),
+            child: PetsBarWidget(
+              onSelected: _loadPets,
             ),
-          ],
-        ),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: pets.length,
+              itemBuilder: (context, index) {
+                return PetAdoptionItem(
+                  pet: pets[index],
+                  color: _getItemColor(index), // Assign a color based on index
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }

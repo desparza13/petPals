@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class PetsBarWidget extends StatefulWidget {
-  const PetsBarWidget({super.key});
+  final Function(String) onSelected;
+
+  const PetsBarWidget({super.key, required this.onSelected});
 
   @override
   State<PetsBarWidget> createState() => _PetsBarWidgetState();
@@ -15,89 +17,41 @@ class _PetsBarWidgetState extends State<PetsBarWidget> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Column(
-          children: [
-            ElevatedButton(
-              onPressed: (){
-                setState((){
-                  selected = 1;
-                });
-              }, 
-              style: ElevatedButton.styleFrom(
-                backgroundColor: selected==1 ? Color.fromARGB(255, 245, 190, 138): Colors.white,
-                fixedSize: Size(80, 80)
-              ),
-              child: Image.asset('assets/images/icons/dog_icon.png')
-            ),
-            const Padding(
-              padding: EdgeInsets.only(top:8.0),
-              child: Text('Dogs', style: TextStyle(fontWeight: FontWeight.bold),),
-            )
-          ],
-        ),
-        Column(
-          children: [
-            ElevatedButton(
-              onPressed: (){
-                setState((){
-                  selected = 2;
-                });
-              }, 
-              style: ElevatedButton.styleFrom(
-                backgroundColor: selected==2 ? Color.fromARGB(255, 245, 190, 138): Colors.white,
-                fixedSize: Size(80, 80)
-              ),
-              child: Image.asset('assets/images/icons/cat_icon.png')
-            ),
-            const Padding(
-              padding: EdgeInsets.only(top:8.0),
-              child: Text('Cats', style: TextStyle(fontWeight: FontWeight.bold)),
-            )
+        // Dog Button
+        _buildPetTypeButton('Dog', 'assets/images/icons/dog_icon.png', 1),
+        // Cat Button
+        _buildPetTypeButton('Cat', 'assets/images/icons/cat_icon.png', 2),
+        // Bird Button
+        _buildPetTypeButton('Bird', 'assets/images/icons/bird_icon.png', 3),
+        // All Button
+        _buildPetTypeButton('All', 'assets/images/icons/all_icon.png', 4),
+      ],
+    );
+  }
 
-          ],
+  Widget _buildPetTypeButton(String type, String iconPath, int index) {
+    return Column(
+      children: [
+        ElevatedButton(
+          onPressed: () {
+            setState(() {
+              selected = index;
+            });
+            widget.onSelected(type);
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: selected == index ? Theme.of(context).colorScheme.tertiary : Theme.of(context).colorScheme.background,
+            fixedSize: const Size(80, 80),
+          ),
+          child: Image.asset(iconPath),
         ),
-        
-        Column(
-          children: [
-            ElevatedButton(
-              onPressed: (){
-                setState((){
-                  selected = 3;
-                });
-              }, 
-              style: ElevatedButton.styleFrom(
-                backgroundColor: selected==3 ? Color.fromARGB(255, 245, 190, 138): Colors.white,
-                fixedSize: Size(80, 80)
-              ),
-              child: Image.asset('assets/images/icons/bird_icon.png')
-            ),
-            const Padding(
-              padding: EdgeInsets.only(top:8.0),
-              child: Text('Birds', style: TextStyle(fontWeight: FontWeight.bold)),
-            )
-          ],
+        Padding(
+          padding: const EdgeInsets.only(top: 8.0),
+          child: Text(
+            type,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
         ),
-        Column(
-          children: [
-            ElevatedButton(
-              onPressed: (){
-                setState((){
-                  selected = 4;
-                });
-              }, 
-              style: ElevatedButton.styleFrom(
-                backgroundColor: selected==4 ? Color.fromARGB(255, 245, 190, 138): Colors.white,
-                fixedSize: Size(80, 80)
-              ),
-              child: Text('...',style: TextStyle(color: Colors.black, fontSize: 30),)
-            ),
-            const Padding(
-              padding: EdgeInsets.only(top:8.0),
-              child: Text('All', style: TextStyle(fontWeight: FontWeight.bold)),
-            )
-          ],
-        ),
-        
       ],
     );
   }

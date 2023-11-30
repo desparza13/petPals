@@ -28,7 +28,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
       HomePage(),
       NewTaskPage(),
       ToDoPage(),
-      const AdoptionFeedPage(),
+      AdoptionFeedPage(),
       QAPage(),
     ];
     var theme = Theme.of(context).colorScheme;

@@ -101,6 +101,26 @@ Future<List<Pet>> fetchPetsInAdoption() async {
   return pets;
 }
 
+Future<List<Pet>> fetchPetsByType(String type) async {
+  QuerySnapshot snapshot;
+  if (type != 'All') {
+      snapshot = await FirebaseFirestore.instance
+          .collection('pets')
+          .where('type', isEqualTo: type)
+          .where('inAdoption', isEqualTo: true)
+          .get();
+      return snapshot.docs.map((doc) => Pet.fromDocument(doc)).toList();
+    } 
+    else {
+      snapshot = await FirebaseFirestore.instance
+          .collection('pets')
+          .where('inAdoption', isEqualTo: true)
+          .get();
+      return snapshot.docs.map((doc) => Pet.fromDocument(doc)).toList();  
+  }
+  return [];
+}
+
 //Añadir mascota
 Future<void> addPet(Pet pet, File? selectedImage) async {
   String uid = FirebaseAuth.instance.currentUser!.uid;

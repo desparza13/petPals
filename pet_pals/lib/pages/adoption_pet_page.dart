@@ -193,9 +193,15 @@ class AdoptionPetPage extends StatelessWidget {
                               foregroundColor: Theme.of(context).colorScheme.onSecondary,
                             ),
                             onPressed: (){
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('Adoption request sent'),
+                                  duration: Duration(seconds: 2),
+                                ),
+                              );
                               Navigator.pop(context);
                             }, 
-                            child: Text('Adoption'))
+                            child: const Text('Adoption'))
                         ],
                       )
                     ]),

@@ -108,6 +108,7 @@ flutter:
     - assets/images/icons/dog_icon.png
     - assets/images/icons/cat_icon.png
     - assets/images/icons/bird_icon.png
+    - assets/images/icons/all_icon.png
     - assets/images/icons/bunnie_icon.png
     - assets/terms_and_conditions.md
     - assets/lottie/no_results.json

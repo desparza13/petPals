@@ -21,7 +21,7 @@ class MyPetPage extends StatelessWidget {
     ];
     return Scaffold(
       appBar: AppBar(
-        title: Text('My pet profile')),
+        title: const Text('My pet profile')),
       body: Stack(
         children: [
           //Imagen de la mascota
@@ -35,7 +35,7 @@ class MyPetPage extends StatelessWidget {
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
-                          return CircularProgressIndicator();
+                          return const CircularProgressIndicator();
                         } else if (snapshot.hasError) {
                           return Image.asset(
                             "assets/images/icons/paws.png",
