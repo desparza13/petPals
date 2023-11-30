@@ -47,5 +47,23 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app needs access to your photos in order to load them into the app</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Esta aplicación necesita acceso a la cámara para tomar fotos y grabar videos.</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+        <dict>
+                <key>CFBundleTypeRole</key>
+                <string>Editor</string>
+                <key>CFBundleURLSchemes</key>
+                <array>
+                        <!-- TODO Replace this value: -->
+                        <!-- Copied from GoogleService-Info.plist key REVERSED_CLIENT_ID -->
+                        <string>com.googleusercontent.apps.1069943460237-4ln6ct15ipljstraarn46ratd8edeqqs</string>
+                </array>
+        </dict>
+	</array>
+	<!-- End of the Google Sign-in Section -->
 </dict>
 </plist>
