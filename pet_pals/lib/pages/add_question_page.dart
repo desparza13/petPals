@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart'; // Asegúrate de haber importado el paquete de Lottie
 import 'package:pet_pals/providers/data_provider_questions.dart';
 import 'package:pet_pals/models/question.dart';
+import 'package:pet_pals/pages/q&a_page.dart';
 
 class AddQuestionPage extends StatefulWidget {
   @override
@@ -20,11 +21,6 @@ class _AddQuestionPageState extends State<AddQuestionPage> {
     super.dispose();
   }
 
-  void _submitQuestion() async {
-    if (_formKey.currentState!.validate()) {
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +28,8 @@ class _AddQuestionPageState extends State<AddQuestionPage> {
       appBar: AppBar(
         title: Text('Add a Question'),
       ),
-      body: SingleChildScrollView( // Permite el desplazamiento cuando el contenido excede el área visible de la pantalla
+      body: SingleChildScrollView(
+        // Permite el desplazamiento cuando el contenido excede el área visible de la pantalla
         child: Padding(
           padding: EdgeInsets.all(16.0),
           child: Form(
@@ -40,8 +37,9 @@ class _AddQuestionPageState extends State<AddQuestionPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                          Lottie.asset('assets/lottie/question.json', width: 200, height: 200),
-                SizedBox(height: 20), 
+                Lottie.asset('assets/lottie/question.json',
+                    width: 200, height: 200),
+                SizedBox(height: 20),
                 TextFormField(
                   controller: _questionController,
                   decoration: InputDecoration(
@@ -59,7 +57,39 @@ class _AddQuestionPageState extends State<AddQuestionPage> {
                 ),
                 SizedBox(height: 20), // Añade un espacio antes del botón
                 ElevatedButton(
-                  onPressed: _submitQuestion,
+                  onPressed: () async {
+                    if (_questionController.text != null) {
+                      try {
+                        await _dataProvider
+                            .addQuestion(_questionController.text);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Question added successfully'),
+                            duration: Duration(seconds: 2),
+                          ),
+                        );
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => QAPage())
+                        );
+                      } catch (error) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content:
+                                Text('Error adding task. Please try again.'),
+                            duration: Duration(seconds: 2),
+                          ),
+                        );
+                      }
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Please fill in all fields'),
+                          duration: Duration(seconds: 2),
+                        ),
+                      );
+                    }
+                  },
                   child: Text('Submit'),
                 ),
               ],

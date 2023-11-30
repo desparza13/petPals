@@ -262,7 +262,7 @@ class ToDoPageState extends State<ToDoPage> {
                                         toDo.time.format(context),
                                         style: TextStyle(fontSize: 18),
                                       ),
-                                      SizedBox(width: 10),
+                                      const SizedBox(width: 10),
                                       Flexible(
                                         child:
                                           Text(
@@ -270,7 +270,7 @@ class ToDoPageState extends State<ToDoPage> {
                                             style: TextStyle(fontSize: 18),
                                           ),
                                       ),
-                                      SizedBox(width: 10),
+                                      const SizedBox(width: 10),
                                       Text(
                                         toDo.relatedPet.name,
                                         style: TextStyle(

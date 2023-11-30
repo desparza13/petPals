@@ -24,13 +24,13 @@ class QuestionsDataProvider {
   }
 
   // Método para añadir una nueva pregunta
-  Future<void> addQuestion(Question question) async {
+  Future<void> addQuestion(String content) async {
     DocumentReference docRef = await questionsCollection.add({
-      'content': question.content,
-      'answer': question.answer,
-      'likes': question.likes,
-      'comments': question.comments,
-      'timestamp': question.timestamp,
+      'content': content,
+      'answer': 'Not answered yet',
+      'likes': [],
+      'comments': [],
+      'timestamp': DateTime.now(),
     });
 
     // Actualiza el ID de la pregunta con el ID del documento generado
