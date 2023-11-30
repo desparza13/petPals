@@ -23,8 +23,7 @@ Future<List<Pet>> fetchPets() async {
 
   pets = petQuerySnapshot.docs.map((doc) {
     Map<String, dynamic> petData = doc.data() as Map<String, dynamic>;
-    print('pets');
-    print(petData);
+    
     return Pet(
       id: doc.id,
       name: petData['name'],
@@ -123,7 +122,6 @@ Future<List<Pet>> fetchPetsByType(String type) async {
 //Añadir mascota
 Future<void> addPet(Pet pet, File? selectedImage) async {
   String uid = FirebaseAuth.instance.currentUser!.uid;
-  print(selectedImage);
   var path;
 
   //Asignar path dependiendo la imagen
@@ -138,14 +136,44 @@ Future<void> addPet(Pet pet, File? selectedImage) async {
 
   CollectionReference pets = FirebaseFirestore.instance.collection('pets');
   try {
-    // final storageRef = _storage.refFromURL('gs://petpals-9935f.appspot.com');
-    // var imageRef = storageRef.child('pets/$path');
-    // Uint8List? data = await imageRef.getData();
-    // print('DATAAAAAA');
-
-    // print(data);
 
     await pets.add({
+      'name': pet.name,
+      'location': pet.location,
+      'type': pet.type,
+      'breed': pet.breed,
+      'age': pet.age,
+      'sex': pet.sex,
+      'color': pet.color,
+      'sterilized': pet.sterilized,
+      'image': 'pets/$path',
+      'propietario': uid,
+      'inAdoption': pet.inAdoption,
+      'size': pet.size
+    });
+  } catch (error) {
+    rethrow;
+  }
+}
+
+//Editar mascota
+Future<void> editPet(String petId,Pet pet, File? selectedImage) async {
+  String uid = FirebaseAuth.instance.currentUser!.uid;
+  var path;
+
+  //Asignar path dependiendo la imagen
+  if (selectedImage != null) {
+    var listPath = selectedImage.path.split('/');
+    path = listPath[listPath.length - 1];
+    final storageRef = _storage.ref();
+    storageRef.child("pets/$path").putFile(selectedImage);
+  } else {
+    path = 'paws.png'; //En caso de que no haya foto, se pone la default
+  }
+
+  CollectionReference pets = FirebaseFirestore.instance.collection('pets');
+  try {
+    await pets.doc(petId).update({
       'name': pet.name,
       'location': pet.location,
       'type': pet.type,

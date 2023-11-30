@@ -5,6 +5,7 @@ import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pet_pals/pages/profile_page.dart';
+import 'package:pet_pals/pages/sign_in_page.dart';
 import 'package:pet_pals/providers/dark_mode_provider.dart';
 import 'package:pet_pals/providers/data_provider_pet.dart';
 import 'package:pet_pals/theme/app_themes.dart';
@@ -67,29 +68,33 @@ class _MenuState extends State<Menu> {
                             borderRadius: BorderRadius.circular(70),
                             child: userImage == null
                                 ? Container(
-                                  width: 50,
-                                  height: 50,
-                                  child: FutureBuilder<Uint8List>(
-                                      future: getFirebaseImage(
-                                          'no-profile-picture.png'),
-                                      builder: (context, snapshot) {
-                                        if (snapshot.connectionState ==
-                                            ConnectionState.waiting) {
-                                          return CircularProgressIndicator();
-                                        } else if (snapshot.hasError) {
-                                          return Image.asset(
-                                            "assets/images/no-profile-picture.png",
-                                            fit: BoxFit.cover,
-                                          );
-                                        } else {
-                                          print(snapshot.data!);
-                                          return Image.memory(
-                                            snapshot.data!,
-                                          );
-                                        }
-                                      }),
-                                )
-                                : Image.network(userImage, width: 50, height: 50,),
+                                    width: 50,
+                                    height: 50,
+                                    child: FutureBuilder<Uint8List>(
+                                        future: getFirebaseImage(
+                                            'no-profile-picture.png'),
+                                        builder: (context, snapshot) {
+                                          if (snapshot.connectionState ==
+                                              ConnectionState.waiting) {
+                                            return CircularProgressIndicator();
+                                          } else if (snapshot.hasError) {
+                                            return Image.asset(
+                                              "assets/images/no-profile-picture.png",
+                                              fit: BoxFit.cover,
+                                            );
+                                          } else {
+                                            print(snapshot.data!);
+                                            return Image.memory(
+                                              snapshot.data!,
+                                            );
+                                          }
+                                        }),
+                                  )
+                                : Image.network(
+                                    userImage,
+                                    width: 50,
+                                    height: 50,
+                                  ),
                           ),
                           SizedBox(width: 15),
                           Text(username == null ? '' : username,
@@ -137,7 +142,12 @@ class _MenuState extends State<Menu> {
                       },
                     ),
                   ),
-                  const SignOutButton(),
+                  GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => SignInPage()));
+                      },
+                      child: const SignOutButton()),
                 ],
               ),
             ),

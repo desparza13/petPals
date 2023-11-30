@@ -79,6 +79,7 @@ class _AddImageState extends State<AddImage> {
           _checkPermissions();
         },
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(Icons.camera_enhance),
             Text('Upload image'),
