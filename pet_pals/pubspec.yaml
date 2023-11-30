@@ -116,6 +116,7 @@ flutter:
     - assets/lottie/Animation - 1701151008730.json
     - assets/lottie/sleepy.json
     - assets/images/icons/paws.png
+    - assets/images/no-profile-picture.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

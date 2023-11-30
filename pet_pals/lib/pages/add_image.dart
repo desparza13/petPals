@@ -78,7 +78,12 @@ class _AddImageState extends State<AddImage> {
         onPressed: () {
           _checkPermissions();
         },
-        child: Text('upload image'));
+        child: Row(
+          children: [
+            Icon(Icons.camera_enhance),
+            Text('Upload image'),
+          ],
+        ));
   }
 
   Widget imagePermissions(bool isPermanent) {
@@ -109,7 +114,8 @@ class _AddImageState extends State<AddImage> {
                     color: Colors.red,
                     child: Image.file(
                       newSelectedImage,
-                      height: 190,
+                      height: MediaQuery.of(context).size.height / 3,
+              width: MediaQuery.of(context).size.width,
                       fit: BoxFit.fill,
                     )),
               ),

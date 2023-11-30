@@ -28,8 +28,6 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     var userImage = FirebaseAuth.instance.currentUser!.photoURL;
-    print('Perfiiiiiiil');
-    print(userImage);
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
@@ -60,7 +58,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   return CircularProgressIndicator();
                                 } else if (snapshot.hasError) {
                                   return Image.asset(
-                                    "assets/images/icons/paws.png",
+                                    "assets/images/no-profile-picture.png",
                                     fit: BoxFit.cover,
                                   );
                                 } else {
@@ -71,7 +69,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 }
                               }),
                         )
-                        : Image.asset('name'),
+                        : Image.network(userImage),
                   ),
                 ),
               Container(

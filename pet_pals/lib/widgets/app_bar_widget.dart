@@ -1,6 +1,10 @@
 // app_bar_widget.dart
+import 'dart:typed_data';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_pals/pages/profile_page.dart';
+import 'package:pet_pals/providers/data_provider_pet.dart';
 
 class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
@@ -12,6 +16,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    var userImage = FirebaseAuth.instance.currentUser!.photoURL;
 
     return AppBar(
       leading: IconButton(
@@ -30,10 +35,35 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
             Navigator.of(context)
                 .push(MaterialPageRoute(builder: (context) => ProfilePage()));
           },
-          child: const CircleAvatar(
-            backgroundImage: NetworkImage(
-                'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png'),
-            radius: 25.0,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(70),
+            child: userImage == null
+                ? Container(
+                  width: 50,
+                  height: 50,
+                  child: FutureBuilder<Uint8List>(
+                      future: getFirebaseImage('no-profile-picture.png'),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return CircularProgressIndicator();
+                        } else if (snapshot.hasError) {
+                          return Image.asset(
+                            "assets/images/no-profile-picture.png",
+                            fit: BoxFit.cover,
+                          );
+                        } else {
+                          print(snapshot.data!);
+                          return Image.memory(
+                            snapshot.data!,
+                          );
+                        }
+                      }),
+                )
+                : Image.network(
+                    userImage,
+                    width: 50,
+                    height: 50,
+                  ),
           ),
         ),
         const SizedBox(width: 25),

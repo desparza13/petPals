@@ -1,5 +1,9 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:pet_pals/models/pet.dart';
+import 'package:pet_pals/pages/add_image.dart';
+import 'package:pet_pals/providers/data_provider_pet.dart';
 
 class EditMyPetPage extends StatefulWidget {
   const EditMyPetPage({super.key, required this.pet});
@@ -45,32 +49,30 @@ class _EditMyPetPageState extends State<EditMyPetPage> {
             child: Container(
               height: MediaQuery.of(context).size.height / 3,
               width: MediaQuery.of(context).size.width,
-              child: Image.network(widget.pet.image, fit: BoxFit.fill),
+              child: FutureBuilder<Uint8List>(
+                      future: getFirebaseImage(widget.pet.image),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const CircularProgressIndicator();
+                        } else if (snapshot.hasError) {
+                          return Image.asset(
+                            "assets/images/icons/paws.png",
+                            fit: BoxFit.cover,
+                          );
+                        } else {
+                          return Image.memory(snapshot.data!,
+                              width: double.infinity, height: double.infinity, fit: BoxFit.cover,);
+                        }
+                      }),
             ),
           ),
           Positioned(
             top: 100,
             bottom: 600,
-            left: 120,
-            right: 120,
-            child: ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(100.0),
-                ),
-                backgroundColor: theme.colorScheme.secondary.withOpacity(0.6)
-              ),
-              child: Row(
-                children: [
-                  Icon(Icons.camera_enhance),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text('Edit Photo'),
-                ],
-              ),
-            ),
+            left: 115,
+            right: 100,
+            child: AddImage()
           ),
           Positioned(
               top: MediaQuery.of(context).size.height / 4,

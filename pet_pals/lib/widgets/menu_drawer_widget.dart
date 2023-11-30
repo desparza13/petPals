@@ -1,9 +1,12 @@
+import 'dart:typed_data';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pet_pals/pages/profile_page.dart';
 import 'package:pet_pals/providers/dark_mode_provider.dart';
+import 'package:pet_pals/providers/data_provider_pet.dart';
 import 'package:pet_pals/theme/app_themes.dart';
 import 'package:pet_pals/theme/bloc/theme_bloc.dart';
 import 'package:provider/provider.dart';
@@ -19,6 +22,8 @@ class _MenuState extends State<Menu> {
 
   @override
   Widget build(BuildContext context) {
+    var userImage = FirebaseAuth.instance.currentUser!.photoURL;
+
     var theme = Theme.of(context).colorScheme;
     // Determine if the device is in landscape or portrait
     var isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
@@ -58,11 +63,33 @@ class _MenuState extends State<Menu> {
                       },
                       child: Row(
                         children: [
-                          CircleAvatar(
-                            //Make it circular
-                            backgroundImage: NetworkImage(
-                                'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png'),
-                            radius: 20.0,
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(70),
+                            child: userImage == null
+                                ? Container(
+                                  width: 50,
+                                  height: 50,
+                                  child: FutureBuilder<Uint8List>(
+                                      future: getFirebaseImage(
+                                          'no-profile-picture.png'),
+                                      builder: (context, snapshot) {
+                                        if (snapshot.connectionState ==
+                                            ConnectionState.waiting) {
+                                          return CircularProgressIndicator();
+                                        } else if (snapshot.hasError) {
+                                          return Image.asset(
+                                            "assets/images/no-profile-picture.png",
+                                            fit: BoxFit.cover,
+                                          );
+                                        } else {
+                                          print(snapshot.data!);
+                                          return Image.memory(
+                                            snapshot.data!,
+                                          );
+                                        }
+                                      }),
+                                )
+                                : Image.network(userImage, width: 50, height: 50,),
                           ),
                           SizedBox(width: 15),
                           Text(username == null ? '' : username,

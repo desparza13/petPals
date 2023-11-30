@@ -49,7 +49,7 @@ class _AddPetPageState extends State<AddPetPage> {
             ),
           ),
           Positioned(
-              top: 10, bottom: 500, left: 0, right: 0, child: AddImage()),
+              top: 0, bottom: 500, left: 0, right: 0, child: AddImage()),
           Positioned(
               top: MediaQuery.of(context).size.height / 4,
               bottom: 0,
@@ -160,7 +160,7 @@ class _AddPetPageState extends State<AddPetPage> {
                                         context,
                                         listen: false)
                                     .file;
-                                
+
                                 final newPet = Pet(
                                     name: nameController.text,
                                     type: typeController.text,

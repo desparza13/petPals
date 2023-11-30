@@ -51,7 +51,6 @@ class PetHomeItem extends StatelessWidget {
                             fit: BoxFit.cover,
                           );
                         } else {
-                          print(snapshot.data!);
                           return Image.memory(snapshot.data!,
                               width: double.infinity, height: double.infinity, fit: BoxFit.cover,);
                         }
